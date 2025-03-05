@@ -1,0 +1,227 @@
+.logo{
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    
+}
+/* Estilo general para el logo */
+
+
+/* Para pantallas grandes (TV) */
+
+/* Para pantallas de laptops (tamaños medianos) */
+@media (max-width: 1920px) {
+    .logo {
+        width: 180px;
+        height: 180px;
+        margin-top: -7%;
+        margin-left: -5%;
+    }
+}
+@media ((min-width: 1024px) ){
+    .logo {
+        width: 180px;
+        height: 180px;
+        margin-top: -4%;
+        margin-left: -10%;
+    }
+}
+/* Para pantallas de tabletas */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .logo {
+        width: 140px;
+        height: 140px;
+        margin-top: -4%;
+        margin-left: -8%;
+    }
+}
+
+/* Para pantallas de móviles medianos (pantallas entre 600px y 767px) */
+@media (max-width: 767px) and (min-width: 600px) {
+    .logo {
+        width: 120px;
+        height: 120px;
+        margin-top: -3%;
+        margin-left: -6%;
+    }
+}
+
+/* Para pantallas de móviles pequeños (menos de 600px) */
+@media (max-width: 599px) {
+    .logo {
+        width: 100px;
+        height: 100px;
+        margin-top: -20%;
+        margin-left: -10%;
+    }
+}
+
+.datos {
+    position: absolute;
+    top: 80%; /* Ajusta el valor de 'top' según lo que necesites */
+    left: 29%; /* Mueve el elemento hacia el centro horizontalmente */
+    transform: translateX(-50%); /* Ajuste para centrar el elemento */
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Estilos para el encabezado */
+  .heading {
+    text-align: center;
+    font-size: 2rem;
+    margin: 20px 0;
+  }
+  
+  /* Estilos para el contenedor de la galería */
+  .gallery-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    grid-template-rows: repeat(3, 1fr); /* 3 filas */
+    gap: 16px; /* Espaciado entre los divs */
+    padding: 20px;
+  }
+  
+  /* Estilos para los elementos de la galería (los divs pequeños) */
+  .gallery-item {
+    position: relative;
+    overflow: hidden; /* Evita que las imágenes se desborden */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para los elementos */
+  }
+  
+  /* Estilos para las imágenes */
+  .gallery-item img {
+    width: 100%; /* La imagen ocupa el 100% del tamaño del div */
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el div sin distorsionarse */
+    border-radius: 8px;
+  }
+  
+  /* Efecto hover */
+  .gallery-item:hover img {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Estilos para el contenedor de eventos */
+  #eventosListado {
+    display: flex; /* Los elementos se alinean en una fila */
+    overflow-x: auto; /* Activa el desplazamiento horizontal */
+    gap: 20px; /* Espacio entre los eventos */
+    padding: 20px; /* Espaciado dentro del contenedor */
+    justify-content: flex-start; /* Los eventos empiezan desde el inicio */
+    align-items: flex-start; /* Alineación de los eventos al inicio */
+    max-width: 100%; /* Evita que el contenedor se extienda más allá del ancho */
+  }
+  
+  #eventosListado {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los eventos se acomoden en filas */
+    gap: 20px; /* Espacio entre las cajas */
+    justify-content: flex-start; /* Los eventos empiezan desde el principio */
+    padding: 20px; /* Espaciado dentro del contenedor */
+    max-width: 100%; /* Evita que el contenedor se extienda más allá del ancho */
+  }
+  
+  .evento {
+    width: 250px; /* Ancho fijo para cada evento */
+    height: 350px; /* Altura fija de los eventos */
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto hover */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Espaciado entre imagen y descripción */
+  }
+  
+  .evento:hover {
+    transform: translateY(-10px); /* Efecto de hover al mover el evento hacia arriba */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al pasar el mouse */
+  }
+  
+  .evento-img {
+    width: 100%; /* Imagen ocupa todo el ancho de la caja */
+    height: 60%; /* Imagen ocupa el 60% de la altura */
+    object-fit: cover; /* Asegura que la imagen cubra bien la caja */
+    border-radius: 5px; /* Bordes redondeados en la imagen */
+  }
+  
+  .evento-desc {
+    font-size: 1rem;
+    color: #555;
+    font-weight: bold;
+    margin-top: 10px; /* Separación entre imagen y descripción */
+  }
+
+  
+  /* Estilos para el modal */
+  .modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1; /* Asegura que esté encima del contenido */
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo oscuro */
+  }
+  
+  /* Contenido del modal */
+  .modal-content {
+    background-color: #fff;
+    color: #333;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 700px;
+    text-align: center;
+  }
+  
+  #modalImage {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  #modalDescription {
+    font-size: 1.2rem;
+    margin-top: 15px;
+    line-height: 1.6;
+  }
+  
+  /* Estilo para el botón de cierre (×) */
+  .close {
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  /* Estilos para el contenedor de eventos */
+#eventosListado {
+    display: flex;
+    flex-wrap: wrap; /* Para que los elementos se ajusten a varias filas si es necesario */
+    gap: 20px; /* Espacio entre las cajas */
+    justify-content: space-between; /* Distribuir las cajas de forma uniforme */
+    padding: 0%; /* Espaciado en el contenedor */
+  }
