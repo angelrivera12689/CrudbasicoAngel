@@ -80,8 +80,7 @@ Licence URI: https://www.os-templates.com/template-terms
     <ul>
       <li><a href="#eventosRealizados">Eventos Realizados</a></li>
       <li><a href="#eventosListado">Listado de Eventos</a></li>
-      <li><a href="#">Ipsum</a></li>
-      <li><a href="#">Dolor</a></li>
+     
     </ul>
     <!-- ################################################################################################ -->
   </div>
@@ -139,7 +138,7 @@ Licence URI: https://www.os-templates.com/template-terms
             </div>
           </div>
           
-          <figcaption>Gallery Description Goes Here</figcaption>
+
         </figure>
       </div>
       <!-- ################################################################################################ -->
@@ -166,53 +165,150 @@ Licence URI: https://www.os-templates.com/template-terms
     <!-- / main body -->
     <div class="clear"></div>
   </main>
-  <h2 id="modalTitle">Título del Evento</h2>
-  <div id="eventosListado" class="eventosListado">
-    <!-- Evento 1 -->
-    <div class="evento" onclick="openModal('evento1')">
-      <img src="../img/How-to-Keep-Work-Stress-From-Showing-Up-on-Your-Face-—-Create-Cultivate.jpg" alt="Evento 1" class="evento-img">
-      <p class="evento-desc">Evento 1: Descripción breve del evento 1...</p>
+  <section>
+  <h2 id="modalTitle" style="text-align: center; font-size: 190%;">Eventos Disponibles</h2>
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Eventos con Modal</title>
+    
+</head>
+<body>
+
+    <h2>🎉 Galería de Eventos</h2>
+
+    <!-- Botones de filtro -->
+    <div class="categorias">
+      <button onclick="filtrarEventos('todos')">📌 Todos</button>
+        <button onclick="filtrarEventos('realizados')">✅ Realizados</button>
+        <button onclick="filtrarEventos('proximos')">📅 Próximos</button>
+        <button onclick="filtrarEventos('corporativos')">🏢 Corporativos</button>
     </div>
-  
-    <!-- Evento 2 -->
-    <div class="evento" onclick="openModal('evento2')">
-      <img src="../img/I Finally Figured Out How to Have A Book Launch Party.jfif" alt="Evento 2" class="evento-img">
-      <p class="evento-desc">Evento 2: Descripción breve del evento 2...</p>
-    </div>
-  
-    <!-- Evento 3 -->
-    <div class="evento" onclick="openModal('evento3')">
-      <img src="../img/Romantic-Berry-Pink-Sonoma-Wedding.jpg" alt="Evento 3" class="evento-img">
-      <p class="evento-desc">Evento 3: Descripción breve del evento 3...</p>
-    </div>
-        <!-- Evento 3 -->
-        <div class="evento" onclick="openModal('evento3')">
-          <img src="../img/Romantic-Berry-Pink-Sonoma-Wedding.jpg" alt="Evento 3" class="evento-img">
-          <p class="evento-desc">Evento 3: Descripción breve del evento 3...</p>
+
+    <!-- Galería de eventos -->
+    <div class="galeria">
+        <!-- Eventos Realizados -->
+        <div class="evento realizados" onclick="openModal('Evento 1', 'Descripción detallada del evento 1.', '../img/evento1.jpg')">
+            <img src="../img/evento1.jpg" alt="Evento 1">
+            <p>Evento 1 (Realizado)</p>
         </div>
-            <!-- Evento 3 -->
-    <div class="evento" onclick="openModal('evento3')">
-      <img src="../img/Romantic-Berry-Pink-Sonoma-Wedding.jpg" alt="Evento 3" class="evento-img">
-      <p class="evento-desc">Evento 3: Descripción breve del evento 3...</p>
+        <div class="evento realizados" onclick="openModal('Evento 1', 'Descripción detallada del evento 1.', '../img/evento1.jpg')">
+          <img src="../img/evento1.jpg" alt="Evento 1">
+          <p>Evento 1 (Realizado)</p>
+      </div>
+      <div class="evento realizados" onclick="openModal('Evento 1', 'Descripción detallada del evento 1.', '../img/evento1.jpg')">
+        <img src="../img/evento1.jpg" alt="Evento 1">
+        <p>Evento 1 (Realizado)</p>
     </div>
-        <!-- Evento 3 -->
-        <div class="evento" onclick="openModal('evento3')">
-          <img src="../img/Romantic-Berry-Pink-Sonoma-Wedding.jpg" alt="Evento 3" class="evento-img">
-          <p class="evento-desc">Evento 3: Descripción breve del evento 3...</p>
-        </div>
-            <!-- Evento 3 -->
-    <div class="evento" onclick="openModal('evento3')">
-      <img src="../img/Romantic-Berry-Pink-Sonoma-Wedding.jpg" alt="Evento 3" class="evento-img">
-      <p class="evento-desc">Evento 3: Descripción breve del evento 3...</p>
-    </div>
-        <!-- Evento 3 -->
-        <div class="evento" onclick="openModal('evento3')">
-          <img src="../img/Romantic-Berry-Pink-Sonoma-Wedding.jpg" alt="Evento 3" class="evento-img">
-          <p class="evento-desc">Evento 3: Descripción breve del evento 3...</p>
-        </div>
-  
-    <!-- Agregar más eventos aquí... -->
+    <div class="evento realizados" onclick="openModal('Evento 1', 'Descripción detallada del evento 1.', '../img/evento1.jpg')">
+      <img src="../img/evento1.jpg" alt="Evento 1">
+      <p>Evento 1 (Realizado)</p>
   </div>
+  <div class="evento realizados" onclick="openModal('Evento 1', 'Descripción detallada del evento 1.', '../img/evento1.jpg')">
+    <img src="../img/evento1.jpg" alt="Evento 1">
+    <p>Evento 1 (Realizado)</p>
+</div>
+<div class="evento realizados" onclick="openModal('Evento 1', 'Descripción detallada del evento 1.', '../img/evento1.jpg')">
+  <img src="../img/evento1.jpg" alt="Evento 1">
+  <p>Evento 1 (Realizado)</p>
+</div>
+<div class="evento realizados" onclick="openModal('Evento 1', 'Descripción detallada del evento 1.', '../img/evento1.jpg')">
+  <img src="../img/evento1.jpg" alt="Evento 1">
+  <p>Evento 1 (Realizado)</p>
+</div>
+<div class="evento realizados" onclick="openModal('Evento 1', 'Descripción detallada del evento 1.', '../img/evento1.jpg')">
+  <img src="../img/evento1.jpg" alt="Evento 1">
+  <p>Evento 1 (Realizado)</p>
+</div>
+
+
+   
+
+        <!-- Eventos Próximos -->
+        <div class="evento proximos" onclick="openModal('Evento 5', 'Descripción detallada del evento 3.', '../img/evento3.jpg')">
+            <img src="../img/evento3.jpg" alt="Evento 3">
+            <p>Evento 5 (Próximo)</p>
+        </div>
+        <div class="evento proximos" onclick="openModal('Evento 6', 'Descripción detallada del evento 4.', '../img/evento4.jpg')">
+            <img src="../img/evento4.jpg" alt="Evento 4">
+            <p>Evento 6 (Próximo)</p>
+        </div>
+        <div class="evento realizados" onclick="openModal('Evento 7', 'Descripción detallada del evento 1.', '../img/evento1.jpg')">
+          <img src="../img/evento1.jpg" alt="Evento 1">
+          <p>Evento 7 (Realizado)</p>
+      </div>
+      <div class="evento proximos" onclick="openModal('Evento 5', 'Descripción detallada del evento 3.', '../img/evento3.jpg')">
+        <img src="../img/evento3.jpg" alt="Evento 3">
+        <p>Evento 5 (Próximo)</p>
+    </div> <div class="evento proximos" onclick="openModal('Evento 5', 'Descripción detallada del evento 3.', '../img/evento3.jpg')">
+      <img src="../img/evento3.jpg" alt="Evento 3">
+      <p>Evento 5 (Próximo)</p>
+  </div> <div class="evento proximos" onclick="openModal('Evento 5', 'Descripción detallada del evento 3.', '../img/evento3.jpg')">
+    <img src="../img/evento3.jpg" alt="Evento 3">
+    <p>Evento 5 (Próximo)</p>
+</div>
+<div class="evento proximos" onclick="openModal('Evento 5', 'Descripción detallada del evento 3.', '../img/evento3.jpg')">
+  <img src="../img/evento3.jpg" alt="Evento 3">
+  <p>Evento 5 (Próximo)</p>
+</div>
+<div class="evento proximos" onclick="openModal('Evento 5', 'Descripción detallada del evento 3.', '../img/evento3.jpg')">
+  <img src="../img/evento3.jpg" alt="Evento 3">
+  <p>Evento 5 (Próximo)</p>
+</div>
+<div class="evento proximos" onclick="openModal('Evento 5', 'Descripción detallada del evento 3.', '../img/evento3.jpg')">
+  <img src="../img/evento3.jpg" alt="Evento 3">
+  <p>Evento 5 (Próximo)</p>
+</div>
+ <div class="evento proximos" onclick="openModal('Evento 5', 'Descripción detallada del evento 3.', '../img/evento3.jpg')">
+            <img src="../img/evento3.jpg" alt="Evento 3">
+            <p>Evento 5 (Próximo)</p>
+        </div>
+      
+
+        <!-- Eventos Corporativos -->
+        <div class="evento corporativos" onclick="openModal('Evento 5', 'Descripción detallada del evento 5.', '../img/evento5.jpg')">
+            <img src="../img/evento5.jpg" alt="Evento 5">
+            <p>Evento 5 (Corporativo)</p>
+        </div>
+        <div class="evento corporativos" onclick="openModal('Evento 6', 'Descripción detallada del evento 6.', '../img/evento6.jpg')">
+            <img src="../img/evento6.jpg" alt="Evento 6">
+            <p>Evento 6 (Corporativo)</p>
+        </div>
+        <div class="evento corporativos" onclick="openModal('Evento 5', 'Descripción detallada del evento 5.', '../img/evento5.jpg')">
+          <img src="../img/evento5.jpg" alt="Evento 5">
+          <p>Evento 5 (Corporativo)</p>
+      </div>
+      <div class="evento corporativos" onclick="openModal('Evento 5', 'Descripción detallada del evento 5.', '../img/evento5.jpg')">
+        <img src="../img/evento5.jpg" alt="Evento 5">
+        <p>Evento 5 (Corporativo)</p>
+    </div>
+    <div class="evento corporativos" onclick="openModal('Evento 5', 'Descripción detallada del evento 5.', '../img/evento5.jpg')">
+      <img src="../img/evento5.jpg" alt="Evento 5">
+      <p>Evento 5 (Corporativo)</p>
+  </div>
+  <div class="evento corporativos" onclick="openModal('Evento 5', 'Descripción detallada del evento 5.', '../img/evento5.jpg')">
+    <img src="../img/evento5.jpg" alt="Evento 5">
+    <p>Evento 5 (Corporativo)</p>
+</div><div class="evento corporativos" onclick="openModal('Evento 5', 'Descripción detallada del evento 5.', '../img/evento5.jpg')">
+  <img src="../img/evento5.jpg" alt="Evento 5">
+  <p>Evento 5 (Corporativo)</p>
+</div><div class="evento corporativos" onclick="openModal('Evento 5', 'Descripción detallada del evento 5.', '../img/evento5.jpg')">
+  <img src="../img/evento5.jpg" alt="Evento 5">
+  <p>Evento 5 (Corporativo)</p>
+</div>
+<div class="evento corporativos" onclick="openModal('Evento 5', 'Descripción detallada del evento 5.', '../img/evento5.jpg')">
+  <img src="../img/evento5.jpg" alt="Evento 5">
+  <p>Evento 5 (Corporativo)</p>
+</div>
+    </div>
+
+    
+</body>
+</html>
+
+</section>
   
   <!-- Modal -->
   <div id="eventModal" class="modal">
@@ -223,85 +319,70 @@ Licence URI: https://www.os-templates.com/template-terms
       <p id="modalDescription">Descripción completa del evento.</p>
     </div>
   </div>
-  
-  <footer id="footer" class="hoc clear"> 
+  <div class="wrapper row4">
+    <div id="footer" class="hoc clear"> 
     <!-- ################################################################################################ -->
-    <div class="center btmspace-50">
-      <h6 class="heading">Besloor</h6>
-      <nav>
-        <ul class="nospace inline pushright uppercase">
-          <li><a href="../index.html"><i class="fas fa-lg fa-home"></i></a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Terms</a></li>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Cookies</a></li>
-          <li><a href="#">Disclaimer</a></li>
-        </ul>
-      </nav>
-    </div>
+    
     <!-- ################################################################################################ -->
     <hr class="btmspace-50">
     <!-- ################################################################################################ -->
     <div class="group">
       <div class="one_quarter first">
-        <h6 class="heading">Ligula aenean id odio</h6>
+        <h6 class="heading">Contacto</h6>
         <ul class="nospace btmspace-30 linklist contact">
           <li><i class="fas fa-map-marker-alt"></i>
             <address>
-            Street Name &amp; Number, Town, Postcode/Zip
+              Calle 45 #10-23, Bogotá, 110111, Colombia
             </address>
           </li>
-          <li><i class="fas fa-phone"></i> +00 (123) 456 7890</li>
-          <li><i class="far fa-envelope"></i> info@domain.com</li>
+          <li><i class="fas fa-phone"></i> +57 (601) 345 6789</li>
+          <li><i class="far fa-envelope"></i> info@angelsevents.com</li>
         </ul>
         <ul class="faico clear">
           <li><a class="faicon-facebook" href="#"><i class="fab fa-facebook"></i></a></li>
-          <li><a class="faicon-google-plus" href="#"><i class="fab fa-google-plus-g"></i></a></li>
+          <li><a class="faicon-instagram" href="#"><i class="fab fa-instagram"></i></a></li>
           <li><a class="faicon-linkedin" href="#"><i class="fab fa-linkedin"></i></a></li>
           <li><a class="faicon-twitter" href="#"><i class="fab fa-twitter"></i></a></li>
-          <li><a class="faicon-vk" href="#"><i class="fab fa-vk"></i></a></li>
         </ul>
       </div>
       <div class="one_quarter">
-        <h6 class="heading">Vivamus risus maecenas</h6>
-        <p class="nospace btmspace-15">Nunc urna porttitor eget molestie a consequat at lectus donec sollicitudin.</p>
+        <h6 class="heading">Sobre AngelsEvents</h6>
+        <p class="nospace btmspace-15">Organizamos eventos únicos y memorables con calidad y creatividad. Déjanos hacer realidad tu celebración soñada.</p>
         <form method="post" action="#">
           <fieldset>
-            <legend>Newsletter:</legend>
-            <input class="btmspace-15" type="text" value="" placeholder="Name">
-            <input class="btmspace-15" type="text" value="" placeholder="Email">
-            <button type="submit" value="submit">Submit</button>
+            <legend>Suscríbete a nuestro boletín:</legend>
+            <input class="btmspace-15" type="text" value="" placeholder="Nombre">
+            <input class="btmspace-15" type="text" value="" placeholder="Correo Electrónico">
+            <button type="submit" value="submit">Suscribirse</button>
           </fieldset>
         </form>
       </div>
       <div class="one_quarter">
-        <h6 class="heading">Dictum sit amet tortor</h6>
+        <h6 class="heading">Nuestros Servicios</h6>
         <ul class="nospace linklist">
-          <li><a href="#">Est a orci donec eleifend</a></li>
-          <li><a href="#">Dignissim erat proin diam</a></li>
-          <li><a href="#">Aenean vehicula augue</a></li>
-          <li><a href="#">Et neque sed ligula nisl</a></li>
-          <li><a href="#">Dictum quis tempus eu</a></li>
+          <li><a href="#">Organización de bodas</a></li>
+          <li><a href="#">Eventos corporativos</a></li>
+          <li><a href="#">Fiestas privadas</a></li>
+          <li><a href="#">Lanzamientos de productos</a></li>
+          <li><a href="#">Festivales y conciertos</a></li>
         </ul>
       </div>
       <div class="one_quarter">
-        <h6 class="heading">Proin tincidunt venenatis</h6>
+        <h6 class="heading">Galería de Eventos</h6>
         <ul class="nospace clear latestimg">
-          <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+          <li><a class="imgover" href="#"><img src="/FrontEnd/img/Live-Music-and-Art-in-Paris_-Off-the-Beaten-Path.jpg" alt="Evento 1"></a></li>
+          <li><a class="imgover" href="#"><img src="/FrontEnd/img/Millions-of-PNG-Images_-Backgrounds-and-Vectors-for-Free-Download-_-Pngtree.jpg" alt="Evento 2"></a></li>
+          <li><a class="imgover" href="#"><img src="/FrontEnd/img/Nada melhor para se relacionar com seus Leads e….jfif" alt="Evento 3"></a></li>
+          <li><a class="imgover" href="#"><img src="/FrontEnd/img/How-to-Keep-Work-Stress-From-Showing-Up-on-Your-Face-—-Create-Cultivate.jpg" alt="Evento 4"></a></li>
+          <li><a class="imgover" href="#"><img src="/FrontEnd/img/I Finally Figured Out How to Have A Book Launch Party.jfif" alt="Evento 5"></a></li>
+          <li><a class="imgover" href="#"><img src="/FrontEnd/img/How-to-Keep-Work-Stress-From-Showing-Up-on-Your-Face-—-Create-Cultivate.jpg" alt="Evento 6"></a></li>
+                  
         </ul>
       </div>
     </div>
     <!-- ################################################################################################ -->
   </footer>
+
 </div>
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->

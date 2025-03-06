@@ -21,11 +21,21 @@ function openModal(eventId) {
     // Agrega más eventos según lo necesites...
   }
   
-  // Función para cerrar el modal
-  function closeModal() {
-    const modal = document.getElementById("eventModal");
-    modal.style.display = "none";
-  }
+  function filtrarEventos(categoria) {
+    let eventos = document.querySelectorAll('.evento');
+
+    eventos.forEach(evento => {
+        if (categoria === 'todos') {
+            evento.classList.remove('hidden');
+        } else {
+            evento.classList.toggle('hidden', !evento.classList.contains(categoria));
+        }
+    });
+}
+
+function closeModal() {
+  document.getElementById("eventoModal").style.display = "none";
+}
 
   
   
