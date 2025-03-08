@@ -1,67 +1,66 @@
 package com.sena.crud_basic.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity(name = "Event") // Name of the table in the database
+@Entity
+@Table(name = "Event") // Nombre de la tabla en la base de datos
 public class Events {
 
-    // Attributes or columns of the entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_event")  // Name of the column in the database
-    private int id_event;
+    @Column(name = "id_event")
+    private int idEvent;
 
     @Column(name = "event_name", length = 100, nullable = false)
-    private String event_name;
+    private String eventName;
 
     @Column(name = "description", length = 255)
     private String description;
 
-    @Column(name = "date")
-    private String date; // You could use LocalDate instead of String for better date management
+    @Column(name = "date", nullable = false)
+    private LocalDate date;  // Se cambió de String a LocalDate
 
-    @Column(name = "time")
-    private LocalDateTime time; // You could use LocalTime if you only need to store the time
+    @Column(name = "time", nullable = false)
+    private LocalTime time;  // Se cambió de LocalDateTime a LocalTime
 
     @Column(name = "location", length = 150)
     private String location;
 
     @Column(name = "category_id")
-    private int category_id;  // To relate the event to a category
+    private int categoryId;
 
-    // Constructor
-    public Events(int id_event, String event_name, String description, String date, LocalDateTime time, String location, int category_id) {
-        this.id_event = id_event;
-        this.event_name = event_name;
+    // **Constructor vacío obligatorio para JPA**
+    public Events() {
+    }
+
+    // **Constructor con parámetros**
+    public Events(int idEvent, String eventName, String description, LocalDate date, LocalTime time, String location, int categoryId) {
+        this.idEvent = idEvent;
+        this.eventName = eventName;
         this.description = description;
         this.date = date;
         this.time = time;
         this.location = location;
-        this.category_id = category_id;
+        this.categoryId = categoryId;
     }
 
-    // Getters and Setters
-
-    public int getId_event() {
-        return id_event;
+    // **Getters y Setters**
+    public int getIdEvent() {
+        return idEvent;
     }
 
-    public void setId_event(int id_event) {
-        this.id_event = id_event;
+    public void setIdEvent(int idEvent) {
+        this.idEvent = idEvent;
     }
 
-    public String getEvent_name() {
-        return event_name;
+    public String getEventName() {
+        return eventName;
     }
 
-    public void setEvent_name(String event_name) {
-        this.event_name = event_name;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
     public String getDescription() {
@@ -72,19 +71,19 @@ public class Events {
         this.description = description;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public LocalDateTime getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -96,11 +95,11 @@ public class Events {
         this.location = location;
     }
 
-    public int getCategory_id() {
-        return category_id;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

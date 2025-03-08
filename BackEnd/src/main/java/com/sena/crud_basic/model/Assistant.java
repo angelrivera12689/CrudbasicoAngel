@@ -66,8 +66,10 @@ public class Assistant {
         this.phone = phone;
     }
 
-    public void save(Assistant assistant) {
+    public int getId() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        throw new UnsupportedOperationException("Unimplemented method 'getId'");
     }
+
+ 
 }

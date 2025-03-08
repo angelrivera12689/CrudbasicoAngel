@@ -1,52 +1,47 @@
 package com.sena.crud_basic.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity(name = "Review") // Table name in the database
 public class Review {
 
-    // Attributes or columns of the entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_review")  // Column name in the database
-    private int id_review;
+    @Column(name = "id_review")
+    private int idReview;
 
     @Column(name = "comment", length = 255)
     private String comment;
 
-    @Column(name = "rating")  // Rating is from 1 to 5
+    @Column(name = "rating")
     private int rating;
 
-    // Foreign keys
     @ManyToOne
-    @Column(name = "event_id")
-    private int event_id;  // Foreign key reference to Evento (Event)
+    @JoinColumn(name = "event_id")  // Foreign key reference to Event
+    private Events event;
 
     @ManyToOne
-    @Column(name = "assistant_id")
-    private int assistant_id;  // Foreign key reference to Asistente (Assistant)
+    @JoinColumn(name = "assistant_id")  // Foreign key reference to Assistant
+    private Assistant assistant;
 
-    // Constructor
-    public Review(int id_review, String comment, int rating, int event_id, int assistant_id) {
-        this.id_review = id_review;
+    // Constructor vacío (necesario para JPA)
+    public Review() {}
+
+    // Constructor completo
+    public Review(String comment, int rating, Events event, Assistant assistant) {
         this.comment = comment;
         this.rating = rating;
-        this.event_id = event_id;
-        this.assistant_id = assistant_id;
+        this.event = event;
+        this.assistant = assistant;
     }
 
     // Getters and Setters
-    public int getId_review() {
-        return id_review;
+    public int getIdReview() {
+        return idReview;
     }
 
-    public void setId_review(int id_review) {
-        this.id_review = id_review;
+    public void setIdReview(int idReview) {
+        this.idReview = idReview;
     }
 
     public String getComment() {
@@ -65,19 +60,19 @@ public class Review {
         this.rating = rating;
     }
 
-    public int getEvent_id() {
-        return event_id;
+    public Events getEvent() {
+        return event;
     }
 
-    public void setEvent_id(int event_id) {
-        this.event_id = event_id;
+    public void setEvent(Events event) {
+        this.event = event;
     }
 
-    public int getAssistant_id() {
-        return assistant_id;
+    public Assistant getAssistant() {
+        return assistant;
     }
 
-    public void setAssistant_id(int assistant_id) {
-        this.assistant_id = assistant_id;
+    public void setAssistant(Assistant assistant) {
+        this.assistant = assistant;
     }
 }
