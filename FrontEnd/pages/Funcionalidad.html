@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Angels Events | Sistema de Gestión</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="/CrudbasicoAngel/FrontEnd/style.css">
+    
+</head>
+<body id="top">
+    <!-- SECCIÓN: ENCABEZADO Y NAVEGACIÓN -->
+    <div class="bgded overlay" style="background-image:url('../images/demo/backgrounds/01.png');">
+        <div class="wrapper row0">
+            <div id="topbar" class="hoc clear">
+                <div class="fl_left">
+                    <ul class="nospace">
+                        <li><i class="fas fa-phone"></i> +00 (123) 456 7890</li>
+                        <li><i class="far fa-envelope"></i> info@domain.com</li>
+                    </ul>
+                </div>
+                <div class="fl_right">
+                    <ul class="nospace">
+                        <li><a href="../index.html"><i class="fas fa-home"></i></a></li>
+                        <li><a href="#" title="Help Centre"><i class="fas fa-life-ring"></i></a></li>
+                        <li><a href="#" title="Login"><i class="fas fa-sign-in-alt"></i></a></li>
+                        <li><a href="#" title="Sign Up"><i class="fas fa-edit"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="wrapper row1">
+            <header id="header" class="hoc clear">
+                <div id="logo" class="fl_left">
+                   
+                </div>
+                <nav id="mainav" class="fl_right">
+                    <ul class="clear">
+                        <li><a href="/FrontEnd/index.html">Inicio</a></li>
+                        <li><a href="/FrontEnd/pages/gallery.html">Galeria</a></li>
+                        <li><a href="/FrontEnd/pages/Contacto.html">Contacto</a></li>
+                        <li class="active"><a href="/FrontEnd/pages/login.html">Admin</a></li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+    </div>
+    
+    <!-- SECCIÓN: CONTENIDO PRINCIPAL - SISTEMA CRUD -->
+    <div class="wrapper row3">
+        <main class="hoc container clear">
+            <div class="crud-container">
+                <!-- SECCIÓN: TÍTULO DEL SISTEMA -->
+                <div class="crud-header">
+                    <h1>Sistema de Gestión de Registros</h1>
+                </div>
+                
+                <!-- SECCIÓN: BUSCADOR -->
+                <section class="search-section">
+                    <input type="text" placeholder="Buscar registro..." id="searchInput">
+                    <button type="button" id="searchButton">Buscar</button>
+                </section>
+                
+                <!-- SECCIÓN: FORMULARIO DE DATOS -->
+                <section class="form-section">
+                    <h2 class="section-title">Datos del Registro</h2>
+                    <form id="recordForm">
+                        <div class="form-group">
+                            <label for="id">ID:</label>
+                            <input type="text" id="id" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" id="apellido" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telefono">Teléfono:</label>
+                            <input type="tel" id="telefono">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="categoria">Categoría:</label>
+                            <select id="categoria">
+                                <option value="">Seleccionar categoría</option>
+                                <option value="cliente">Cliente</option>
+                                <option value="proveedor">Proveedor</option>
+                                <option value="empleado">Empleado</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones:</label>
+                            <textarea id="observaciones"></textarea>
+                        </div>
+                        
+                        <!-- SECCIÓN: BOTONES DE ACCIONES -->
+                        <div class="buttons-section">
+                            <button type="button" class="btn btn-primary" id="btnCrear">Crear Nuevo</button>
+                            <button type="button" class="btn btn-warning" id="btnActualizar">Actualizar</button>
+                            <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
+                            <button type="button" class="btn btn-info" id="btnLimpiar">Limpiar Formulario</button>
+                        </div>
+                    </form>
+                </section>
+                
+                <!-- SECCIÓN: TABLA DE REGISTROS -->
+                <section class="table-section">
+                    <h2 class="section-title">Lista de Registros</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Categoría</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Ejemplo de registros -->
+                            <tr>
+                                <td>1</td>
+                                <td>Juan</td>
+                                <td>Pérez</td>
+                                <td>juan@ejemplo.com</td>
+                                <td>123456789</td>
+                                <td>Cliente</td>
+                                <td class="actions-column">
+                                    <button class="btn btn-info btn-sm">Editar</button>
+                                    <button class="btn btn-danger btn-sm">Eliminar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>María</td>
+                                <td>López</td>
+                                <td>maria@ejemplo.com</td>
+                                <td>987654321</td>
+                                <td>Proveedor</td>
+                                <td class="actions-column">
+                                    <button class="btn btn-info btn-sm">Editar</button>
+                                    <button class="btn btn-danger btn-sm">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            <div class="clear"></div>
+        </main>
+    </div>
+    
+    <!-- SECCIÓN: FOOTER -->
+    <div class="wrapper row4">
+        <footer id="footer" class="hoc clear">
+            <div class="center btmspace-50">
+                <h6 class="heading">Angels Events</h6>
+                <nav>
+                    <ul class="nospace inline pushright uppercase">
+                        <li><a href="../index.html"><i class="fas fa-lg fa-home"></i></a></li>
+                        <li><a href="#">Acerca de</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Términos</a></li>
+                        <li><a href="#">Privacidad</a></li>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">Aviso Legal</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <hr class="btmspace-50">
+            <div class="group">
+                <div class="one_quarter first">
+                    <h6 class="heading">Información de Contacto</h6>
+                    <ul class="nospace btmspace-30 linklist contact">
+                        <li><i class="fas fa-map-marker-alt"></i>
+                            <address>
+                            Nombre de calle &amp; Número, Ciudad, Código Postal
+                            </address>
+                        </li>
+                        <li><i class="fas fa-phone"></i> +00 (123) 456 7890</li>
+                        <li><i class="far fa-envelope"></i> info@angelevents.com</li>
+                    </ul>
+                    <ul class="faico clear">
+                        <li><a class="faicon-facebook" href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a class="faicon-google-plus" href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                        <li><a class="faicon-linkedin" href="#"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a class="faicon-twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a class="faicon-vk" href="#"><i class="fab fa-vk"></i></a></li>
+                    </ul>
+                </div>
+                <div class="one_quarter">
+                    <h6 class="heading">Suscríbete a nuestro boletín</h6>
+                    <p class="nospace btmspace-15">Recibe actualizaciones sobre nuestros servicios y eventos.</p>
+                    <form method="post" action="#">
+                        <fieldset>
+                            <legend>Newsletter:</legend>
+                            <input class="btmspace-15" type="text" value="" placeholder="Nombre">
+                            <input class="btmspace-15" type="text" value="" placeholder="Email">
+                            <button type="submit" value="submit">Enviar</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="one_quarter">
+                    <h6 class="heading">Enlaces de interés</h6>
+                    <ul class="nospace linklist">
+                        <li><a href="#">Nuestros servicios</a></li>
+                        <li><a href="#">Eventos recientes</a></li>
+                        <li><a href="#">Testimonios</a></li>
+                        <li><a href="#">Blog de eventos</a></li>
+                        <li><a href="#">Preguntas frecuentes</a></li>
+                    </ul>
+                </div>
+                <div class="one_quarter">
+                    <h6 class="heading">Galería de eventos</h6>
+                    <ul class="nospace clear latestimg">
+                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- SECCIÓN: COPYRIGHT -->
+    <div class="wrapper row5">
+        <div id="copyright" class="hoc clear">
+            <p class="fl_left">Copyright &copy; 2025 - Todos los derechos reservados - <a href="#">Angels Events</a></p>
+            <p class="fl_right">Plantilla por <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+        </div>
+    </div>
+    
+    <!-- SECCIÓN: BOTÓN VOLVER ARRIBA Y SCRIPTS -->
+    <a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
+    <script src="../layout/scripts/jquery.min.js"></script>
+    <script src="../layout/scripts/jquery.backtotop.js"></script>
+    <script src="../layout/scripts/jquery.mobilemenu.js"></script>
+</body>
+</html>
