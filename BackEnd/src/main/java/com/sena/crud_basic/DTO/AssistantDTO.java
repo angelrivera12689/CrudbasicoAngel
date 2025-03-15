@@ -6,6 +6,7 @@ public class AssistantDTO {
     private String email;
     private String phone;
 
+    
     // Constructor
     public AssistantDTO(String name, String email, String phone) {
         this.name = name;

@@ -41,10 +41,10 @@ public class TicketService {
 
     public Ticket convertToModel(TicketDTO ticketDTO) {
         Events event = eventRepository.findById(ticketDTO.getEventId())
-                .orElseThrow(() -> new RuntimeException("Event not found with id: " + ticketDTO.getEventId()));
+        .orElseThrow(() -> new RuntimeException("Event not found with id: " + ticketDTO.getEventId()));
 
         Assistant assistant = assistantRepository.findById(ticketDTO.getAssistantId())
-                .orElseThrow(() -> new RuntimeException("Assistant not found with id: " + ticketDTO.getAssistantId()));
+        .orElseThrow(() -> new RuntimeException("Assistant not found with id: " + ticketDTO.getAssistantId()));
 
         return new Ticket(
                 event,

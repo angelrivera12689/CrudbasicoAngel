@@ -24,6 +24,9 @@ public class Assistant {
     @Column(name = "phone", length = 20)
     private String phone;
 
+    public Assistant() {
+        // Este constructor es necesario para JPA/Hibernate
+    }
     // Constructor
     public Assistant(int id_assistant, String name, String email, String phone) {
         this.id_assistant = id_assistant;
@@ -33,43 +36,38 @@ public class Assistant {
     }
 
     // Getters and Setters
+// Getter para 'id'
+public int getId() {
+    return id_assistant;
+}
 
-    public int getId_assistant() {
-        return id_assistant;
-    }
+public void setId(int id) {
+    this.id_assistant = id;
+}
 
-    public void setId_assistant(int id_assistant) {
-        this.id_assistant = id_assistant;
-    }
+public String getName() {
+    return name;
+}
 
-    public String getName() {
-        return name;
-    }
+public void setName(String name) {
+    this.name = name;
+}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+public String getEmail() {
+    return email;
+}
 
-    public String getEmail() {
-        return email;
-    }
+public void setEmail(String email) {
+    this.email = email;
+}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+public String getPhone() {
+    return phone;
+}
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public int getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
-    }
+public void setPhone(String phone) {
+    this.phone = phone;
+}
 
  
 }
