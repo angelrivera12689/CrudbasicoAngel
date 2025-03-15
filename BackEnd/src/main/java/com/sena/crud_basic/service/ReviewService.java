@@ -1,8 +1,10 @@
 package com.sena.crud_basic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.ReviewDTO;
 import com.sena.crud_basic.model.Review;
 import com.sena.crud_basic.model.Events;
@@ -11,6 +13,7 @@ import com.sena.crud_basic.repository.IReview;
 import com.sena.crud_basic.repository.IEvent;
 import com.sena.crud_basic.repository.IAssistant;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,10 +28,76 @@ public class ReviewService {
     @Autowired
     private IAssistant assistantRepository;
     
-    // Method to save a review from ReviewDTO
-    public void save(ReviewDTO reviewDTO) {
-        Review review = convertToModel(reviewDTO);  // Convert DTO to model
-        reviewRepository.save(review);  // Save review to the database
+     public ResponseDTO save(ReviewDTO reviewDTO) {
+        // Validar que el comentario no sea nulo o vacío
+        if (reviewDTO.getComment() == null || reviewDTO.getComment().trim().isEmpty()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El comentario no puede estar vacío"
+            );
+        }
+
+        // Validar que la calificación esté entre 1 y 5
+        if (reviewDTO.getRating() < 1 || reviewDTO.getRating() > 5) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "La calificación debe estar entre 1 y 5"
+            );
+        }
+
+        // Validar que el evento exista
+        Optional<Events> eventOpt = eventRepository.findById(reviewDTO.getEventId());
+        if (!eventOpt.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El evento especificado no existe"
+            );
+        }
+
+        // Validar que el asistente exista
+        Optional<Assistant> assistantOpt = assistantRepository.findById(reviewDTO.getAssistantId());
+        if (!assistantOpt.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El asistente especificado no existe"
+            );
+        }
+
+        // Convertir DTO a modelo y guardar
+        Review review = convertToModel(reviewDTO);
+        reviewRepository.save(review);
+
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Reseña guardada exitosamente"
+        );
+    }
+
+    // ✅ Método para obtener todas las reseñas
+    public List<Review> findAll() {
+        return reviewRepository.findAll();
+    }
+
+    // ✅ Método para buscar una reseña por ID
+    public Optional<Review> findById(int id) {
+        return reviewRepository.findById(id);
+    }
+
+    // ✅ Método para eliminar una reseña por ID
+    public ResponseDTO deleteReview(int id) {
+        Optional<Review> reviewOpt = findById(id);
+        if (!reviewOpt.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "La reseña no existe"
+            );
+        }
+
+        reviewRepository.deleteById(id);
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Reseña eliminada correctamente"
+        );
     }
     
     // Method to convert a Review entity to ReviewDTO

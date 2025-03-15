@@ -1,8 +1,13 @@
 package com.sena.crud_basic.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.sena.crud_basic.DTO.CategoryEventDTO;
+import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.model.CategoryEvent;
 import com.sena.crud_basic.repository.IEventCategory;
 
@@ -12,16 +17,57 @@ public class CategoryEventService {
     @Autowired
     private IEventCategory data;
 
-    public void save(CategoryEventDTO categoryEventDTO) {
+     public ResponseDTO save(CategoryEventDTO categoryEventDTO) {
+        // Validar el nombre de acuerdo a las restricciones
+        if (categoryEventDTO.getName().length() < 1 || categoryEventDTO.getName().length() > 50) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El nombre debe estar entre 1 y 50 caracteres"
+            );
+        }
+
+        // Validar la descripción
+        if (categoryEventDTO.getDescription().length() > 255) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "La descripción no puede superar los 255 caracteres"
+            );
+        }
+
+        // Convertir el DTO a modelo
         CategoryEvent categoryEvent = convertToModel(categoryEventDTO);
+        
+        // Guardar la categoría de evento
         data.save(categoryEvent);
+        
+        // Retornar una respuesta exitosa
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Categoría de evento guardada exitosamente"
+        );
     }
 
-    public CategoryEventDTO convertToDTO(CategoryEvent categoryEvent) {
-        return new CategoryEventDTO(
-                categoryEvent.getId_category(),
-                categoryEvent.getName(),
-                categoryEvent.getDescription());
+    public List<CategoryEvent> findAll() {
+        return data.findAll();
+    }
+
+    public Optional<CategoryEvent> findById(int id) {
+        return data.findById(id);
+    }
+
+    public ResponseDTO deleteCategory(int id) {
+        Optional<CategoryEvent> categoryEvent = findById(id);
+        if (!categoryEvent.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El registro no existe"
+            );
+        }
+        data.deleteById(id);
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Categoría de evento eliminada correctamente"
+        );
     }
 
     public CategoryEvent convertToModel(CategoryEventDTO categoryEventDTO) {

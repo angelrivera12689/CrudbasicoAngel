@@ -37,7 +37,8 @@ public class employee {
 
     @Column(name="phone_number", length=15, nullable = false)
     private String phone_number;
-
+    public employee() {
+    }
     //constructor
     public employee(String first_name, String last_name, String address, String phone_number) {
         this.first_name = first_name;

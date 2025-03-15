@@ -20,7 +20,10 @@ public class CategoryEvent {
 
     @Column(name = "description", length = 255)
     private String description;
-
+    
+    public CategoryEvent() {
+        // Constructor vacío requerido por JPA
+    }
     // Constructor
     public CategoryEvent(int id_category, String name, String description) {
         this.id_category = id_category;

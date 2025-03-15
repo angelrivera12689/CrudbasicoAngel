@@ -24,6 +24,8 @@ public class organizer {
     @Column(name = "email", length = 255)
     private String email;
 
+    public organizer() {
+    }
     // Constructor
     public organizer(int id_organizer, String name, String phone, String email) {
         this.id_organizer = id_organizer;

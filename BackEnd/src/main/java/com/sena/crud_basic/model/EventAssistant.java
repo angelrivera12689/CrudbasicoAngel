@@ -26,7 +26,9 @@ public class EventAssistant {
     @ManyToOne
     @JoinColumn(name = "id_assistant")  // Foreign key to the Assistant entity
     private Assistant assistant;
-
+    
+    public EventAssistant() {
+    }
     // Constructor
     public EventAssistant(Events event, Assistant assistant) {
         this.event = event;

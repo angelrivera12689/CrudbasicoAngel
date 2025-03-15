@@ -9,6 +9,7 @@ public class EventAssistantDTO {
     private Events event;
     private Assistant assistant;
 
+    
     // Constructor
     public EventAssistantDTO(int idEventAssistant, Events event, Assistant assistant) {
         this.idEventAssistant = idEventAssistant;
