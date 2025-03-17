@@ -1,0 +1,87 @@
+CREATE DATABASE angels_event;
+USE angels_event;
+
+CREATE TABLE organizer (
+    id_organizer INT PRIMARY KEY AUTO_INCREMENT,
+    phone VARCHAR(20),
+    email VARCHAR(255),
+    name VARCHAR(255)
+);
+
+CREATE TABLE assistant (
+    id_assistant INT PRIMARY KEY AUTO_INCREMENT,
+    phone VARCHAR(20),
+    email VARCHAR(255),
+    name VARCHAR(255)
+);
+
+CREATE TABLE employee (
+    id_employee INT PRIMARY KEY AUTO_INCREMENT,
+    phone_number VARCHAR(15),
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
+    address VARCHAR(80)
+);
+
+CREATE TABLE category_event (
+    id_category INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    description VARCHAR(255)
+);
+
+CREATE TABLE event (
+    id_event INT PRIMARY KEY AUTO_INCREMENT,
+    category_id INT,
+    date DATE,
+    time TIME,
+    event_name VARCHAR(100),
+    location VARCHAR(255),
+    description VARCHAR(255),
+    FOREIGN KEY (category_id) REFERENCES category_event(id_category)
+);
+
+CREATE TABLE ticket (
+    id_ticket INT PRIMARY KEY AUTO_INCREMENT,
+    assistant_id INT,
+    event_id INT,
+    price DOUBLE,
+    purchase_date DATETIME,
+    seat_number VARCHAR(255),
+    status VARCHAR(255),
+    FOREIGN KEY (assistant_id) REFERENCES assistant(id_assistant),
+    FOREIGN KEY (event_id) REFERENCES event(id_event)
+);
+
+CREATE TABLE review (
+    id_review INT PRIMARY KEY AUTO_INCREMENT,
+    event_id INT,
+    assistant_id INT,
+    rating INT,
+    comment VARCHAR(255),
+    FOREIGN KEY (event_id) REFERENCES event(id_event),
+    FOREIGN KEY (assistant_id) REFERENCES assistant(id_assistant)
+);
+
+CREATE TABLE event_organizer (
+    id_event_organizer INT PRIMARY KEY AUTO_INCREMENT,
+    id_event INT,
+    id_organizer INT,
+    FOREIGN KEY (id_event) REFERENCES event(id_event),
+    FOREIGN KEY (id_organizer) REFERENCES organizer(id_organizer)
+);
+
+CREATE TABLE event_assistant (
+    id_event_assistant INT PRIMARY KEY AUTO_INCREMENT,
+    id_event INT,
+    id_assistant INT,
+    FOREIGN KEY (id_event) REFERENCES event(id_event),
+    FOREIGN KEY (id_assistant) REFERENCES assistant(id_assistant)
+);
+
+CREATE TABLE event_employee (
+    id_event_employee INT PRIMARY KEY AUTO_INCREMENT,
+    id_event INT,
+    id_employee INT,
+    FOREIGN KEY (id_event) REFERENCES event(id_event),
+    FOREIGN KEY (id_employee) REFERENCES employee(id_employee)
+);
