@@ -27,10 +27,14 @@ public class EventOrganizer {
     @JoinColumn(name = "id_organizer")  // Foreign key to the Organizer entity
     private organizer organizer;
 
+    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     // Constructor
-    public EventOrganizer(Events event, organizer organizer) {
+    public EventOrganizer(Events event, organizer organizer, boolean status) {
         this.event = event;
         this.organizer = organizer;
+        this.status=status;
     }
 
     // Getters and Setters
@@ -57,4 +61,12 @@ public class EventOrganizer {
     public void setOrganizer(organizer organizer) {
         this.organizer = organizer;
     }
+    public boolean getStatus() {
+        return status;
+     }
+    
+     public void setStatus(boolean status) {
+        this.status = status;
+     }
 }
+

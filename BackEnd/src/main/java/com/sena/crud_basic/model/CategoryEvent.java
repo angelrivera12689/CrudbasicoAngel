@@ -24,11 +24,14 @@ public class CategoryEvent {
     public CategoryEvent() {
         // Constructor vacío requerido por JPA
     }
+    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    private boolean status;
     // Constructor
-    public CategoryEvent(int id_category, String name, String description) {
+    public CategoryEvent(int id_category, String name, String description, boolean status) {
         this.id_category = id_category;
         this.name = name;
         this.description = description;
+        this.status = status;
     }
 
     // Getters and Setters
@@ -55,4 +58,11 @@ public class CategoryEvent {
     public void setDescription(String description) {
         this.description = description;
     }
+    public boolean getStatus() {
+        return status;
+     }
+    
+     public void setStatus(boolean status) {
+        this.status = status;
+     }
 }

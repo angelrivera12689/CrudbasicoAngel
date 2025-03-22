@@ -31,12 +31,15 @@ public class Events {
     @Column(name = "category_id")
     private int categoryId;
 
+    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     // **Constructor vacío obligatorio para JPA**
     public Events() {
     }
 
     // **Constructor con parámetros**
-    public Events(int idEvent, String eventName, String description, LocalDate date, LocalTime time, String location, int categoryId) {
+    public Events(int idEvent, String eventName, String description, LocalDate date, LocalTime time, String location, int categoryId, boolean status) {
         this.idEvent = idEvent;
         this.eventName = eventName;
         this.description = description;
@@ -44,6 +47,7 @@ public class Events {
         this.time = time;
         this.location = location;
         this.categoryId = categoryId;
+        this.status=status;
     }
 
     // **Getters y Setters**
@@ -102,4 +106,12 @@ public class Events {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
+    public boolean getStatus() {
+        return status;
+     }
+    
+     public void setStatus(boolean status) {
+        this.status = status;
+     }
 }
+

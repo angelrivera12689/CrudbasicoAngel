@@ -71,7 +71,7 @@ public class AssistantService {
     
 
     public List<Assistant> findAll() {
-        return data.findAll();
+        return data.getListUserActive();
     }
 
     // Método para consultar un asistente por ID
@@ -80,7 +80,7 @@ public class AssistantService {
     }
 
     // Método para eliminar un asistente por ID
-    public ResponseDTO deleteUser(int id) {
+    public ResponseDTO delete(int id) {
         Optional<Assistant> assistant = findById(id);
         if (!assistant.isPresent()) {
             // Si no se encuentra el asistente, devolvemos una respuesta de error
@@ -90,34 +90,34 @@ public class AssistantService {
             );
         }
 
-        // Si el asistente existe, lo eliminamos
-        data.deleteById(id);
+        // Cambiar el estado del asistente a false (eliminación lógica)
+        assistant.get().setStatus(false);
+        data.save(assistant.get());
+
         // Devolvemos una respuesta de éxito
         return new ResponseDTO(
             HttpStatus.OK.toString(),
             "Asistente eliminado correctamente"
         );
     }
-
-
-
-
+    
         // Método para convertir un modelo a un DTO
-    public AssistantDTO convertToDTO(Assistant assistant) {
-        return new AssistantDTO(
-            assistant.getName(),
-            assistant.getEmail(),
-            assistant.getPhone()
-        );
+        public AssistantDTO convertToDTO(Assistant assistant) {
+            return new AssistantDTO(
+                assistant.getName(),
+                assistant.getEmail(),
+                assistant.getPhone()
+            );
+        }
+    
+        // Método para convertir un DTO a un modelo
+        public Assistant convertToModel(AssistantDTO assistantDTO) {
+            return new Assistant(
+                0, // Asumimos que el ID es auto-generado en la base de datos
+                assistantDTO.getName(),
+                assistantDTO.getEmail(),
+                assistantDTO.getPhone(), 
+                true
+            );
+        }
     }
-
-    // Método para convertir un DTO a un modelo
-    public Assistant convertToModel(AssistantDTO assistantDTO) {
-        return new Assistant(
-            0, // Asumimos que el ID es auto-generado en la base de datos
-            assistantDTO.getName(),
-            assistantDTO.getEmail(),
-            assistantDTO.getPhone()
-        );
-    }
-}

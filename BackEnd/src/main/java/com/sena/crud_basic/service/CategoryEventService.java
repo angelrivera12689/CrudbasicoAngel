@@ -74,6 +74,7 @@ public class CategoryEventService {
         return new CategoryEvent(
                 0, // ID is auto-generated
                 categoryEventDTO.getName(),
-                categoryEventDTO.getDescription());
+                categoryEventDTO.getDescription(), true);
+               
     }
 }

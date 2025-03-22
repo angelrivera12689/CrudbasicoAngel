@@ -30,6 +30,6 @@ public class EventOrganizerService {
     public EventOrganizer convertToModel(EventOrganizerDTO eventOrganizerDTO) {
         Events event = eventOrganizerDTO.getEvent();
         organizer organizer = eventOrganizerDTO.getOrganizer();
-        return new EventOrganizer(event, organizer);
+        return new EventOrganizer(event, organizer, true);
     }
 }

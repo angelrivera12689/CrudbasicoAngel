@@ -24,15 +24,19 @@ public class Review {
     @JoinColumn(name = "assistant_id")  // Foreign key reference to Assistant
     private Assistant assistant;
 
+    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     // Constructor vacío (necesario para JPA)
     public Review() {}
 
     // Constructor completo
-    public Review(String comment, int rating, Events event, Assistant assistant) {
+    public Review(String comment, int rating, Events event, Assistant assistant, boolean status) {
         this.comment = comment;
         this.rating = rating;
         this.event = event;
         this.assistant = assistant;
+        this.status=status;
     }
 
     // Getters and Setters
@@ -75,4 +79,11 @@ public class Review {
     public void setAssistant(Assistant assistant) {
         this.assistant = assistant;
     }
+    public boolean getStatus() {
+        return status;
+     }
+    
+     public void setStatus(boolean status) {
+        this.status = status;
+     }
 }

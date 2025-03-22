@@ -27,8 +27,12 @@ public class EventEmployee {
     @JoinColumn(name = "id_employee")  // Foreign key to the Employee entity
     private employee employee;
 
+    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     // Constructor
-    public EventEmployee(Events event, employee employee) {
+    public EventEmployee(Events event, employee employee, boolean status) {
+        this.status=status;
         this.event = event;
         this.employee = employee;
     }
@@ -57,4 +61,11 @@ public class EventEmployee {
     public void setEmployee(employee employee) {
         this.employee = employee;
     }
+    public boolean getStatus() {
+        return status;
+     }
+    
+     public void setStatus(boolean status) {
+        this.status = status;
+     }
 }

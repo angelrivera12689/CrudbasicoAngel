@@ -124,7 +124,7 @@ public class ReviewService {
                 reviewDTO.getComment(),
                 reviewDTO.getRating(),
                 event,
-                assistant
+                assistant, true
         );
     }
 }

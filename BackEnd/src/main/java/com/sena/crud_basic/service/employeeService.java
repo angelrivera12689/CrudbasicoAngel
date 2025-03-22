@@ -96,6 +96,6 @@ public class employeeService {
                 employeeDTO.getFirstName(),
                 employeeDTO.getLastName(),
                 employeeDTO.getAddress(),
-                employeeDTO.getPhoneNumber());
+                employeeDTO.getPhoneNumber(), true);
     }
 }

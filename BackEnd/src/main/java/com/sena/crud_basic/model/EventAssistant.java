@@ -26,13 +26,17 @@ public class EventAssistant {
     @ManyToOne
     @JoinColumn(name = "id_assistant")  // Foreign key to the Assistant entity
     private Assistant assistant;
+
+    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    private boolean status;
     
     public EventAssistant() {
     }
     // Constructor
-    public EventAssistant(Events event, Assistant assistant) {
+    public EventAssistant(Events event, Assistant assistant, boolean status) {
         this.event = event;
         this.assistant = assistant;
+        this.status= status;
     }
 
     // Getters and Setters
@@ -58,5 +62,12 @@ public class EventAssistant {
 
     public void setAssistant(Assistant assistant) {
         this.assistant = assistant;
-    }
+   }
+   public boolean getStatus() {
+    return status;
+ }
+
+ public void setStatus(boolean status) {
+    this.status = status;
+ }
 }

@@ -24,14 +24,18 @@ public class organizer {
     @Column(name = "email", length = 255)
     private String email;
 
+    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     public organizer() {
     }
     // Constructor
-    public organizer(int id_organizer, String name, String phone, String email) {
+    public organizer(int id_organizer, String name, String phone, String email, boolean status) {
         this.id_organizer = id_organizer;
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.status =status;
     }
 
     // Getters and Setters
@@ -67,4 +71,12 @@ public class organizer {
     public void setEmail(String email) {
         this.email = email;
     }
+    public boolean getStatus() {
+        return status;
+     }
+    
+     public void setStatus(boolean status) {
+        this.status = status;
+     }
 }
+

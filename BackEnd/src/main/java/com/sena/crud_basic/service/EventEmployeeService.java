@@ -30,6 +30,6 @@ public class EventEmployeeService {
     public EventEmployee convertToModel(EventEmployeeDTO eventEmployeeDTO) {
         Events event = eventEmployeeDTO.getEvent();
         employee employee = eventEmployeeDTO.getEmployee();
-        return new EventEmployee(event, employee);
+        return new EventEmployee(event, employee, true);
     }
 }

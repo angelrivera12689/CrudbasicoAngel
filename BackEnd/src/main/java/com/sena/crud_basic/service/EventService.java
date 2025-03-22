@@ -105,7 +105,7 @@ public class EventService {
                 eventDTO.getDate(),
                 eventDTO.getTime(),
                 eventDTO.getLocation(),
-                eventDTO.getCategoryId());
+                eventDTO.getCategoryId(), true);
     }
 }
     // Other business logic methods (if needed) can be added here

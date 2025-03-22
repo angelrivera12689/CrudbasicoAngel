@@ -39,12 +39,15 @@ public class employee {
     private String phone_number;
     public employee() {
     }
+    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    private boolean status;
     //constructor
-    public employee(String first_name, String last_name, String address, String phone_number) {
+    public employee(String first_name, String last_name, String address, String phone_number, boolean status) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.address = address;
         this.phone_number = phone_number;
+        this.status= status;
     }
 
     public int getId_employee() {
@@ -86,6 +89,11 @@ public class employee {
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
-
+    public boolean getStatus() {
+        return status;
+     }
     
+     public void setStatus(boolean status) {
+        this.status = status;
+     }
 }

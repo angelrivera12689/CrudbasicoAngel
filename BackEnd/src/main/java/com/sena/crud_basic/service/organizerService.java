@@ -109,7 +109,7 @@ public class organizerService {
                 0,  // Assuming ID is auto-generated
                 organizerDTO.getName(),
                 organizerDTO.getPhone(),
-                organizerDTO.getEmail());
+                organizerDTO.getEmail(), true);
     }
 
    

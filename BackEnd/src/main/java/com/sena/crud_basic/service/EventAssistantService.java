@@ -57,6 +57,6 @@ public class EventAssistantService {
     public EventAssistant convertToModel(EventAssistantDTO eventAssistantDTO) {
         Events event = eventAssistantDTO.getEvent();
         Assistant assistant = eventAssistantDTO.getAssistant();
-        return new EventAssistant(event, assistant);
+        return new EventAssistant(event, assistant, true);
     }
 }

@@ -24,15 +24,19 @@ public class Assistant {
     @Column(name = "phone", length = 20)
     private String phone;
 
+    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     public Assistant() {
         // Este constructor es necesario para JPA/Hibernate
     }
     // Constructor
-    public Assistant(int id_assistant, String name, String email, String phone) {
+    public Assistant(int id_assistant, String name, String email, String phone, boolean status) {
         this.id_assistant = id_assistant;
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.status = status;
     }
 
     // Getters and Setters
@@ -68,6 +72,14 @@ public String getPhone() {
 public void setPhone(String phone) {
     this.phone = phone;
 }
+
+public boolean getStatus() {
+    return status;
+ }
+
+ public void setStatus(boolean status) {
+    this.status = status;
+ }
 
  
 }

@@ -48,7 +48,7 @@ public class AssistantController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAssistant(@PathVariable int id) {
         // Llamamos al servicio para eliminar al asistente
-        ResponseDTO message = assistantService.deleteUser(id);
+        ResponseDTO message = assistantService.delete(id);
         
         if (message.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(message, HttpStatus.OK);  // Si la eliminación es exitosa
