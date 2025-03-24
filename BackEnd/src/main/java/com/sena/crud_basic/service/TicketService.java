@@ -8,6 +8,7 @@ import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.TicketDTO;
 import com.sena.crud_basic.model.Ticket;
 import com.sena.crud_basic.model.Events;
+import com.sena.crud_basic.model.Review;
 import com.sena.crud_basic.model.Assistant;
 import com.sena.crud_basic.repository.TicketRepository;
 import com.sena.crud_basic.repository.IEvent;
@@ -75,7 +76,7 @@ public class TicketService {
 
     // ✅ Método para obtener todos los tickets
     public List<Ticket> findAll() {
-        return ticketRepository.findAll();
+        return ticketRepository.getListTicketActive();
     }
 
     // ✅ Método para buscar un ticket por ID
@@ -84,23 +85,30 @@ public class TicketService {
     }
 
     // ✅ Método para eliminar un ticket por ID
-    public ResponseDTO deleteTicket(int id) {
-        Optional<Ticket> ticketOpt = findById(id);
-        if (!ticketOpt.isPresent()) {
+     // ✅ Método para eliminar una reseña por ID
+     public ResponseDTO deleteTicket(int id) {
+        // Buscar el ticket por ID
+        Optional<Ticket> ticket = findById(id);
+        if (!ticket.isPresent()) {
+            // Si no se encuentra el ticket, devolvemos una respuesta de error
             return new ResponseDTO(
                 HttpStatus.BAD_REQUEST.toString(),
-                "El ticket no existe"
+                "El registro no existe"
             );
         }
-
-        // Si existe, lo eliminamos
-        ticketRepository.deleteById(id);
+    
+        // Cambiar el estado del ticket a false (eliminación lógica)
+        ticket.get().setStatus(false);
+        ticketRepository.save(ticket.get()); // Usamos el repositorio correctamente
+    
+        // Devolvemos una respuesta de éxito
         return new ResponseDTO(
             HttpStatus.OK.toString(),
             "Ticket eliminado correctamente"
         );
     }
-
+    
+    
     // ✅ Método para convertir un Ticket a TicketDTO
     public TicketDTO convertToDTO(Ticket ticket) {
         return new TicketDTO(

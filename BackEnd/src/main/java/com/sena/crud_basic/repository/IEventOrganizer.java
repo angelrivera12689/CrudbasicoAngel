@@ -4,5 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.sena.crud_basic.model.EventOrganizer;
 
 public interface IEventOrganizer extends JpaRepository<EventOrganizer, Integer> {
-    // You can add custom queries if needed
+    
+    
 }

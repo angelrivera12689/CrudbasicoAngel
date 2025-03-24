@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.ReviewDTO;
 import com.sena.crud_basic.model.Review;
+import com.sena.crud_basic.model.organizer;
 import com.sena.crud_basic.model.Events;
 import com.sena.crud_basic.model.Assistant;
 import com.sena.crud_basic.repository.IReview;
@@ -75,7 +76,7 @@ public class ReviewService {
 
     // ✅ Método para obtener todas las reseñas
     public List<Review> findAll() {
-        return reviewRepository.findAll();
+        return reviewRepository.getListReviewActive();
     }
 
     // ✅ Método para buscar una reseña por ID
@@ -85,20 +86,28 @@ public class ReviewService {
 
     // ✅ Método para eliminar una reseña por ID
     public ResponseDTO deleteReview(int id) {
-        Optional<Review> reviewOpt = findById(id);
-        if (!reviewOpt.isPresent()) {
+        // Buscar la reseña por ID
+        Optional<Review> review = findById(id);
+        if (!review.isPresent()) {
+            // Si no se encuentra la reseña, devolvemos una respuesta de error
             return new ResponseDTO(
                 HttpStatus.BAD_REQUEST.toString(),
-                "La reseña no existe"
+                "El registro no existe"
             );
         }
-
-        reviewRepository.deleteById(id);
+    
+        // Cambiar el estado de la reseña a false (eliminación lógica)
+        review.get().setStatus(false);
+        reviewRepository.save(review.get()); // Usamos el repositorio correcto
+    
+        // Devolvemos una respuesta de éxito
         return new ResponseDTO(
             HttpStatus.OK.toString(),
             "Reseña eliminada correctamente"
         );
     }
+    
+    
     
     // Method to convert a Review entity to ReviewDTO
     public ReviewDTO convertToDTO(Review review) {

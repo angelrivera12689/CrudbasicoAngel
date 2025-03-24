@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.organizerDTO;
+import com.sena.crud_basic.model.Events;
 import com.sena.crud_basic.model.organizer;
 import com.sena.crud_basic.repository.Iorganizer;
 
@@ -60,7 +61,7 @@ public class organizerService {
 
     // ✅ Método para obtener todos los organizadores
     public List<organizer> findAll() {
-        return data.findAll();
+        return data.getListOrganizerActive();
     }
 
     // ✅ Método para buscar un organizador por ID
@@ -72,19 +73,24 @@ public class organizerService {
     public ResponseDTO deleteOrganizer(int id) {
         Optional<organizer> organizer = findById(id);
         if (!organizer.isPresent()) {
+            // Si no se encuentra el empleado, devolvemos una respuesta de error
             return new ResponseDTO(
                 HttpStatus.BAD_REQUEST.toString(),
-                "El organizador no existe"
+                "El registro no existe"
             );
         }
-
-        // Si existe, lo eliminamos
-        data.deleteById(id);
+    
+        // Cambiar el estado del empleado a false (eliminación lógica)
+        organizer.get().setStatus(false);
+        data.save(organizer.get());
+    
+        // Devolvemos una respuesta de éxito
         return new ResponseDTO(
             HttpStatus.OK.toString(),
             "Organizador eliminado correctamente"
         );
     }
+    
 
     // ✅ Método para validar el formato del email
     private boolean isValidEmail(String email) {

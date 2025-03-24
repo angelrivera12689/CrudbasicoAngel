@@ -88,4 +88,14 @@ public class Ticket {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public static Object get() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'get'");
+    }
+
+    public void setStatus(boolean b) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setStatus'");
+    }
 }

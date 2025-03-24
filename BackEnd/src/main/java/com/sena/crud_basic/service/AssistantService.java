@@ -71,7 +71,7 @@ public class AssistantService {
     
 
     public List<Assistant> findAll() {
-        return data.getListUserActive();
+        return data.getListAssistantActive();
     }
 
     // Método para consultar un asistente por ID

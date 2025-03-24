@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.sena.crud_basic.DTO.CategoryEventDTO;
 import com.sena.crud_basic.DTO.ResponseDTO;
+import com.sena.crud_basic.model.Assistant;
 import com.sena.crud_basic.model.CategoryEvent;
 import com.sena.crud_basic.repository.IEventCategory;
 
@@ -48,22 +49,29 @@ public class CategoryEventService {
     }
 
     public List<CategoryEvent> findAll() {
-        return data.findAll();
+        return data.getListCategoryActive();
     }
 
     public Optional<CategoryEvent> findById(int id) {
         return data.findById(id);
     }
 
-    public ResponseDTO deleteCategory(int id) {
+    public ResponseDTO delete(int id) {
+        // Buscar la categoría de evento por su ID
         Optional<CategoryEvent> categoryEvent = findById(id);
         if (!categoryEvent.isPresent()) {
+            // Si no se encuentra la categoría, devolvemos una respuesta de error
             return new ResponseDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 "El registro no existe"
             );
         }
-        data.deleteById(id);
+    
+        // Cambiar el estado de la categoría a false (eliminación lógica)
+        categoryEvent.get().setStatus(false);
+        data.save(categoryEvent.get());
+    
+        // Devolvemos una respuesta de éxito
         return new ResponseDTO(
             HttpStatus.OK.toString(),
             "Categoría de evento eliminada correctamente"
@@ -77,4 +85,6 @@ public class CategoryEventService {
                 categoryEventDTO.getDescription(), true);
                
     }
+
+    
 }

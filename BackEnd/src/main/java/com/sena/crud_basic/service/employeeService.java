@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.employeeDTO;
+import com.sena.crud_basic.model.Assistant;
 import com.sena.crud_basic.model.employee;
 import com.sena.crud_basic.repository.Iemployee;
 
@@ -58,7 +59,7 @@ public class employeeService {
 
     // ✅ Método para obtener todos los empleados
     public List<employee> findAll() {
-        return data.findAll();
+        return data.getListEmployeeActive();
     }
 
     // ✅ Método para buscar un empleado por ID
@@ -70,19 +71,24 @@ public class employeeService {
     public ResponseDTO deleteEmployee(int id) {
         Optional<employee> employee = findById(id);
         if (!employee.isPresent()) {
+            // Si no se encuentra el empleado, devolvemos una respuesta de error
             return new ResponseDTO(
                 HttpStatus.BAD_REQUEST.toString(),
-                "El empleado no existe"
+                "El registro no existe"
             );
         }
-
-        // Si existe, lo eliminamos
-        data.deleteById(id);
+    
+        // Cambiar el estado del empleado a false (eliminación lógica)
+        employee.get().setStatus(false);
+        data.save(employee.get());
+    
+        // Devolvemos una respuesta de éxito
         return new ResponseDTO(
             HttpStatus.OK.toString(),
             "Empleado eliminado correctamente"
         );
     }
+    
     public employeeDTO convertToDTO(employee employee) {
         return new employeeDTO(
                 employee.getFirst_name(),

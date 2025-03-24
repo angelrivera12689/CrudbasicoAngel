@@ -10,7 +10,7 @@ import com.sena.crud_basic.model.Assistant;
 public interface IAssistant extends JpaRepository<Assistant, Integer> {
     
     @Query("SELECT a FROM Assistant a WHERE a.status != false")
-    List<Assistant> getListUserActive();
+    List<Assistant> getListAssistantActive();
     /*
      * C
      * R

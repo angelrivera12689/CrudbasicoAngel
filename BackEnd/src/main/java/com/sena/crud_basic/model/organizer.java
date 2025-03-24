@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity(name = "Organizer") // Table name in the database
+@Entity(name = "organizer") // Table name in the database
 public class organizer {
 
     // Attributes or columns of the entity
