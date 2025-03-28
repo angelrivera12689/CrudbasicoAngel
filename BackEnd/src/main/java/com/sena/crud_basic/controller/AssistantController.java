@@ -56,4 +56,14 @@ public class AssistantController {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);  // Si hay algún problema
         }
     }
+    @GetMapping("/filter")
+    public ResponseEntity<Object> filterAssistants(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Boolean status) {
+    
+        var assistantList = assistantService.filterAssistants(name, email, status);
+        return new ResponseEntity<>(assistantList, HttpStatus.OK);
+    }
+    
 }

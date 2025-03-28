@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.sena.crud_basic.DTO.CategoryEventDTO;
 import com.sena.crud_basic.DTO.ResponseDTO;
-import com.sena.crud_basic.model.Assistant;
+
 import com.sena.crud_basic.model.CategoryEvent;
 import com.sena.crud_basic.repository.IEventCategory;
 
@@ -77,7 +77,11 @@ public class CategoryEventService {
             "Categoría de evento eliminada correctamente"
         );
     }
-
+    public List<CategoryEvent> filterCategory(String name, String description, Boolean status) {
+        return data.filterCategory(name, description, status);
+    }
+    
+    
     public CategoryEvent convertToModel(CategoryEventDTO categoryEventDTO) {
         return new CategoryEvent(
                 0, // ID is auto-generated

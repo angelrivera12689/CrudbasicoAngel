@@ -22,12 +22,12 @@ public class Ticket {
     private double price;
     private String seatNumber;
     private LocalDateTime purchaseDate;
-    private String status;
+    private boolean status;
 
     // Constructores
     public Ticket() {}
 
-    public Ticket(Events event, Assistant assistant, double price, String seatNumber, LocalDateTime purchaseDate, String status) {
+    public Ticket(Events event, Assistant assistant, double price, String seatNumber, LocalDateTime purchaseDate, boolean status) {
         this.event = event;
         this.assistant = assistant;
         this.price = price;
@@ -61,7 +61,7 @@ public class Ticket {
         return purchaseDate;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -85,17 +85,7 @@ public class Ticket {
         this.purchaseDate = purchaseDate;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public static Object get() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
-    }
-
-    public void setStatus(boolean b) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStatus'");
     }
 }

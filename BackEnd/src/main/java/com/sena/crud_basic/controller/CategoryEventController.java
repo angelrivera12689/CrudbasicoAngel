@@ -3,6 +3,7 @@ package com.sena.crud_basic.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.sena.crud_basic.DTO.CategoryEventDTO;
 import com.sena.crud_basic.DTO.ResponseDTO;
-import com.sena.crud_basic.model.Assistant;
 import com.sena.crud_basic.model.CategoryEvent;
 import com.sena.crud_basic.service.CategoryEventService;
 
@@ -59,4 +59,15 @@ public class CategoryEventController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/filter")
+public ResponseEntity<Object> filterCategory(
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) String description,
+        @RequestParam(required = false) Boolean status) {
+    
+    var categoryEventServiceList = categoryEventService.filterCategory(name, description, status);
+    return new ResponseEntity<>(categoryEventServiceList, HttpStatus.OK);
+}
+
 }

@@ -20,37 +20,40 @@ public class Events {
     private String description;
 
     @Column(name = "date", nullable = false)
-    private LocalDate date;  // Se cambió de String a LocalDate
+    private LocalDate date;  // LocalDate para fechas
 
     @Column(name = "time", nullable = false)
-    private LocalTime time;  // Se cambió de LocalDateTime a LocalTime
+    private LocalTime time;  // LocalTime para horas
 
     @Column(name = "location", length = 150)
     private String location;
 
-    @Column(name = "category_id")
-    private int categoryId;
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false) // Se alinea con la base de datos
+    private CategoryEvent categoryEvent;
+    
 
-    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
     private boolean status;
 
-    // **Constructor vacío obligatorio para JPA**
+    // Constructor vacío para JPA
     public Events() {
     }
 
-    // **Constructor con parámetros**
-    public Events(int idEvent, String eventName, String description, LocalDate date, LocalTime time, String location, int categoryId, boolean status) {
+    // Constructor con parámetros
+    public Events(CategoryEvent categoryEvent, int idEvent, String eventName, String description,
+                  LocalDate date, LocalTime time, String location, boolean status) {
         this.idEvent = idEvent;
         this.eventName = eventName;
         this.description = description;
         this.date = date;
         this.time = time;
         this.location = location;
-        this.categoryId = categoryId;
-        this.status=status;
+        this.categoryEvent = categoryEvent;
+        this.status = status;
     }
 
-    // **Getters y Setters**
+    // Getters y Setters
     public int getIdEvent() {
         return idEvent;
     }
@@ -99,19 +102,19 @@ public class Events {
         this.location = location;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public CategoryEvent getCategoryEvent() {
+        return categoryEvent;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryEvent(CategoryEvent categoryEvent) {
+        this.categoryEvent = categoryEvent;
     }
+
     public boolean getStatus() {
         return status;
-     }
-    
-     public void setStatus(boolean status) {
-        this.status = status;
-     }
-}
+    }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+}

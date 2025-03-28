@@ -12,8 +12,8 @@ public class CategoryEvent {
     // Attributes or columns of the entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_category")  // Column name in the database
-    private int id_category;
+    @Column(name = "category_id")  // Column name in the database
+    private int category_id;
 
     @Column(name = "name", length = 50, nullable = false)
     private String name;
@@ -27,20 +27,20 @@ public class CategoryEvent {
     @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
     private boolean status;
     // Constructor
-    public CategoryEvent(int id_category, String name, String description, boolean status) {
-        this.id_category = id_category;
+    public CategoryEvent(int category_id, String name, String description, boolean status) {
+        this.category_id = category_id;
         this.name = name;
         this.description = description;
         this.status = status;
     }
 
     // Getters and Setters
-    public int getId_category() {
-        return id_category;
+    public int getcategory_id() {
+        return category_id;
     }
 
-    public void setId_category(int id_category) {
-        this.id_category = id_category;
+    public void setcategory_id(int category_id) {
+        this.category_id= category_id;
     }
 
     public String getName() {

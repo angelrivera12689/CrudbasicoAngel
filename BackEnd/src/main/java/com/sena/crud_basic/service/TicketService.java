@@ -8,7 +8,6 @@ import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.TicketDTO;
 import com.sena.crud_basic.model.Ticket;
 import com.sena.crud_basic.model.Events;
-import com.sena.crud_basic.model.Review;
 import com.sena.crud_basic.model.Assistant;
 import com.sena.crud_basic.repository.TicketRepository;
 import com.sena.crud_basic.repository.IEvent;
@@ -121,4 +120,25 @@ public class TicketService {
                 ticket.getStatus()
         );
     }
+ // ✅ Método para convertir un TicketDTO a Ticket
+    public Ticket convertToModel(TicketDTO ticketDTO) {
+        // Buscar el evento y el asistente en la base de datos
+        Events event = eventRepository.findById(ticketDTO.getEventId())
+                .orElseThrow(() -> new RuntimeException("Evento no encontrado con ID: " + ticketDTO.getEventId()));
+    
+        Assistant assistant = assistantRepository.findById(ticketDTO.getAssistantId())
+                .orElseThrow(() -> new RuntimeException("Asistente no encontrado con ID: " + ticketDTO.getAssistantId()));
+    
+        // Crear y retornar el objeto Ticket
+        return new Ticket(
+                event,
+                assistant,
+                ticketDTO.getPrice(),
+                ticketDTO.getSeatNumber(),
+                ticketDTO.getPurchaseDate(),
+                ticketDTO.getStatus()
+        );
+    }
+    
+    
 }

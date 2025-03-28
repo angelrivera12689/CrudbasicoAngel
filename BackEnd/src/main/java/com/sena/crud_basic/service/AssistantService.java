@@ -101,6 +101,11 @@ public class AssistantService {
         );
     }
     
+    public List<Assistant> filterAssistants(String name, String email, Boolean status) {
+        return data.filterAssistants(name, email, status);
+    }
+    
+    
         // Método para convertir un modelo a un DTO
         public AssistantDTO convertToDTO(Assistant assistant) {
             return new AssistantDTO(

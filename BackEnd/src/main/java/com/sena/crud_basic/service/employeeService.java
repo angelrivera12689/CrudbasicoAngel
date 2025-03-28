@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.employeeDTO;
-import com.sena.crud_basic.model.Assistant;
+
 import com.sena.crud_basic.model.employee;
 import com.sena.crud_basic.repository.Iemployee;
 
@@ -88,6 +88,11 @@ public class employeeService {
             "Empleado eliminado correctamente"
         );
     }
+
+    public List<employee> filteremployee(String first_name, String last_name, String address, String phone_number, Boolean status) {
+        return data.filteremployee(first_name, last_name, address, phone_number, status);
+    }
+    
     
     public employeeDTO convertToDTO(employee employee) {
         return new employeeDTO(

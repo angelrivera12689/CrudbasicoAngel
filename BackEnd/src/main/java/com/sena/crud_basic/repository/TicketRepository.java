@@ -8,9 +8,8 @@ import java.util.List;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
-    List<Ticket> findByStatus(String status);
-    List<Ticket> findByAssistantId(int assistantId);
+    
 
-   @Query("SELECT t FROM Ticket t WHERE t.status != false")
+@Query("SELECT t FROM Ticket t WHERE t.status != false")
 List<Ticket> getListTicketActive();
 }

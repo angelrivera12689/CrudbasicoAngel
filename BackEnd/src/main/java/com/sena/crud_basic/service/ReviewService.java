@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.ReviewDTO;
 import com.sena.crud_basic.model.Review;
-import com.sena.crud_basic.model.organizer;
+
 import com.sena.crud_basic.model.Events;
 import com.sena.crud_basic.model.Assistant;
 import com.sena.crud_basic.repository.IReview;

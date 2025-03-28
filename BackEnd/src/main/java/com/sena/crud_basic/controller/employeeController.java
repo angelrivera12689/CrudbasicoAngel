@@ -53,4 +53,17 @@ public class employeeController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/filter")
+    public ResponseEntity<Object> filterEmployee(
+            @RequestParam(required = false, name = "first_name") String first_name,
+            @RequestParam(required = false, name = "last_name") String last_name,
+            @RequestParam(required = false, name = "address") String address,
+            @RequestParam(required = false, name = "phone_number") String phone_number,
+            @RequestParam(required = false, name = "status") Boolean status) {
+    
+        var employeeList = employeeService.filteremployee(first_name, last_name, address, phone_number, status);
+        return new ResponseEntity<>(employeeList, HttpStatus.OK);
+    }
+    
+
 }

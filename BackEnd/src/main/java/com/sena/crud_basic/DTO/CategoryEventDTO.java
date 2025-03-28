@@ -7,7 +7,7 @@ public class CategoryEventDTO {
     private String description;
 
     // Constructor
-    public CategoryEventDTO(int idCategory, String name, String description) {
+    public CategoryEventDTO(int category_id, String name, String description) {
        
         this.name = name;
         this.description = description;
