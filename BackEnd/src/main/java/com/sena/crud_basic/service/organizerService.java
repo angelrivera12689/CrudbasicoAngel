@@ -99,8 +99,53 @@ public class organizerService {
         return pattern.matcher(email).matches();
     }
 
-   
-   
+    public List<organizer> filterorganizers(String name, String phone, String email, Boolean status) {
+        return data.filterorganizers(name, phone, email, status);
+    }
+
+    public ResponseDTO update(int id, organizerDTO organizerDTO) {
+        Optional<organizer> existingOrganizer = findById(id);
+        if (!existingOrganizer.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El organizador no existe"
+            );
+        }
+
+        if (organizerDTO.getName().length() < 1 || organizerDTO.getName().length() > 100) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El nombre debe estar entre 1 y 100 caracteres"
+            );
+        }
+
+        if (!isValidEmail(organizerDTO.getEmail())) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El email no tiene un formato válido"
+            );
+        }
+
+        if (organizerDTO.getPhone().length() != 10 || !organizerDTO.getPhone().matches("[0-9]+")) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El número de teléfono debe tener 10 dígitos y solo puede contener números"
+            );
+        }
+
+        organizer organizerToUpdate = existingOrganizer.get();
+        organizerToUpdate.setName(organizerDTO.getName());
+        organizerToUpdate.setPhone(organizerDTO.getPhone());
+        organizerToUpdate.setEmail(organizerDTO.getEmail());
+
+        data.save(organizerToUpdate);
+
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Organizador actualizado exitosamente"
+        );
+    }
+
     // Method to convert an organizer entity to organizerDTO
     public organizerDTO convertToDTO(organizer organizer) {
         return new organizerDTO(
@@ -118,5 +163,6 @@ public class organizerService {
                 organizerDTO.getEmail(), true);
     }
 
-   
+
 }
+

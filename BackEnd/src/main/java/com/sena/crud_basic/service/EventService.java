@@ -11,6 +11,7 @@ import com.sena.crud_basic.model.Events;
 import com.sena.crud_basic.repository.IEvent;
 import com.sena.crud_basic.repository.IEventCategory;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,6 +108,33 @@ public class EventService {
             HttpStatus.OK.toString(),
             "Evento eliminado correctamente"
         );
+    }
+    public ResponseDTO update(int id, EventsDTO eventDTO) {
+        Optional<Events> existingEvent = findById(id);
+        if (!existingEvent.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El evento no existe"
+            );
+        }
+
+        Events eventToUpdate = existingEvent.get();
+        eventToUpdate.setEventName(eventDTO.getEventName());
+        eventToUpdate.setDescription(eventDTO.getDescription());
+        eventToUpdate.setDate(eventDTO.getDate());
+        eventToUpdate.setTime(eventDTO.getTime());
+        eventToUpdate.setLocation(eventDTO.getLocation());
+
+        eventRepository.save(eventToUpdate);
+
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Evento actualizado exitosamente"
+        );
+    }
+
+    public List<Events> filterEvent(String event_name, String description, LocalDate date, String location, Integer category_id) {
+        return eventRepository.filterevent(event_name, description, date, location, category_id);
     }
 
   // ✅ Método para convertir un Events a EventsDTO

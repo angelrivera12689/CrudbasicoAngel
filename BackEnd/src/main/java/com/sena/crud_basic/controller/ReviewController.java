@@ -59,4 +59,26 @@ public class ReviewController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Object> filterReviews(
+            @RequestParam(required = false) String comment,
+            @RequestParam(required = false) Integer rating,
+            @RequestParam(required = false) Integer eventId,
+            @RequestParam(required = false) Integer assistantId,
+            @RequestParam(required = false) Boolean status) {
+
+        List<Review> reviews = reviewService.filterReviews(comment, rating, eventId, assistantId, status);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateReview(@PathVariable int id, @RequestBody ReviewDTO reviewDTO) {
+        ResponseDTO response = reviewService.update(id, reviewDTO);
+        if (response.getStatus().equals(HttpStatus.OK.toString())) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

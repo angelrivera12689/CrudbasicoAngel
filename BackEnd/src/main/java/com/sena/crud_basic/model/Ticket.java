@@ -20,9 +20,13 @@ public class Ticket {
     private Assistant assistant;
 
     private double price;
+
     private String seatNumber;
+
     private LocalDateTime purchaseDate;
-    private boolean status;
+
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private boolean status = true; // Por defecto será `true`
 
     // Constructores
     public Ticket() {}
@@ -34,6 +38,17 @@ public class Ticket {
         this.seatNumber = seatNumber;
         this.purchaseDate = purchaseDate;
         this.status = status;
+    }
+
+    // Este método se ejecuta antes de insertar un nuevo registro
+    @PrePersist
+    public void prePersist() {
+        if (this.purchaseDate == null) {
+            this.purchaseDate = LocalDateTime.now(); // Asignar la fecha y hora actuales
+        }
+        if (!this.status) {
+            this.status = true; // Asegurar que el estado por defecto sea `true`
+        }
     }
 
     // Getters y Setters

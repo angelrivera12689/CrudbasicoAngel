@@ -30,4 +30,5 @@ public class CategoryEventDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+    
 }

@@ -2,11 +2,16 @@ package com.sena.crud_basic.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.sena.crud_basic.DTO.EventsDTO;
 import com.sena.crud_basic.DTO.ResponseDTO;
+import com.sena.crud_basic.model.Events;
 import com.sena.crud_basic.service.EventService;
 
 @RestController
@@ -52,5 +57,25 @@ public class EventController {
         } else {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
+    }
+
+     @GetMapping("/filter")
+    public ResponseEntity<List<Events>> filterEvents(
+            @RequestParam(required = false) String event_name,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) LocalDate date,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) Integer category_id) {
+        
+        List<Events> filteredEvents = eventService.filterEvent(event_name, description, date, location, category_id);
+        return ResponseEntity.ok(filteredEvents);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseDTO> update(@PathVariable int id, @RequestBody EventsDTO eventDTO) {
+        ResponseDTO response = eventService.update(id, eventDTO);
+        return ResponseEntity
+                .status(response.getStatus().equals(HttpStatus.OK.toString()) ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
+                .body(response);
     }
 }

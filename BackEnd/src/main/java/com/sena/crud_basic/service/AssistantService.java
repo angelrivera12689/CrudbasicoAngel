@@ -125,4 +125,52 @@ public class AssistantService {
                 true
             );
         }
+        public ResponseDTO update(int id, AssistantDTO assistantDTO) {
+            // Buscar el asistente por ID
+            Optional<Assistant> existingAssistant = findById(id);
+            if (!existingAssistant.isPresent()) {
+                return new ResponseDTO(
+                    HttpStatus.BAD_REQUEST.toString(),
+                    "El asistente no existe"
+                );
+            }
+    
+            // Validar el nombre de acuerdo a las restricciones
+            if (assistantDTO.getName().length() < 1 || assistantDTO.getName().length() > 50) {
+                return new ResponseDTO(
+                    HttpStatus.BAD_REQUEST.toString(),
+                    "El nombre debe estar entre 1 y 50 caracteres"
+                );
+            }
+    
+            // Validar el formato del email
+            if (!isValidEmail(assistantDTO.getEmail())) {
+                return new ResponseDTO(
+                    HttpStatus.BAD_REQUEST.toString(),
+                    "El email no tiene un formato válido"
+                );
+            }
+    
+            // Validar el teléfono (por ejemplo, debe tener 10 dígitos)
+            if (assistantDTO.getPhone().length() != 10 || !assistantDTO.getPhone().matches("[0-9]+")) {
+                return new ResponseDTO(
+                    HttpStatus.BAD_REQUEST.toString(),
+                    "El número de teléfono debe tener 10 dígitos y solo puede contener números"
+                );
+            }
+    
+            // Actualizar los datos del asistente existente
+            Assistant assistantToUpdate = existingAssistant.get();
+            assistantToUpdate.setName(assistantDTO.getName());
+            assistantToUpdate.setEmail(assistantDTO.getEmail());
+            assistantToUpdate.setPhone(assistantDTO.getPhone());
+    
+            // Guardar los cambios
+            data.save(assistantToUpdate);
+    
+            return new ResponseDTO(
+                HttpStatus.OK.toString(),
+                "Asistente actualizado exitosamente"
+            );
+        }
     }

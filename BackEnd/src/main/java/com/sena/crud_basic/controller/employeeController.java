@@ -65,5 +65,14 @@ public class employeeController {
         return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
     
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateEmployee(@PathVariable int id, @RequestBody employeeDTO employeeDTO) {
+        ResponseDTO response = employeeService.update(id, employeeDTO);
+        if (response.getStatus().equals(HttpStatus.OK.toString())) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

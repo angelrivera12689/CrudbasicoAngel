@@ -51,4 +51,6 @@ public class EventAssistantController {
         }
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    
 }

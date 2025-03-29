@@ -15,4 +15,5 @@ public interface IEventAssistant extends JpaRepository<Assistant, Integer> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByEventIdAndAssistantId'");
     }
+    
 }

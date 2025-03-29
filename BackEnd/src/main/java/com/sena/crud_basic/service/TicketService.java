@@ -13,6 +13,7 @@ import com.sena.crud_basic.repository.TicketRepository;
 import com.sena.crud_basic.repository.IEvent;
 import com.sena.crud_basic.repository.IAssistant;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,7 @@ public class TicketService {
                 "El precio del ticket debe ser mayor a 0"
             );
         }
-
+    
         // Validar que el número de asiento no esté vacío
         if (ticketDTO.getSeatNumber() == null || ticketDTO.getSeatNumber().trim().isEmpty()) {
             return new ResponseDTO(
@@ -45,33 +46,41 @@ public class TicketService {
                 "El número de asiento es obligatorio"
             );
         }
-
-        // Validar que la fecha de compra no sea nula
-        if (ticketDTO.getPurchaseDate() == null) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "La fecha de compra es obligatoria"
-            );
-        }
-
+    
         // Buscar el evento y el asistente
         Events event = eventRepository.findById(ticketDTO.getEventId())
                 .orElseThrow(() -> new RuntimeException("Evento no encontrado con ID: " + ticketDTO.getEventId()));
-
+    
         Assistant assistant = assistantRepository.findById(ticketDTO.getAssistantId())
                 .orElseThrow(() -> new RuntimeException("Asistente no encontrado con ID: " + ticketDTO.getAssistantId()));
-
+    
+        // Manejo automático de la fecha de compra y estado
+        LocalDateTime purchaseDate = ticketDTO.getPurchaseDate() != null
+                ? ticketDTO.getPurchaseDate()  // Si viene en el DTO, lo usamos
+                : LocalDateTime.now();         // Si no viene, usamos la fecha y hora actuales
+    
+        boolean status = ticketDTO.getStatus()
+                ? ticketDTO.getStatus()        // Si viene en el DTO, lo usamos
+                : true;                        // Si no viene, usamos el valor predeterminado
+    
         // Convertir el DTO a modelo y guardar
-        Ticket ticket = new Ticket(event, assistant, ticketDTO.getPrice(), ticketDTO.getSeatNumber(),
-                                   ticketDTO.getPurchaseDate(), ticketDTO.getStatus());
-
+        Ticket ticket = new Ticket(
+            event,
+            assistant,
+            ticketDTO.getPrice(),
+            ticketDTO.getSeatNumber(),
+            purchaseDate,
+            status
+        );
+    
         ticketRepository.save(ticket);
-
+    
         return new ResponseDTO(
             HttpStatus.OK.toString(),
             "Ticket guardado exitosamente"
         );
     }
+    
 
     // ✅ Método para obtener todos los tickets
     public List<Ticket> findAll() {
@@ -83,7 +92,7 @@ public class TicketService {
         return ticketRepository.findById(id);
     }
 
-    // ✅ Método para eliminar un ticket por ID
+
      // ✅ Método para eliminar una reseña por ID
      public ResponseDTO deleteTicket(int id) {
         // Buscar el ticket por ID
@@ -105,8 +114,36 @@ public class TicketService {
             HttpStatus.OK.toString(),
             "Ticket eliminado correctamente"
         );
-    }
     
+    }
+
+    public ResponseDTO update(int id, TicketDTO ticketDTO) {
+        Optional<Ticket> ticketOpt = ticketRepository.findById(id);
+        if (!ticketOpt.isPresent()) {
+            return new ResponseDTO(HttpStatus.BAD_REQUEST.toString(), "El ticket no existe");
+        }
+
+        Ticket ticket = ticketOpt.get();
+        ticket.setPrice(ticketDTO.getPrice());
+        ticket.setSeatNumber(ticketDTO.getSeatNumber());
+        ticket.setStatus(ticketDTO.getStatus());
+        ticket.setPurchaseDate(ticketDTO.getPurchaseDate());
+
+        ticketRepository.save(ticket);
+        return new ResponseDTO(HttpStatus.OK.toString(), "Ticket actualizado exitosamente");
+    }
+
+
+     public List<Ticket> filterTickets(
+            Integer eventId,
+            Integer assistantId,
+            Double price,
+            String seatNumber,
+            Boolean status,
+            LocalDateTime fromDate,
+            LocalDateTime toDate) {
+        return ticketRepository.filterTickets(eventId, assistantId, price, seatNumber, status, fromDate, toDate);
+    }
     
     // ✅ Método para convertir un Ticket a TicketDTO
     public TicketDTO convertToDTO(Ticket ticket) {

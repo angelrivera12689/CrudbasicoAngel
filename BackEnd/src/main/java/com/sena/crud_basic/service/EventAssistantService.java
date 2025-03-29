@@ -59,4 +59,5 @@ public class EventAssistantService {
         Assistant assistant = eventAssistantDTO.getAssistant();
         return new EventAssistant(event, assistant, true);
     }
+    
 }

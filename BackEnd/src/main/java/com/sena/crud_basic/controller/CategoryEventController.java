@@ -69,5 +69,13 @@ public ResponseEntity<Object> filterCategory(
     var categoryEventServiceList = categoryEventService.filterCategory(name, description, status);
     return new ResponseEntity<>(categoryEventServiceList, HttpStatus.OK);
 }
-
+@PutMapping("/{id}")
+    public ResponseEntity<Object> updateCategory(@PathVariable int id, @RequestBody CategoryEventDTO categoryEventDTO) {
+        ResponseDTO response = categoryEventService.update(id, categoryEventDTO);
+        if (response.getStatus().equals(HttpStatus.OK.toString())) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

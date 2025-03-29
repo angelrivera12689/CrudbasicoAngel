@@ -80,6 +80,46 @@ public class CategoryEventService {
     public List<CategoryEvent> filterCategory(String name, String description, Boolean status) {
         return data.filterCategory(name, description, status);
     }
+
+    public ResponseDTO update(int id, CategoryEventDTO categoryEventDTO) {
+        // Buscar la categoría por ID
+        Optional<CategoryEvent> existingCategory = findById(id);
+        if (!existingCategory.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "La categoría no existe"
+            );
+        }
+
+        // Validar el nombre de acuerdo a las restricciones
+        if (categoryEventDTO.getName().length() < 1 || categoryEventDTO.getName().length() > 50) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El nombre debe estar entre 1 y 50 caracteres"
+            );
+        }
+
+        // Validar la descripción
+        if (categoryEventDTO.getDescription().length() < 1 || categoryEventDTO.getDescription().length() > 200) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "La descripción debe estar entre 1 y 200 caracteres"
+            );
+        }
+
+        // Actualizar los datos de la categoría existente
+        CategoryEvent categoryToUpdate = existingCategory.get();
+        categoryToUpdate.setName(categoryEventDTO.getName());
+        categoryToUpdate.setDescription(categoryEventDTO.getDescription());
+
+        // Guardar los cambios
+        data.save(categoryToUpdate);
+
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Categoría de evento actualizada exitosamente"
+        );
+    }
     
     
     public CategoryEvent convertToModel(CategoryEventDTO categoryEventDTO) {

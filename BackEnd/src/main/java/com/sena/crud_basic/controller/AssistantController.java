@@ -65,5 +65,13 @@ public class AssistantController {
         var assistantList = assistantService.filterAssistants(name, email, status);
         return new ResponseEntity<>(assistantList, HttpStatus.OK);
     }
-    
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateAssistant(@PathVariable int id, @RequestBody AssistantDTO assistantDTO) {
+        ResponseDTO response = assistantService.update(id, assistantDTO);
+        if (response.getStatus().equals(HttpStatus.OK.toString())) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

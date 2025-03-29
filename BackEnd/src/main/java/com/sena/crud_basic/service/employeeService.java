@@ -93,6 +93,54 @@ public class employeeService {
         return data.filteremployee(first_name, last_name, address, phone_number, status);
     }
     
+    public ResponseDTO update(int id, employeeDTO employeeDTO) {
+        Optional<employee> existingEmployee = findById(id);
+        if (!existingEmployee.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El empleado no existe"
+            );
+        }
+
+        // Validar que el nombre tenga entre 1 y 100 caracteres
+        if (employeeDTO.getFirstName().length() < 1 || employeeDTO.getFirstName().length() > 100) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El primer nombre debe estar entre 1 y 100 caracteres"
+            );
+        }
+
+        // Validar que el apellido tenga entre 1 y 100 caracteres
+        if (employeeDTO.getLastName().length() < 1 || employeeDTO.getLastName().length() > 100) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El apellido debe estar entre 1 y 100 caracteres"
+            );
+        }
+
+        // Validar el número de teléfono (debe tener 10 dígitos y solo números)
+        if (employeeDTO.getPhoneNumber().length() != 10 || !employeeDTO.getPhoneNumber().matches("[0-9]+")) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El número de teléfono debe tener 10 dígitos y solo contener números"
+            );
+        }
+
+        // Actualizar los datos del empleado existente
+        employee employeeToUpdate = existingEmployee.get();
+        employeeToUpdate.setFirst_name(employeeDTO.getFirstName());
+        employeeToUpdate.setLast_name(employeeDTO.getLastName());
+        employeeToUpdate.setAddress(employeeDTO.getAddress());
+        employeeToUpdate.setPhone_number(employeeDTO.getPhoneNumber());
+
+        // Guardar los cambios
+        data.save(employeeToUpdate);
+
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Empleado actualizado exitosamente"
+        );
+    }
     
     public employeeDTO convertToDTO(employee employee) {
         return new employeeDTO(

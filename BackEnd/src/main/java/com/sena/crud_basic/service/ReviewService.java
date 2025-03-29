@@ -106,8 +106,31 @@ public class ReviewService {
             "Reseña eliminada correctamente"
         );
     }
+
+    public ResponseDTO update(int id, ReviewDTO reviewDTO) {
+        Optional<Review> existingReview = findById(id);
+        if (!existingReview.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "La reseña no existe"
+            );
+        }
+
+        Review reviewToUpdate = existingReview.get();
+        reviewToUpdate.setComment(reviewDTO.getComment());
+        reviewToUpdate.setRating(reviewDTO.getRating());
+
+        reviewRepository.save(reviewToUpdate);
+
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Reseña actualizada exitosamente"
+        );
+    }
     
-    
+    public List<Review> filterReviews(String comment, Integer rating, Integer eventId, Integer assistantId, Boolean status) {
+        return reviewRepository.filterReviews(comment, rating, eventId, assistantId, status);
+    }
     
     // Method to convert a Review entity to ReviewDTO
     public ReviewDTO convertToDTO(Review review) {
