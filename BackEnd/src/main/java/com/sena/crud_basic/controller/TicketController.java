@@ -25,7 +25,7 @@ public class TicketController {
     private TicketService ticketService;
 
     // ✅ Endpoint para crear un ticket
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<ResponseDTO> createTicket(@RequestBody TicketDTO ticketDTO) {
         ResponseDTO response = ticketService.save(ticketDTO);
         return ResponseEntity.ok(response);

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
-    <link rel="stylesheet" href="/CrudbasicoAngel/FrontEnd/style.css">
+    <link rel="stylesheet" href="/FrontEnd/style.css">
     
 </head>
 <body id="top">
@@ -63,49 +63,130 @@
                 </section>
                 
                 <!-- SECCIÓN: FORMULARIO DE DATOS -->
-                <section class="form-section">
-                    <h2 class="section-title">Datos del Registro</h2>
-                    <form id="recordForm">
-                        <div class="form-group">
-                            <label for="id">ID:</label>
-                            <input type="text" id="id" readonly>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" id="nombre" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="apellido">Apellido:</label>
-                            <input type="text" id="apellido" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="telefono">Teléfono:</label>
-                            <input type="tel" id="telefono">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="categoria">Categoría:</label>
-                            <select id="categoria">
-                                <option value="">Seleccionar categoría</option>
-                                <option value="cliente">Cliente</option>
-                                <option value="proveedor">Proveedor</option>
-                                <option value="empleado">Empleado</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="observaciones">Observaciones:</label>
-                            <textarea id="observaciones"></textarea>
-                        </div>
-                        
+                <div class="button-container">
+                    <button class="btn-toggle" data-form="asistente-form">Registrar Asistente</button>
+                    <button class="btn-toggle" data-form="registro-form">Registrar Categoría de Evento</button>
+                    <button class="btn-toggle" data-form="persona-form">Registrar Empleado</button>
+                    <button class="btn-toggle" data-form="evento-form">Registrar Evento</button>
+                    <button class="btn-toggle" data-form="organizer-form">Registrar Organizador</button>
+                    <button class="btn-toggle" data-form="review-form">Agregar Reseña</button>
+                    <button class="btn-toggle" data-form="ticket-form">Registrar Ticket</button>
+                </div>
+                <form id="asistente-form">
+                    <h2>Registrar Asistente</h2>
+                    <label for="asistente-nombre">Nombre:</label>
+                    <input type="text" id="asistente-nombre" required>
+                    
+                    <label for="asistente-email">Email:</label>
+                    <input type="email" id="asistente-email" required>
+                    
+                    <label for="asistente-phone">Teléfono:</label>
+                    <input type="text" id="asistente-phone" required>
+                    
+                    <button type="submit">Registrar</button>
+                </form>
+
+                <form id="registro-form">
+                    <h2>Registrar Categoria de Evento</h2>
+                    
+                    <label for="registro-nombre">Nombre:</label>
+                    <input type="text" id="registro-nombre" required>
+                
+                    <label for="registro-descripcion">Descripción:</label>
+                    <textarea id="registro-descripcion" required></textarea>
+                
+                    <button type="submit">Registrar</button>
+                </form>
+
+                <form id="persona-form" class="entity-form hidden">
+                    <h2>Registrar Empleado</h2>
+                    
+                    <label for="persona-firstName">Nombre:</label>
+                    <input type="text" id="persona-firstName" required>
+                
+                    <label for="persona-lastName">Apellido:</label>
+                    <input type="text" id="persona-lastName" required>
+                
+                    <label for="persona-address">Dirección:</label>
+                    <input type="text" id="persona-address" required>
+                
+                    <label for="persona-phoneNumber">Teléfono:</label>
+                    <input type="text" id="persona-phoneNumber" required>
+                
+                    <button type="submit">Registrar</button>
+                </form>
+
+                <form id="evento-form">
+                    <h2>Registrar Evento</h2>
+                
+                    <label for="evento-nombre">Nombre del Evento:</label>
+                    <input type="text" id="evento-nombre" required>
+                
+                    <label for="evento-descripcion">Descripción:</label>
+                    <textarea id="evento-descripcion" required></textarea>
+                
+                    <label for="evento-ubicacion">Ubicación:</label>
+                    <input type="text" id="evento-ubicacion" required>
+                
+                    <label for="evento-categoria">Categoría:</label>
+                    <input type="number" id="evento-categoria" required>
+                
+                    <button type="submit">Registrar</button>
+                </form>
+
+                <form id="organizer-form" class="hidden">
+                    <h2>Registrar Organizador</h2>
+                
+                    <label for="organizador-nombre">Nombre:</label>
+                    <input type="text" id="organizador-nombre" required>
+                
+                    <label for="organizador-telefono">Teléfono:</label>
+                    <input type="text" id="organizador-telefono" required>
+                
+                    <label for="organizador-email">Email:</label>
+                    <input type="email" id="organizador-email" required>
+                
+                    <button type="submit">Registrar</button>
+                </form>
+
+                <form id="review-form" class="hidden">
+                    <h2>Registrar Reseña</h2>
+                
+                    <label for="review-comment">Comentario:</label>
+                    <textarea id="review-comment" required></textarea>
+                
+                    <label for="review-rating">Calificación (1-5):</label>
+                    <input type="number" id="review-rating" min="1" max="5" required>
+                
+                    <label for="review-event-id">ID del Evento:</label>
+                    <input type="number" id="review-event-id" required>
+                
+                    <label for="review-assistant-id">ID del Asistente:</label>
+                    <input type="number" id="review-assistant-id" required>
+                
+                    <button type="submit">Enviar Reseña</button>
+                </form>
+
+                <form id="ticket-form" class="hidden">
+                    <h2>Registrar Ticket</h2>
+                
+                    <label for="ticket-event-id">ID del Evento:</label>
+                    <input type="number" id="ticket-event-id" required>
+                
+                    <label for="ticket-assistant-id">ID del Asistente:</label>
+                    <input type="number" id="ticket-assistant-id" required>
+                
+                    <label for="ticket-price">Precio:</label>
+                    <input type="number" id="ticket-price" step="0.01" required>
+                
+                    <label for="ticket-seat-number">Número de Asiento:</label>
+                    <input type="text" id="ticket-seat-number" required>
+                
+                    <button type="submit">Registrar Ticket</button>
+                </form>
+                
+                
+                <p id="mensaje"></p>
                         <!-- SECCIÓN: BOTONES DE ACCIONES -->
                         <div class="buttons-section">
                             <button type="button" class="btn btn-primary" id="btnCrear">Crear Nuevo</button>
@@ -256,5 +337,6 @@
     <script src="../layout/scripts/jquery.min.js"></script>
     <script src="../layout/scripts/jquery.backtotop.js"></script>
     <script src="../layout/scripts/jquery.mobilemenu.js"></script>
+    <script src="/funcionalida.js"></script>
 </body>
 </html>

@@ -20,10 +20,10 @@ public class Events {
     private String description;
 
     @Column(name = "date", nullable = false)
-    private LocalDate date;  // LocalDate para fechas
+    private LocalDate date = LocalDate.now();  // LocalDate automático
 
     @Column(name = "time", nullable = false)
-    private LocalTime time;  // LocalTime para horas
+    private LocalTime time = LocalTime.now();  // LocalTime automático
 
     @Column(name = "location", length = 150)
     private String location;
@@ -32,12 +32,19 @@ public class Events {
     @JoinColumn(name = "category_id", nullable = false) // Se alinea con la base de datos
     private CategoryEvent categoryEvent;
     
-
     @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
     private boolean status;
 
     // Constructor vacío para JPA
     public Events() {
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
     }
 
     // Constructor con parámetros
@@ -46,8 +53,8 @@ public class Events {
         this.idEvent = idEvent;
         this.eventName = eventName;
         this.description = description;
-        this.date = date;
-        this.time = time;
+        this.date = date != null ? date : LocalDate.now();
+        this.time = time != null ? time : LocalTime.now();
         this.location = location;
         this.categoryEvent = categoryEvent;
         this.status = status;

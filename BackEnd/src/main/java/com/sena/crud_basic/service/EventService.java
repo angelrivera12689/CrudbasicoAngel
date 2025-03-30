@@ -35,20 +35,7 @@ public class EventService {
         }
 
         // Validar que la fecha no sea nula
-        if (eventDTO.getDate() == null) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "La fecha del evento es obligatoria"
-            );
-        }
-
-        // Validar que la hora no sea nula
-        if (eventDTO.getTime() == null) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "La hora del evento es obligatoria"
-            );
-        }
+    
 
         // Validar que la categoría exista y esté activa
         Optional<CategoryEvent> category = categoryRepository.findById(eventDTO.getCategoryId());
