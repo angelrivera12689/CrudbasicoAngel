@@ -57,10 +57,7 @@
                 </div>
                 
                 <!-- SECCIÓN: BUSCADOR -->
-                <section class="search-section">
-                    <input type="text" placeholder="Buscar registro..." id="searchInput">
-                    <button type="button" id="searchButton">Buscar</button>
-                </section>
+               
                 
                 <!-- SECCIÓN: FORMULARIO DE DATOS -->
                 <div class="button-container">
@@ -196,55 +193,33 @@
                         </div>
                     </form>
                 </section>
-                
+  <br>
+  <br>
+  <section class="search-section">
+    <input type="text" id="searchInput" placeholder="Buscar por ID Ticket, Evento, Asistente, etc.">
+    <button type="button" id="searchButton">Buscar</button>
+</section>
                 <!-- SECCIÓN: TABLA DE REGISTROS -->
                 <section class="table-section">
-                    <h2 class="section-title">Lista de Registros</h2>
+                    <h2 class="section-title">Lista de Tickets</h2>
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Email</th>
-                                <th>Teléfono</th>
-                                <th>Categoría</th>
+                                <th>ID Ticket</th>
+                                <th>Evento ID</th>
+                                <th>Asistente ID</th>
+                                <th>Precio</th>
+                                <th>Número de Asiento</th>
+                                <th>Fecha de Compra</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            <!-- Ejemplo de registros -->
-                            <tr>
-                                <td>1</td>
-                                <td>Juan</td>
-                                <td>Pérez</td>
-                                <td>juan@ejemplo.com</td>
-                                <td>123456789</td>
-                                <td>Cliente</td>
-                                <td class="actions-column">
-                                    <button class="btn btn-info btn-sm">Editar</button>
-                                    <button class="btn btn-danger btn-sm">Eliminar</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>María</td>
-                                <td>López</td>
-                                <td>maria@ejemplo.com</td>
-                                <td>987654321</td>
-                                <td>Proveedor</td>
-                                <td class="actions-column">
-                                    <button class="btn btn-info btn-sm">Editar</button>
-                                    <button class="btn btn-danger btn-sm">Eliminar</button>
-                                </td>
-                            </tr>
+                            <!-- Aquí se insertarán los registros dinámicamente -->
                         </tbody>
                     </table>
                 </section>
-            </div>
-            <div class="clear"></div>
-        </main>
-    </div>
     
     <!-- SECCIÓN: FOOTER -->
     <div class="wrapper row4">
@@ -337,6 +312,7 @@
     <script src="../layout/scripts/jquery.min.js"></script>
     <script src="../layout/scripts/jquery.backtotop.js"></script>
     <script src="../layout/scripts/jquery.mobilemenu.js"></script>
-    <script src="/funcionalida.js"></script>
+    <script src="/registros.js"></script>
+    <script src="/buscar.js"></script>
 </body>
 </html>
