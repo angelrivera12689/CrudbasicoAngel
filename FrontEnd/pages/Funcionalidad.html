@@ -46,8 +46,17 @@
             </header>
         </div>
     </div>
-    
-    <!-- SECCIÓN: CONTENIDO PRINCIPAL - SISTEMA CRUD -->
+
+    <div class="buttons-section">
+        <button type="button" class="btn btn-primary" id="btnCrear">Crear Nuevo</button>
+        <button type="button" class="btn btn-danger" id="btnFiltrar">Buscar</button>
+        <button type="button" class="btn btn-warning" id="btnActualizar">Actualizar</button>
+        <button type="button" class="btn btn-info" id="btnEliminar">Eliminar</button>
+    </div>
+
+
+
+  <section id="Crear">
     <div class="wrapper row3">
         <main class="hoc container clear">
             <div class="crud-container">
@@ -185,128 +194,451 @@
                 
                 <p id="mensaje"></p>
                         <!-- SECCIÓN: BOTONES DE ACCIONES -->
-                        <div class="buttons-section">
-                            <button type="button" class="btn btn-primary" id="btnCrear">Crear Nuevo</button>
-                            <button type="button" class="btn btn-warning" id="btnActualizar">Actualizar</button>
-                            <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
-                            <button type="button" class="btn btn-info" id="btnLimpiar">Limpiar Formulario</button>
-                        </div>
-                    </form>
-                </section>
+                      
+  </section>
   <br>
   <br>
-  <section class="search-section">
-    <input type="text" id="searchInput" placeholder="Buscar por ID Ticket, Evento, Asistente, etc.">
-    <button type="button" id="searchButton">Buscar</button>
+
+  <section id="Filtrar">
+
+    <div class="button-container">
+        <button class="btn-toggle-filter" data-section="filtrar-tickets">Filtrar Tickets</button>
+        <button class="btn-toggle-filter" data-section="filtrar-eventos">Filtrar Eventos</button>
+        <button class="btn-toggle-filter" data-section="filtrar-asistentes">Filtrar Asistentes</button>
+        <button class="btn-toggle-filter" data-section="filtrar-empleados">Filtrar Empleados</button>
+        <button class="btn-toggle-filter" data-section="filtrar-organizadores">Filtrar Organizadores</button>
+        <button class="btn-toggle-filter" data-section="filtrar-resenas">Filtrar Reseñas</button>
+        <button class="btn-toggle-filter" data-section="filtrar-categorias">Filtrar Categorías</button>
+    </div>
+
+<section id="filtrar-tickets">
+    <div class="search-section">
+        <input type="text" id="searchInput" placeholder="Buscar por ID Ticket, Evento, Asistente, etc.">
+        <button type="button" id="searchButton">Buscar</button>
+    </div>
+
+    <section class="table-section">
+        <h2 class="section-title">Lista de Tickets</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID Ticket</th>
+                    <th>Evento ID</th>
+                    <th>Asistente ID</th>
+                    <th>Precio</th>
+                    <th>Número de Asiento</th>
+                    <th>Fecha de Compra</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Aquí se insertarán los registros dinámicamente -->
+            </tbody>
+        </table>
+    </section>
+    </section>
+
+
+
+        <section id="filtrar-eventos">
+            <div class="search-section">
+                <input type="text" id="searchInputEventos" placeholder="Buscar por ID Evento, Nombre, etc.">
+                <button type="button" id="searchButtonEventos">Buscar</button>
+            </div>
+        
+            <section class="table-section">
+                <h2 class="section-title">Lista de Eventos</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID Evento</th>
+                            <th>Nombre del Evento</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>Ubicación</th>
+                            <th>Categoría</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBodyEventos">
+                        <!-- Aquí se insertarán los registros dinámicamente -->
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+
+
+        
+<section id="filtrar-asistentes">
+    <div class="search-section">
+        <input type="text" id="searchInputAsistentes" placeholder="Buscar por ID Asistente, Nombre, etc.">
+        <button type="button" id="searchButtonAsistentes">Buscar</button>
+    </div>
+
+    <section class="table-section">
+        <h2 class="section-title">Lista de Asistentes</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID Asistente</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de Registro</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tableBodyAsistentes">
+                <!-- Aquí se insertarán los registros dinámicamente -->
+            </tbody>
+        </table>
+    </section>
 </section>
-                <!-- SECCIÓN: TABLA DE REGISTROS -->
-                <section class="table-section">
-                    <h2 class="section-title">Lista de Tickets</h2>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID Ticket</th>
-                                <th>Evento ID</th>
-                                <th>Asistente ID</th>
-                                <th>Precio</th>
-                                <th>Número de Asiento</th>
-                                <th>Fecha de Compra</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <!-- Aquí se insertarán los registros dinámicamente -->
-                        </tbody>
-                    </table>
-                </section>
-    
-    <!-- SECCIÓN: FOOTER -->
-    <div class="wrapper row4">
-        <footer id="footer" class="hoc clear">
-            <div class="center btmspace-50">
-                <h6 class="heading">Angels Events</h6>
-                <nav>
-                    <ul class="nospace inline pushright uppercase">
-                        <li><a href="../index.html"><i class="fas fa-lg fa-home"></i></a></li>
-                        <li><a href="#">Acerca de</a></li>
-                        <li><a href="#">Contacto</a></li>
-                        <li><a href="#">Términos</a></li>
-                        <li><a href="#">Privacidad</a></li>
-                        <li><a href="#">Cookies</a></li>
-                        <li><a href="#">Aviso Legal</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <hr class="btmspace-50">
-            <div class="group">
-                <div class="one_quarter first">
-                    <h6 class="heading">Información de Contacto</h6>
-                    <ul class="nospace btmspace-30 linklist contact">
-                        <li><i class="fas fa-map-marker-alt"></i>
-                            <address>
-                            Nombre de calle &amp; Número, Ciudad, Código Postal
-                            </address>
-                        </li>
-                        <li><i class="fas fa-phone"></i> +00 (123) 456 7890</li>
-                        <li><i class="far fa-envelope"></i> info@angelevents.com</li>
-                    </ul>
-                    <ul class="faico clear">
-                        <li><a class="faicon-facebook" href="#"><i class="fab fa-facebook"></i></a></li>
-                        <li><a class="faicon-google-plus" href="#"><i class="fab fa-google-plus-g"></i></a></li>
-                        <li><a class="faicon-linkedin" href="#"><i class="fab fa-linkedin"></i></a></li>
-                        <li><a class="faicon-twitter" href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a class="faicon-vk" href="#"><i class="fab fa-vk"></i></a></li>
-                    </ul>
+
+
+
+<section id="filtrar-empleados">
+    <div class="search-section">
+        <input type="text" id="searchInputEmpleados" placeholder="Buscar por ID Empleado, Nombre, etc.">
+        <button type="button" id="searchButtonEmpleados">Buscar</button>
+    </div>
+
+    <section class="table-section">
+        <h2 class="section-title">Lista de Empleados</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID Empleado</th>
+                    <th>Nombre</th>
+                    <th>Rol</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de Contratación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tableBodyEmpleados">
+                <!-- Aquí se insertarán los registros dinámicamente -->
+            </tbody>
+        </table>
+    </section>
+</section>
+
+
+
+<section id="filtrar-organizadores">
+    <div class="search-section">
+        <input type="text" id="searchInputOrganizadores" placeholder="Buscar por ID Organizador, Nombre, etc.">
+        <button type="button" id="searchButtonOrganizadores">Buscar</button>
+    </div>
+
+    <section class="table-section">
+        <h2 class="section-title">Lista de Organizadores</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID Organizador</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de Registro</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tableBodyOrganizadores">
+                <!-- Aquí se insertarán los registros dinámicamente -->
+            </tbody>
+        </table>
+    </section>
+</section>
+
+
+<section id="filtrar-resenas">
+    <div class="search-section">
+        <input type="text" id="searchInputResenas" placeholder="Buscar por ID Reseña, Comentario, etc.">
+        <button type="button" id="searchButtonResenas">Buscar</button>
+    </div>
+
+    <section class="table-section">
+        <h2 class="section-title">Lista de Reseñas</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID Reseña</th>
+                    <th>ID Evento</th>
+                    <th>ID Asistente</th>
+                    <th>Comentario</th>
+                    <th>Calificación</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tableBodyResenas">
+                <!-- Aquí se insertarán los registros dinámicamente -->
+            </tbody>
+        </table>
+    </section>
+</section>
+
+
+<section id="filtrar-categorias">
+    <div class="search-section">
+        <input type="text" id="searchInputCategorias" placeholder="Buscar por ID Categoría, Nombre, etc.">
+        <button type="button" id="searchButtonCategorias">Buscar</button>
+    </div>
+
+    <section class="table-section">
+        <h2 class="section-title">Lista de Categorías</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID Categoría</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tableBodyCategorias">
+                <!-- Aquí se insertarán los registros dinámicamente -->
+            </tbody>
+        </table>
+    </section>
+</section>
+</section>
+
+
+<!-- Sección ACTUALIZAR -->
+<section id="Actualizar">
+    <div class="wrapper row3">
+        <main class="hoc container clear">
+            <div class="crud-container">
+                <!-- SECCIÓN: TÍTULO DEL SISTEMA -->
+                <div class="crud-header">
+                    <h1>Sistema de Gestión de Actualizar</h1>
                 </div>
-                <div class="one_quarter">
-                    <h6 class="heading">Suscríbete a nuestro boletín</h6>
-                    <p class="nospace btmspace-15">Recibe actualizaciones sobre nuestros servicios y eventos.</p>
-                    <form method="post" action="#">
-                        <fieldset>
-                            <legend>Newsletter:</legend>
-                            <input class="btmspace-15" type="text" value="" placeholder="Nombre">
-                            <input class="btmspace-15" type="text" value="" placeholder="Email">
-                            <button type="submit" value="submit">Enviar</button>
-                        </fieldset>
-                    </form>
-                </div>
-                <div class="one_quarter">
-                    <h6 class="heading">Enlaces de interés</h6>
-                    <ul class="nospace linklist">
-                        <li><a href="#">Nuestros servicios</a></li>
-                        <li><a href="#">Eventos recientes</a></li>
-                        <li><a href="#">Testimonios</a></li>
-                        <li><a href="#">Blog de eventos</a></li>
-                        <li><a href="#">Preguntas frecuentes</a></li>
-                    </ul>
-                </div>
-                <div class="one_quarter">
-                    <h6 class="heading">Galería de eventos</h6>
-                    <ul class="nospace clear latestimg">
-                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-                        <li><a class="imgover" href="#"><img src="../images/demo/100x100.png" alt=""></a></li>
-                    </ul>
-                </div>
-            </div>
-        </footer>
+    <div class="button-container">
+        <button class="btn-toggle" data-form="asistente-update-form">Actualizar Asistente</button>
+        <button class="btn-toggle" data-form="categoria-update-form">Actualizar Categoría de Evento</button>
+        <button class="btn-toggle" data-form="empleado-update-form">Actualizar Empleado</button>
+        <button class="btn-toggle" data-form="evento-update-form">Actualizar Evento</button>
+        <button class="btn-toggle" data-form="organizador-update-form">Actualizar Organizador</button>
+        <button class="btn-toggle" data-form="reseña-update-form">Actualizar Reseña</button>
+        <button class="btn-toggle" data-form="ticket-update-form">Actualizar Ticket</button>
     </div>
     
-    <!-- SECCIÓN: COPYRIGHT -->
-    <div class="wrapper row5">
-        <div id="copyright" class="hoc clear">
-            <p class="fl_left">Copyright &copy; 2025 - Todos los derechos reservados - <a href="#">Angels Events</a></p>
-            <p class="fl_right">Plantilla por <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
-        </div>
-    </div>
+    <form id="asistente-update-form" class="hidden">
+        <h2>Actualizar Asistente</h2>
+        <label for="asistente-id">ID del Asistente:</label>
+        <input type="text" id="asistente-id" required>
+        
+        <label for="asistente-nombre">Nombre:</label>
+        <input type="text" id="asistente-nombre" required>
+        
+        <label for="asistente-email">Email:</label>
+        <input type="email" id="asistente-email" required>
+        
+        <label for="asistente-phone">Teléfono:</label>
+        <input type="text" id="asistente-phone" required>
+        
+        <button type="submit">Actualizar</button>
+    </form>
     
+    <form id="categoria-update-form" class="hidden">
+        <h2>Actualizar Categoría de Evento</h2>
+        <label for="categoria-id">ID de Categoría:</label>
+        <input type="text" id="categoria-id" required>
+        
+        <label for="categoria-nombre">Nombre:</label>
+        <input type="text" id="categoria-nombre" required>
+        
+        <label for="categoria-descripcion">Descripción:</label>
+        <textarea id="categoria-descripcion" required></textarea>
+        
+        <button type="submit">Actualizar</button>
+    </form>
+    
+    <form id="empleado-update-form" class="hidden">
+        <h2>Actualizar Empleado</h2>
+        <label for="empleado-id">ID del Empleado:</label>
+        <input type="text" id="empleado-id" required>
+        
+        <label for="empleado-nombre">Nombre:</label>
+        <input type="text" id="empleado-nombre" required>
+        
+        <label for="empleado-apellido">Apellido:</label>
+        <input type="text" id="empleado-apellido" required>
+        
+        <label for="empleado-direccion">Dirección:</label>
+        <input type="text" id="empleado-direccion" required>
+        
+        <label for="empleado-telefono">Teléfono:</label>
+        <input type="text" id="empleado-telefono" required>
+        
+        <button type="submit">Actualizar</button>
+    </form>
+    
+    <form id="evento-update-form" class="hidden">
+        <h2>Actualizar Evento</h2>
+        <label for="evento-id">ID del Evento:</label>
+        <input type="text" id="evento-id" required>
+        
+        <label for="evento-nombre">Nombre del Evento:</label>
+        <input type="text" id="evento-nombre" required>
+        
+        <label for="evento-descripcion">Descripción:</label>
+        <textarea id="evento-descripcion" required></textarea>
+        
+        <label for="evento-ubicacion">Ubicación:</label>
+        <input type="text" id="evento-ubicacion" required>
+        
+        <label for="evento-categoria">Categoría:</label>
+        <input type="number" id="evento-categoria" required>
+        
+        <button type="submit">Actualizar</button>
+    </form>
+    
+    <form id="organizador-update-form" class="hidden">
+        <h2>Actualizar Organizador</h2>
+        <label for="organizador-id">ID del Organizador:</label>
+        <input type="text" id="organizador-id" required>
+        
+        <label for="organizador-nombre">Nombre:</label>
+        <input type="text" id="organizador-nombre" required>
+        
+        <label for="organizador-telefono">Teléfono:</label>
+        <input type="text" id="organizador-telefono" required>
+        
+        <label for="organizador-email">Email:</label>
+        <input type="email" id="organizador-email" required>
+        
+        <button type="submit">Actualizar</button>
+    </form>
+    
+    <form id="reseña-update-form" class="hidden">
+        <h2>Actualizar Reseña</h2>
+        <label for="reseña-id">ID de la Reseña:</label>
+        <input type="text" id="reseña-id" required>
+        
+        <label for="reseña-comentario">Comentario:</label>
+        <textarea id="reseña-comentario" required></textarea>
+        
+        <label for="reseña-calificacion">Calificación (1-5):</label>
+        <input type="number" id="reseña-calificacion" min="1" max="5" required>
+        
+        <label for="reseña-evento-id">ID del Evento:</label>
+        <input type="number" id="reseña-evento-id" required>
+        
+        <label for="reseña-asistente-id">ID del Asistente:</label>
+        <input type="number" id="reseña-asistente-id" required>
+        
+        <button type="submit">Actualizar</button>
+    </form>
+    
+    <form id="ticket-update-form" class="hidden">
+        <h2>Actualizar Ticket</h2>
+        <label for="ticket-id">ID del Ticket:</label>
+        <input type="text" id="ticket-id" required>
+        
+        <label for="ticket-event-id">ID del Evento:</label>
+        <input type="number" id="ticket-event-id" required>
+        
+        <label for="ticket-assistant-id">ID del Asistente:</label>
+        <input type="number" id="ticket-assistant-id" required>
+        
+        <label for="ticket-price">Precio:</label>
+        <input type="number" id="ticket-price" step="0.01" required>
+        
+        <label for="ticket-seat-number">Número de Asiento:</label>
+        <input type="text" id="ticket-seat-number" required>
+        
+        <button type="submit">Actualizar</button>
+    </form>
+    
+    <p id="mensaje"></p>
+
+</section>
+
+<!-- Sección ELIMINAR -->
+<section id="Eliminar">
+    <h2 style="text-align: center;">Eliminar Registro</h2>
+    
+    <!-- Botones de eliminación -->
+    <div class="button-container">
+        <button class="btn-toggle" data-form="asistente-delete-form">Eliminar Asistente</button>
+        <button class="btn-toggle" data-form="categoria-delete-form">Eliminar Categoría de Evento</button>
+        <button class="btn-toggle" data-form="empleado-delete-form">Eliminar Empleado</button>
+        <button class="btn-toggle" data-form="evento-delete-form">Eliminar Evento</button>
+        <button class="btn-toggle" data-form="organizador-delete-form">Eliminar Organizador</button>
+        <button class="btn-toggle" data-form="reseña-delete-form">Eliminar Reseña</button>
+        <button class="btn-toggle" data-form="ticket-delete-form">Eliminar Ticket</button>
+    </div>
+
+    <!-- Formularios de eliminación -->
+    <!-- Asistente -->
+    <form id="asistente-delete-form" class="delete-form hidden">
+        <h3>Eliminar Asistente</h3>
+        <label for="asistente-id">ID del Asistente:</label>
+        <input type="number" id="asistente-id" required>
+        <button type="submit" class="delete-btn">Eliminar</button>
+    </form>
+    
+    <!-- Categoría -->
+    <form id="categoria-delete-form" class="delete-form hidden">
+        <h3>Eliminar Categoría de Evento</h3>
+        <label for="categoria-id">ID de Categoría:</label>
+        <input type="number" id="categoria-id" required>
+        <button type="submit" class="delete-btn">Eliminar</button>
+    </form>
+
+    <!-- Empleado -->
+    <form id="empleado-delete-form" class="delete-form hidden">
+        <h3>Eliminar Empleado</h3>
+        <label for="empleado-id">ID del Empleado:</label>
+        <input type="number" id="empleado-id" required>
+        <button type="submit" class="delete-btn">Eliminar</button>
+    </form>
+
+    <!-- Evento -->
+    <form id="evento-delete-form" class="delete-form hidden">
+        <h3>Eliminar Evento</h3>
+        <label for="evento-id">ID del Evento:</label>
+        <input type="number" id="evento-id" required>
+        <button type="submit" class="delete-btn">Eliminar</button>
+    </form>
+
+    <!-- Organizador -->
+    <form id="organizador-delete-form" class="delete-form hidden">
+        <h3>Eliminar Organizador</h3>
+        <label for="organizador-id">ID del Organizador:</label>
+        <input type="number" id="organizador-id" required>
+        <button type="submit" class="delete-btn">Eliminar</button>
+    </form>
+
+    <!-- Reseña -->
+    <form id="reseña-delete-form" class="delete-form hidden">
+        <h3>Eliminar Reseña</h3>
+        <label for="reseña-id">ID de la Reseña:</label>
+        <input type="number" id="reseña-id" required>
+        <button type="submit" class="delete-btn">Eliminar</button>
+    </form>
+
+    <!-- Ticket -->
+    <form id="ticket-delete-form" class="delete-form hidden">
+        <h3>Eliminar Ticket</h3>
+        <label for="ticket-id">ID del Ticket:</label>
+        <input type="number" id="ticket-id" required>
+        <button type="submit" class="delete-btn">Eliminar</button>
+    </form>
+
+    <!-- Mensaje de éxito o error -->
+    <p id="mensaje" class="message"></p>
+</section>
+
+
     <!-- SECCIÓN: BOTÓN VOLVER ARRIBA Y SCRIPTS -->
     <a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
     <script src="../layout/scripts/jquery.min.js"></script>
@@ -314,5 +646,7 @@
     <script src="../layout/scripts/jquery.mobilemenu.js"></script>
     <script src="/registros.js"></script>
     <script src="/buscar.js"></script>
+    <script src="/sections.js"></script>
+  <script src="/actualizar.js"></script>
 </body>
 </html>

@@ -1,14 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll(".btn-toggle");
-    const forms = document.querySelectorAll("form");
-
-    buttons.forEach(button => {
-        button.addEventListener("click", () => {
-            forms.forEach(form => form.classList.add("hidden")); // Ocultar todos los formularios
-            document.getElementById(button.dataset.form).classList.remove("hidden"); // Mostrar el seleccionado
-        });
-    });
-});
 
 
 //registrar asistente

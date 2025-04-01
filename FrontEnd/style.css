@@ -726,3 +726,201 @@ form button:hover {
 #registro-form button:hover {
     background: #0056b3;
 }
+
+/* Estilos generales para la sección de filtrado */
+#Filtrar {
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo del contenedor de los botones de filtrado */
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Estilo para cada botón de filtrado */
+.button-container .btn-toggle-filter {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-container .btn-toggle-filter:hover {
+    background-color: #45a049;
+}
+
+/* Estilo de la barra de búsqueda */
+.search-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-section input {
+    padding: 10px;
+    width: 80%;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-section button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-section button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo de la tabla de resultados */
+.table-section {
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-section .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilo para la tabla */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+.data-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Responsividad: hacer que los botones y tabla se ajusten a pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .button-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-section {
+        flex-direction: column;
+    }
+
+    .search-section input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .search-section button {
+        width: 100%;
+    }
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+/* Estilo base de los botones */
+.button-container .btn-toggle {
+    background-color: #007bff; /* Color azul principal */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-align: center;
+    width: auto;
+    box-sizing: border-box;
+}
+
+/* Efecto hover para los botones */
+.button-container .btn-toggle:hover {
+    background-color: #0056b3; /* Azul más oscuro */
+    transform: translateY(-3px); /* Subir el botón un poco para dar efecto de elevación */
+}
+
+/* Efecto active para el clic del botón */
+.button-container .btn-toggle:active {
+    background-color: #003d80; /* Azul aún más oscuro */
+    transform: translateY(1px); /* Efecto de bajada al presionar */
+}
+
+/* Efecto de foco (cuando el botón es seleccionado) */
+.button-container .btn-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.6); /* Resaltar el botón con sombra azul */
+}
+
+/* Efectos para los botones en dispositivos móviles */
+@media (max-width: 768px) {
+    .button-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .button-container .btn-toggle {
+        width: 100%; /* Los botones ocuparán el 100% del ancho en pantallas pequeñas */
+        padding: 14px;
+        font-size: 18px;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+section {
+    background-color: white;  /* Fondo blanco para las secciones */
+    color: #333;  /* Color de texto oscuro para buena legibilidad */
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Fondo blanco para el body */
+body {
+    background-color: #f4f7fa; /* Fondo general suave */
+    color: #333; /* Color de texto oscuro para la legibilidad */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+

@@ -1,3 +1,4 @@
+
  // Función para cargar un ticket basado en su ID
         async function cargarTicketPorId(idTicket) {
             try {
