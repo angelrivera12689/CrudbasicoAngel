@@ -110,8 +110,8 @@ public class EventService {
         eventToUpdate.setEventName(eventDTO.getEventName());
         eventToUpdate.setDescription(eventDTO.getDescription());
         eventToUpdate.setLocation(eventDTO.getLocation());
+        eventToUpdate.setImageUrl(eventDTO.getImageUrl()); // 👈 Aquí se actualiza la imagen
     
-        // 🔥 Buscar la categoría antes de asignarla
         CategoryEvent categoryEvent = categoryRepository.findById(eventDTO.getCategoryId())
             .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
     
@@ -135,33 +135,34 @@ public class EventService {
     }
 
   // ✅ Método para convertir un Events a EventsDTO
-public EventsDTO convertToDTO(Events event) {
+  public EventsDTO convertToDTO(Events event) {
     return new EventsDTO(
             event.getEventName(),
             event.getDescription(),
             event.getDate(),
             event.getTime(),
             event.getLocation(),
-            event.getCategoryEvent().getcategory_id()
+            event.getCategoryEvent().getcategory_id(),
+            event.getImageUrl() 
     );
 }
 
+
 // ✅ Método para convertir un EventsDTO a Events
 public Events convertToModel(EventsDTO eventDTO) {
-    // Buscar la categoría del evento en la base de datos
     CategoryEvent categoryEvent = categoryRepository.findById(eventDTO.getCategoryId())
             .orElseThrow(() -> new RuntimeException("Categoría de evento no encontrada con ID: " + eventDTO.getCategoryId()));
 
-    // Crear y retornar el objeto Events
     return new Events(
-            categoryEvent, // Categoría del evento
-            0, // Suponiendo que el ID es autogenerado
+            categoryEvent,
+            0,
             eventDTO.getEventName(),
             eventDTO.getDescription(),
-            eventDTO.getDate(), // LocalDate, ya está listo para ser usado
-            eventDTO.getTime(), // LocalTime, ya está listo para ser usado
+            null, // la fecha se autogenera
+            null, // la hora también
             eventDTO.getLocation(),
-            true // Estado activo por defecto
+            eventDTO.getImageUrl(), // 👈 aquí lo añadimos
+            true
     );
 }
 }

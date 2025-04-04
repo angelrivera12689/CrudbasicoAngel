@@ -35,6 +35,9 @@ public class Events {
     @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
     private boolean status;
 
+    @Column(name = "image_url", length = 255)
+    private String imageUrl; 
+
     // Constructor vacío para JPA
     public Events() {
         this.date = LocalDate.now();
@@ -49,16 +52,17 @@ public class Events {
 
     // Constructor con parámetros
     public Events(CategoryEvent categoryEvent, int idEvent, String eventName, String description,
-                  LocalDate date, LocalTime time, String location, boolean status) {
-        this.idEvent = idEvent;
-        this.eventName = eventName;
-        this.description = description;
-        this.date = date != null ? date : LocalDate.now();
-        this.time = time != null ? time : LocalTime.now();
-        this.location = location;
-        this.categoryEvent = categoryEvent;
-        this.status = status;
-    }
+    LocalDate date, LocalTime time, String location, String imageUrl, boolean status) {
+this.idEvent = idEvent;
+this.eventName = eventName;
+this.description = description;
+this.date = date != null ? date : LocalDate.now();
+this.time = time != null ? time : LocalTime.now();
+this.location = location;
+this.imageUrl = imageUrl;
+this.categoryEvent = categoryEvent;
+this.status = status;
+}
 
     // Getters y Setters
     public int getIdEvent() {
@@ -124,4 +128,12 @@ public class Events {
     public void setStatus(boolean status) {
         this.status = status;
     }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    
 }

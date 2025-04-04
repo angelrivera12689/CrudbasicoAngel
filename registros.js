@@ -87,54 +87,55 @@ document.getElementById("persona-form").addEventListener("submit", async functio
 });
 
 //registrar evento 
-    document.getElementById("evento-form").addEventListener("submit", async function (event) {
-        event.preventDefault(); // Evita que la página se recargue
+document.getElementById("evento-form").addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-        // Capturar los valores del formulario
-        let eventName = document.getElementById("evento-nombre").value.trim();
-        let description = document.getElementById("evento-descripcion").value.trim();
-        let location = document.getElementById("evento-ubicacion").value.trim();
-        let categoryId = parseInt(document.getElementById("evento-categoria").value.trim());
+    let eventName = document.getElementById("evento-nombre").value.trim();
+    let description = document.getElementById("evento-descripcion").value.trim();
+    let location = document.getElementById("evento-ubicacion").value.trim();
+    let categoryId = parseInt(document.getElementById("evento-categoria").value.trim());
+    let imageUrl = document.getElementById("evento-imagen").value.trim();
 
-        // Validar que los campos no estén vacíos
-        if (!eventName || !description || !location || isNaN(categoryId)) {
-            alert("Todos los campos son obligatorios y la categoría debe ser un número válido.");
-            return;
-        }
+    if (!eventName || !description || !location || !imageUrl || isNaN(categoryId)) {
+        alert("Todos los campos son obligatorios, y la categoría debe ser un número válido.");
+        return;
+    }
 
-        let bodyContent = JSON.stringify({
-            eventName: eventName,
-            description: description,
-            location: location,
-            categoryId: categoryId
+    // 👇 No se envían ni date ni time
+    let bodyContent = JSON.stringify({
+        eventName: eventName,
+        description: description,
+        location: location,
+        categoryId: categoryId,
+        imageUrl: imageUrl
+    });
+
+    try {
+        let response = await fetch("http://localhost:8080/api/v1/events/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            },
+            body: bodyContent
         });
 
-        let headersList = {
-            "Accept": "*/*",
-            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-            "Content-Type": "application/json"
-        };
-
-        try {
-            let response = await fetch("http://localhost:8080/api/v1/events/", {
-                method: "POST",
-                body: bodyContent,
-                headers: headersList
-            });
-
-            if (!response.ok) {
-                throw new Error("Error en la solicitud: " + response.statusText);
-            }
-
-            let data = await response.json();
-            console.log("Evento registrado:", data);
-            alert("Evento registrado con éxito");
-            document.getElementById("evento-form").reset(); // Limpia el formulario
-        } catch (error) {
-            console.error("Error al registrar el evento:", error);
-            alert("Error al registrar el evento.");
+        if (!response.ok) {
+            const errorBody = await response.text();
+            throw new Error("Error en la solicitud: " + response.status + " - " + errorBody);
         }
-    });
+
+        let data = await response.json();
+        console.log("✅ Evento registrado:", data);
+        alert("✅ Evento registrado con éxito");
+        document.getElementById("evento-form").reset();
+    } catch (error) {
+        console.error("❌ Error al registrar el evento:", error);
+        alert("❌ Error al registrar el evento. Revisa consola.");
+    }
+});
+
+
 
 //registro organizar
 document.getElementById("organizer-form").addEventListener("submit", async function (event) {

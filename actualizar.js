@@ -187,9 +187,10 @@ document.addEventListener("DOMContentLoaded", function () {
         let descripcion = document.getElementById("evento-descripcion-update").value.trim();
         let ubicacion = document.getElementById("evento-ubicacion-update").value.trim();
         let categoria = document.getElementById("evento-categoria-update").value.trim();
+        let imageUrl = document.getElementById("evento-imagen-update").value.trim(); // 👈 Nuevo campo
 
         // Validar que los campos no estén vacíos
-        if (!id || !nombre || !descripcion || !ubicacion || !categoria) {
+        if (!id || !nombre || !descripcion || !ubicacion || !categoria || !imageUrl) {
             alert("⚠️ Todos los campos son obligatorios.");
             return;
         }
@@ -199,7 +200,8 @@ document.addEventListener("DOMContentLoaded", function () {
             "eventName": nombre,
             "description": descripcion,
             "location": ubicacion,
-            "categoryId": parseInt(categoria) // Convertir a número si es un ID
+            "categoryId": parseInt(categoria),
+            "imageUrl": imageUrl // 👈 Se envía también
         });
 
         let url = `http://localhost:8080/api/v1/events/${id}`;
@@ -218,7 +220,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.log("📢 Estado de la respuesta:", response.status);
 
-            // Intentar convertir la respuesta a JSON
             let data;
             try {
                 data = await response.json();
@@ -229,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (response.ok) {
                 alert("✅ Evento actualizado con éxito.");
-                document.getElementById("evento-update-form").reset(); // Limpiar formulario
+                document.getElementById("evento-update-form").reset();
             } else {
                 let errorMessage = data && data.message ? data.message : "No se pudo actualizar el evento.";
                 alert(`❌ Error: ${errorMessage}`);
@@ -243,6 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 
 //actualziar organizador
 
