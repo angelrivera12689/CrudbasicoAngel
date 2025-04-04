@@ -902,9 +902,7 @@ form button:hover {
     }
 }
 
-.hidden {
-    display: none;
-}
+
 
 section {
     background-color: white;  /* Fondo blanco para las secciones */

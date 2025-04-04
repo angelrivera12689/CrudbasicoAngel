@@ -122,13 +122,15 @@ public class TicketService {
         if (!ticketOpt.isPresent()) {
             return new ResponseDTO(HttpStatus.BAD_REQUEST.toString(), "El ticket no existe");
         }
-
+    
         Ticket ticket = ticketOpt.get();
         ticket.setPrice(ticketDTO.getPrice());
         ticket.setSeatNumber(ticketDTO.getSeatNumber());
         ticket.setStatus(ticketDTO.getStatus());
-        ticket.setPurchaseDate(ticketDTO.getPurchaseDate());
-
+    
+        // Establecer automáticamente la fecha de compra con la fecha actual
+        ticket.setPurchaseDate(LocalDateTime.now());
+    
         ticketRepository.save(ticket);
         return new ResponseDTO(HttpStatus.OK.toString(), "Ticket actualizado exitosamente");
     }

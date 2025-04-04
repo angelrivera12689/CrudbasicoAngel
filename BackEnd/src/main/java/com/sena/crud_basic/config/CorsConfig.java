@@ -9,29 +9,32 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class CorsConfig {
 
-      @Bean
+    @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        //permitir solicitudes desde todos los origenes
-        // //  config.addAllowedOrigin("*");
+        // Permitir solicitudes desde múltiples orígenes
         config.addAllowedOrigin("http://127.0.0.1:5500");
-        //config.addAllowedOrigin("n cantidad de servidores");
+        config.addAllowedOrigin("http://localhost:5500");
+        config.addAllowedOrigin("https://tu-dominio-produccion.com");
 
-        //permitir solicitudes con estos metodos HTTP
+        // Permitir métodos HTTP específicos
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
 
-        //permitir el envio de ciertos encabezados en las solicitudes
+        // Permitir encabezados específicos
+        config.addAllowedHeader("*"); // Para permitir todos los encabezados
         config.addAllowedHeader("Authorization");
         config.addAllowedHeader("Content-Type");
-        //config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+
+        // Configurar credenciales
         config.setAllowCredentials(true);
+
+        // Aplicar esta configuración a todas las rutas
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
-
 }

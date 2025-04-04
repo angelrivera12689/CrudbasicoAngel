@@ -429,54 +429,62 @@
         <button class="btn-toggle" data-form="reseña-update-form">Actualizar Reseña</button>
         <button class="btn-toggle" data-form="ticket-update-form">Actualizar Ticket</button>
     </div>
-    
-    <form id="asistente-update-form" class="hidden">
+
+    <form id="asistente-update-form">
         <h2>Actualizar Asistente</h2>
-        <label for="asistente-id">ID del Asistente:</label>
-        <input type="text" id="asistente-id" required>
-        
-        <label for="asistente-nombre">Nombre:</label>
-        <input type="text" id="asistente-nombre" required>
-        
-        <label for="asistente-email">Email:</label>
-        <input type="email" id="asistente-email" required>
-        
-        <label for="asistente-phone">Teléfono:</label>
-        <input type="text" id="asistente-phone" required>
-        
-        <button type="submit">Actualizar</button>
+    
+        <label for="update-asistente-id">ID del Asistente:</label>
+        <input type="text" id="update-asistente-id" required>
+    
+        <label for="update-asistente-nombre">Nombre:</label>
+        <input type="text" id="update-asistente-nombre" required>
+    
+        <label for="update-asistente-email">Email:</label>
+        <input type="email" id="update-asistente-email" required>
+    
+        <label for="update-asistente-phone">Teléfono:</label>
+        <input type="text" id="update-asistente-phone" required>
+    
+        <button type="submit">Actualizar Asistente</button>
     </form>
+    
+  <div id="mensaje">
+    <ul></ul>
+</div>
+
+    
     
     <form id="categoria-update-form" class="hidden">
         <h2>Actualizar Categoría de Evento</h2>
         <label for="categoria-id">ID de Categoría:</label>
-        <input type="text" id="categoria-id" required>
+        <input type="text" id="categoria-id-update" required>
         
         <label for="categoria-nombre">Nombre:</label>
-        <input type="text" id="categoria-nombre" required>
+        <input type="text" id="categoria-nombre-update" required>
         
         <label for="categoria-descripcion">Descripción:</label>
-        <textarea id="categoria-descripcion" required></textarea>
+        <textarea id="categoria-descripcion-update" required></textarea>
         
         <button type="submit">Actualizar</button>
     </form>
     
+
     <form id="empleado-update-form" class="hidden">
         <h2>Actualizar Empleado</h2>
         <label for="empleado-id">ID del Empleado:</label>
-        <input type="text" id="empleado-id" required>
+        <input type="text" id="empleado-id-update" required>
         
         <label for="empleado-nombre">Nombre:</label>
-        <input type="text" id="empleado-nombre" required>
+        <input type="text" id="empleado-nombre-update" required>
         
         <label for="empleado-apellido">Apellido:</label>
-        <input type="text" id="empleado-apellido" required>
+        <input type="text" id="empleado-apellido-update" required>
         
         <label for="empleado-direccion">Dirección:</label>
-        <input type="text" id="empleado-direccion" required>
+        <input type="text" id="empleado-direccion-update" required>
         
         <label for="empleado-telefono">Teléfono:</label>
-        <input type="text" id="empleado-telefono" required>
+        <input type="text" id="empleado-telefono-update" required>
         
         <button type="submit">Actualizar</button>
     </form>
@@ -487,16 +495,16 @@
         <input type="text" id="evento-id" required>
         
         <label for="evento-nombre">Nombre del Evento:</label>
-        <input type="text" id="evento-nombre" required>
+        <input type="text" id="evento-nombre-update" required>
         
         <label for="evento-descripcion">Descripción:</label>
-        <textarea id="evento-descripcion" required></textarea>
+        <textarea id="evento-descripcion-update" required></textarea>
         
         <label for="evento-ubicacion">Ubicación:</label>
-        <input type="text" id="evento-ubicacion" required>
+        <input type="text" id="evento-ubicacion-update" required>
         
         <label for="evento-categoria">Categoría:</label>
-        <input type="number" id="evento-categoria" required>
+        <input type="number" id="evento-categoria-update" required>
         
         <button type="submit">Actualizar</button>
     </form>
@@ -504,16 +512,16 @@
     <form id="organizador-update-form" class="hidden">
         <h2>Actualizar Organizador</h2>
         <label for="organizador-id">ID del Organizador:</label>
-        <input type="text" id="organizador-id" required>
+        <input type="text" id="organizador-id-update" required>
         
         <label for="organizador-nombre">Nombre:</label>
-        <input type="text" id="organizador-nombre" required>
+        <input type="text" id="organizador-nombre-update" required>
         
         <label for="organizador-telefono">Teléfono:</label>
-        <input type="text" id="organizador-telefono" required>
+        <input type="text" id="organizador-telefono-update" required>
         
         <label for="organizador-email">Email:</label>
-        <input type="email" id="organizador-email" required>
+        <input type="email" id="organizador-email-update" required>
         
         <button type="submit">Actualizar</button>
     </form>
@@ -521,19 +529,19 @@
     <form id="reseña-update-form" class="hidden">
         <h2>Actualizar Reseña</h2>
         <label for="reseña-id">ID de la Reseña:</label>
-        <input type="text" id="reseña-id" required>
+        <input type="text" id="reseña-id-update" required>
         
         <label for="reseña-comentario">Comentario:</label>
-        <textarea id="reseña-comentario" required></textarea>
+        <textarea id="reseña-comentario-update" required></textarea>
         
         <label for="reseña-calificacion">Calificación (1-5):</label>
-        <input type="number" id="reseña-calificacion" min="1" max="5" required>
+        <input type="number" id="reseña-calificacion-update" min="1" max="5" required>
         
         <label for="reseña-evento-id">ID del Evento:</label>
-        <input type="number" id="reseña-evento-id" required>
+        <input type="number" id="reseña-evento-id-update" required>
         
         <label for="reseña-asistente-id">ID del Asistente:</label>
-        <input type="number" id="reseña-asistente-id" required>
+        <input type="number" id="reseña-asistente-id-update" required>
         
         <button type="submit">Actualizar</button>
     </form>
@@ -541,19 +549,19 @@
     <form id="ticket-update-form" class="hidden">
         <h2>Actualizar Ticket</h2>
         <label for="ticket-id">ID del Ticket:</label>
-        <input type="text" id="ticket-id" required>
+        <input type="text" id="ticket-id-update" required>
         
         <label for="ticket-event-id">ID del Evento:</label>
-        <input type="number" id="ticket-event-id" required>
+        <input type="number" id="ticket-event-id-update" required>
         
         <label for="ticket-assistant-id">ID del Asistente:</label>
-        <input type="number" id="ticket-assistant-id" required>
+        <input type="number" id="ticket-assistant-id-update" required>
         
         <label for="ticket-price">Precio:</label>
-        <input type="number" id="ticket-price" step="0.01" required>
+        <input type="number" id="ticket-price-update" step="0.01" required>
         
         <label for="ticket-seat-number">Número de Asiento:</label>
-        <input type="text" id="ticket-seat-number" required>
+        <input type="text" id="ticket-seat-number-update" required>
         
         <button type="submit">Actualizar</button>
     </form>

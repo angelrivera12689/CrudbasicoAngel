@@ -12,6 +12,7 @@ import com.sena.crud_basic.repository.IEvent;
 import com.sena.crud_basic.repository.IEventCategory;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,21 +105,30 @@ public class EventService {
                 "El evento no existe"
             );
         }
-
+    
         Events eventToUpdate = existingEvent.get();
         eventToUpdate.setEventName(eventDTO.getEventName());
         eventToUpdate.setDescription(eventDTO.getDescription());
-        eventToUpdate.setDate(eventDTO.getDate());
-        eventToUpdate.setTime(eventDTO.getTime());
         eventToUpdate.setLocation(eventDTO.getLocation());
-
+    
+        // 🔥 Buscar la categoría antes de asignarla
+        CategoryEvent categoryEvent = categoryRepository.findById(eventDTO.getCategoryId())
+            .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+    
+        eventToUpdate.setCategoryEvent(categoryEvent);
+    
+        // Fecha y hora se actualizan automáticamente
+        eventToUpdate.setDate(LocalDate.now());
+        eventToUpdate.setTime(LocalTime.now());
+    
         eventRepository.save(eventToUpdate);
-
+    
         return new ResponseDTO(
             HttpStatus.OK.toString(),
             "Evento actualizado exitosamente"
         );
     }
+    
 
     public List<Events> filterEvent(String event_name, String description, LocalDate date, String location, Integer category_id) {
         return eventRepository.filterevent(event_name, description, date, location, category_id);

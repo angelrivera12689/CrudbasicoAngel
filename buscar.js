@@ -74,3 +74,5 @@
             // Cargar inicialmente todos los tickets si lo deseas, o dejarlo vacío
             // cargarTodosLosTickets();
         });
+
+        

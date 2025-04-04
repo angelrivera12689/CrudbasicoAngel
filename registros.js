@@ -281,3 +281,5 @@ document.getElementById("ticket-form").addEventListener("submit", async function
         alert("Error al registrar el ticket.");
     }
 });
+
+
