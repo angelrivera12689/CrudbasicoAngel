@@ -135,5 +135,9 @@ this.status = status;
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-    
+
+    public int getEventId() {
+        return this.idEvent;
+    }
+   
 }

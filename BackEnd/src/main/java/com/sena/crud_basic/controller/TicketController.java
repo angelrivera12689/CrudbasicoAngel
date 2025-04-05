@@ -59,8 +59,9 @@ public class TicketController {
         return ResponseEntity.ok(response);
     }
 
-     @GetMapping("/filter")
+    @GetMapping("/filter")
     public ResponseEntity<Object> filterTickets(
+            @RequestParam(required = false, name = "idTicket") Integer idTicket,  // Agregado el filtro por idTicket
             @RequestParam(required = false, name = "eventId") Integer eventId,
             @RequestParam(required = false, name = "assistantId") Integer assistantId,
             @RequestParam(required = false, name = "price") Double price,
@@ -68,10 +69,14 @@ public class TicketController {
             @RequestParam(required = false, name = "status") Boolean status,
             @RequestParam(required = false, name = "fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,
             @RequestParam(required = false, name = "toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDate) {
-
-        List<Ticket> tickets = ticketService.filterTickets(eventId, assistantId, price, seatNumber, status, fromDate, toDate);
+    
+        // Llamamos al servicio para filtrar los tickets con los parámetros proporcionados
+        List<Ticket> tickets = ticketService.filterTickets(idTicket, eventId, assistantId, price, seatNumber, status, fromDate, toDate);
+        
+        // Devolvemos los tickets encontrados con un estado HTTP OK
         return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
+    
     @PutMapping("/{id}")
     public ResponseEntity<ResponseDTO> updateTicket(@PathVariable int id, @RequestBody TicketDTO ticketDTO) {
         ResponseDTO response = ticketService.update(id, ticketDTO);

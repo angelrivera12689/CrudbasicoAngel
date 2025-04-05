@@ -2,11 +2,15 @@ package com.sena.crud_basic.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.sena.crud_basic.DTO.AssistantDTO;
 import com.sena.crud_basic.DTO.ResponseDTO;
+import com.sena.crud_basic.model.Assistant;
 import com.sena.crud_basic.service.AssistantService;
 
 @RestController
@@ -57,14 +61,17 @@ public class AssistantController {
         }
     }
     @GetMapping("/filter")
-    public ResponseEntity<Object> filterAssistants(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) Boolean status) {
+public ResponseEntity<List<Assistant>> filterAssistants(
+        @RequestParam(required = false) Integer id,
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) String email,
+        @RequestParam(required = false) String phone,
+        @RequestParam(required = false) Boolean status
+) {
+    List<Assistant> results = assistantService.filterAssistants(id, name, email, phone, status);
+    return new ResponseEntity<>(results, HttpStatus.OK);
+}
     
-        var assistantList = assistantService.filterAssistants(name, email, status);
-        return new ResponseEntity<>(assistantList, HttpStatus.OK);
-    }
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateAssistant(@PathVariable int id, @RequestBody AssistantDTO assistantDTO) {
         ResponseDTO response = assistantService.update(id, assistantDTO);

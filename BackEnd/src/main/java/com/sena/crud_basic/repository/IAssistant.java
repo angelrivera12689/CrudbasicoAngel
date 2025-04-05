@@ -12,12 +12,18 @@ public interface IAssistant extends JpaRepository<Assistant, Integer> {
     @Query("SELECT a FROM Assistant a WHERE a.status != false")
     List<Assistant> getListAssistantActive();
 
-   @Query("SELECT a FROM Assistant a " +
-       "WHERE (:name IS NULL OR a.name LIKE %:name%) " +
-       "AND (:email IS NULL OR a.email LIKE %:email%) " +
-       "AND (:status IS NULL OR a.status = :status)")
-List<Assistant> filterAssistants(@Param("name") String name, 
-                                 @Param("email") String email, 
-                                 @Param("status") Boolean status);
 
+    @Query("SELECT a FROM Assistant a WHERE " +
+    "(:id IS NULL OR a.id = :id) AND " +
+    "(:name IS NULL OR LOWER(a.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
+    "(:email IS NULL OR LOWER(a.email) LIKE LOWER(CONCAT('%', :email, '%'))) AND " +
+    "(:phone IS NULL OR a.phone = :phone) AND " +
+    "(:status IS NULL OR a.status = :status)")
+List<Assistant> filterAssistants(
+ @Param("id") Integer id,
+ @Param("name") String name,
+ @Param("email") String email,
+ @Param("phone") String phone,
+ @Param("status") Boolean status
+);
 }

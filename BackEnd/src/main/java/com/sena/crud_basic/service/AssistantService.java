@@ -100,9 +100,8 @@ public class AssistantService {
             "Asistente eliminado correctamente"
         );
     }
-    
-    public List<Assistant> filterAssistants(String name, String email, Boolean status) {
-        return data.filterAssistants(name, email, status);
+    public List<Assistant> filterAssistants(Integer id, String name, String email, String phone, Boolean status) {
+        return data.filterAssistants(id, name, email, phone, status);
     }
     
     

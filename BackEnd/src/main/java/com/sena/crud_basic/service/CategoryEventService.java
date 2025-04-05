@@ -77,8 +77,8 @@ public class CategoryEventService {
             "Categoría de evento eliminada correctamente"
         );
     }
-    public List<CategoryEvent> filterCategory(String name, String description, Boolean status) {
-        return data.filterCategory(name, description, status);
+    public List<CategoryEvent> filterCategory(Integer id, String name, String description, Boolean status) {
+        return data.filterCategory(id, name, description, status);
     }
 
     public ResponseDTO update(int id, CategoryEventDTO categoryEventDTO) {

@@ -6,13 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity(name = "Assistant") // Table name in the database
+@Entity(name = "Assistant")
 public class Assistant {
 
-    // Attributes or columns of the entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_assistant")  // Column name in the database
+    @Column(name = "id_assistant")
     private int id_assistant;
 
     @Column(name = "name", length = 255, nullable = false)
@@ -24,13 +23,11 @@ public class Assistant {
     @Column(name = "phone", length = 20)
     private String phone;
 
-    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
     private boolean status;
 
-    public Assistant() {
-        // Este constructor es necesario para JPA/Hibernate
-    }
-    // Constructor
+    public Assistant() {}
+
     public Assistant(int id_assistant, String name, String email, String phone, boolean status) {
         this.id_assistant = id_assistant;
         this.name = name;
@@ -39,47 +36,48 @@ public class Assistant {
         this.status = status;
     }
 
-    // Getters and Setters
-// Getter para 'id'
-public int getId() {
-    return id_assistant;
-}
+    public int getId() {
+        return id_assistant;
+    }
 
-public void setId(int id) {
-    this.id_assistant = id;
-}
+    public void setId(int id) {
+        this.id_assistant = id;
+    }
 
-public String getName() {
-    return name;
-}
+    public String getName() {
+        return name;
+    }
 
-public void setName(String name) {
-    this.name = name;
-}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-public String getEmail() {
-    return email;
-}
+    public String getEmail() {
+        return email;
+    }
 
-public void setEmail(String email) {
-    this.email = email;
-}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-public String getPhone() {
-    return phone;
-}
+    public String getPhone() {
+        return phone;
+    }
 
-public void setPhone(String phone) {
-    this.phone = phone;
-}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-public boolean getStatus() {
-    return status;
- }
+    public boolean getStatus() {
+        return status;
+    }
 
- public void setStatus(boolean status) {
-    this.status = status;
- }
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
- 
+    // OPCIONAL: si alguna parte del código lo necesita, podés dejarlo
+    public int getAssistantId() {
+        return this.id_assistant;
+    }
 }

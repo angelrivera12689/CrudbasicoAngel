@@ -13,11 +13,18 @@ public interface IEventCategory extends JpaRepository<CategoryEvent, Integer> {
     List<CategoryEvent> getListCategoryActive();
 
 
-    @Query("SELECT c FROM CategoryEvent c WHERE (:name IS NULL OR c.name LIKE %:name%) AND (:description IS NULL OR c.description LIKE %:description%) AND (:status IS NULL OR c.status = :status)")
-    List<CategoryEvent> filterCategory(
-        @Param("name") String name, 
-        @Param("description") String description, 
-        @Param("status") Boolean status);
+    @Query("SELECT c FROM CategoryEvent c WHERE " +
+    "(:id IS NULL OR c.id = :id) AND " +
+    "(:name IS NULL OR c.name LIKE %:name%) AND " +
+    "(:description IS NULL OR c.description LIKE %:description%) AND " +
+    "(:status IS NULL OR c.status = :status)")
+List<CategoryEvent> filterCategory(
+ @Param("id") Integer id,
+ @Param("name") String name,
+ @Param("description") String description,
+ @Param("status") Boolean status
+);
+
 }
 
 

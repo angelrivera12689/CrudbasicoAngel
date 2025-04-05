@@ -217,34 +217,32 @@
         <button class="btn-toggle-filter" data-section="filtrar-categorias">Filtrar Categorías</button>
     </div>
 
-<section id="filtrar-tickets">
-    <div class="search-section">
-        <input type="text" id="searchInput" placeholder="Buscar por ID Ticket, Evento, Asistente, etc.">
-        <button type="button" id="searchButton">Buscar</button>
-    </div>
-
-    <section class="table-section">
-        <h2 class="section-title">Lista de Tickets</h2>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>ID Ticket</th>
-                    <th>Evento ID</th>
-                    <th>Asistente ID</th>
-                    <th>Precio</th>
-                    <th>Número de Asiento</th>
-                    <th>Fecha de Compra</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                <!-- Aquí se insertarán los registros dinámicamente -->
-            </tbody>
-        </table>
+    <section id="filtrar-tickets">
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="Buscar por ID Ticket, Evento, Asistente, Precio, Fecha, etc.">
+            <button type="button" id="searchButton">Buscar</button>
+        </div>
+        
+        <section class="table-section">
+            <h2 class="section-title">Lista de Tickets</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID Ticket</th>
+                        <th>Evento ID</th>
+                        <th>Asistente ID</th>
+                        <th>Precio</th>
+                        <th>Número de Asiento</th>
+                        <th>Estado</th>
+                        <th>Fecha de Compra</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Aquí se insertarán los registros dinámicamente -->
+                </tbody>
+            </table>
+        </section>
     </section>
-    </section>
-
 
 
         <section id="filtrar-eventos">
@@ -293,7 +291,6 @@
                     <th>Nombre</th>
                     <th>Email</th>
                     <th>Teléfono</th>
-                    <th>Fecha de Registro</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -393,8 +390,8 @@
 
 <section id="filtrar-categorias">
     <div class="search-section">
-        <input type="text" id="searchInputCategorias" placeholder="Buscar por ID Categoría, Nombre, etc.">
-        <button type="button" id="searchButtonCategorias">Buscar</button>
+        <input type="text" id="searchInputCategory" placeholder="Buscar por nombre, descripción o estado">
+        <button type="button" id="searchButtonCategory">Buscar</button>
     </div>
 
     <section class="table-section">
@@ -402,20 +399,19 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>ID Categoría</th>
+                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody id="tableBodyCategorias">
-                <!-- Aquí se insertarán los registros dinámicamente -->
+            <tbody id="tableBodyCategory">
+                <!-- Resultados se insertarán aquí -->
             </tbody>
         </table>
     </section>
 </section>
-</section>
-
 
 <!-- Sección ACTUALIZAR -->
 <section id="Actualizar">

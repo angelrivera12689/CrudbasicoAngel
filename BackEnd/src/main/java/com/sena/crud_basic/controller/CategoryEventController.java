@@ -61,14 +61,16 @@ public class CategoryEventController {
     }
 
     @GetMapping("/filter")
-public ResponseEntity<Object> filterCategory(
-        @RequestParam(required = false) String name,
-        @RequestParam(required = false) String description,
-        @RequestParam(required = false) Boolean status) {
+    public ResponseEntity<Object> filterCategory(
+            @RequestParam(required = false) Integer id,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) Boolean status) {
     
-    var categoryEventServiceList = categoryEventService.filterCategory(name, description, status);
-    return new ResponseEntity<>(categoryEventServiceList, HttpStatus.OK);
-}
+        var categoryEventServiceList = categoryEventService.filterCategory(id, name, description, status);
+        return new ResponseEntity<>(categoryEventServiceList, HttpStatus.OK);
+    }
+    
 @PutMapping("/{id}")
     public ResponseEntity<Object> updateCategory(@PathVariable int id, @RequestBody CategoryEventDTO categoryEventDTO) {
         ResponseDTO response = categoryEventService.update(id, categoryEventDTO);
