@@ -12,6 +12,7 @@ import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.organizerDTO;
 import com.sena.crud_basic.model.organizer;
 import com.sena.crud_basic.service.organizerService;
+import com.sena.crud_basic.Resource.RateLimiterService;
 
 @RestController
 @RequestMapping("/api/v1/organizer")
@@ -20,25 +21,46 @@ public class organizerController {
     @Autowired
     private organizerService organizerService;
 
-      @PostMapping("/")
+    @Autowired
+    private RateLimiterService rateLimiter;
+
+    // ✅ Método para verificar el límite
+    private boolean isRateLimited() {
+        return !rateLimiter.tryConsume();
+    }
+
+    // ✅ Crear organizador
+    @PostMapping("/")
     public ResponseEntity<Object> registerOrganizer(@RequestBody organizerDTO organizerDTO) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         ResponseDTO response = organizerService.save(organizerDTO);
         if (response.getStatus().equals(HttpStatus.OK.toString())) {
-            return new ResponseEntity<>(response, HttpStatus.OK);  // Código 200 OK
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);  // Código 400 Bad Request
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 
     // ✅ Obtener todos los organizadores
     @GetMapping("/")
     public ResponseEntity<Object> getAllOrganizers() {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         return new ResponseEntity<>(organizerService.findAll(), HttpStatus.OK);
     }
 
     // ✅ Obtener un organizador por ID
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOrganizerById(@PathVariable int id) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         var organizer = organizerService.findById(id);
         if (!organizer.isPresent()) {
             return new ResponseEntity<>("Organizador no encontrado", HttpStatus.NOT_FOUND);
@@ -46,9 +68,13 @@ public class organizerController {
         return new ResponseEntity<>(organizer.get(), HttpStatus.OK);
     }
 
-    // ✅ Eliminar un organizador por ID
+    // ✅ Eliminar organizador
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteOrganizer(@PathVariable int id) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         ResponseDTO response = organizerService.deleteOrganizer(id);
         if (response.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -57,6 +83,7 @@ public class organizerController {
         }
     }
 
+    // ✅ Filtrar organizadores
     @GetMapping("/filter")
     public ResponseEntity<Object> filterOrganizer(
             @RequestParam(required = false, name = "name") String name,
@@ -64,14 +91,21 @@ public class organizerController {
             @RequestParam(required = false, name = "email") String email,
             @RequestParam(required = false, name = "status") Boolean status) {
 
-        // Llamada al servicio para filtrar los organizadores
-        List<organizer> organizerList = organizerService.filterorganizers(name, phone, email, status);
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
 
-        // Devolvemos la lista de resultados como respuesta
+        List<organizer> organizerList = organizerService.filterorganizers(name, phone, email, status);
         return new ResponseEntity<>(organizerList, HttpStatus.OK);
     }
+
+    // ✅ Actualizar organizador
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable int id, @RequestBody organizerDTO organizerDTO) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         ResponseDTO response = organizerService.update(id, organizerDTO);
         if (response.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -79,5 +113,3 @@ public class organizerController {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
-
-   

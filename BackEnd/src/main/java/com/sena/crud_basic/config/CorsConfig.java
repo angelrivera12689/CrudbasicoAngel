@@ -16,6 +16,7 @@ public class CorsConfig {
 
         // Permitir solicitudes desde múltiples orígenes
         config.addAllowedOrigin("http://127.0.0.1:5500");
+        config.addAllowedOrigin("http://172.30.6.79:5500");
         config.addAllowedOrigin("http://localhost:5500");
         config.addAllowedOrigin("https://tu-dominio-produccion.com");
 

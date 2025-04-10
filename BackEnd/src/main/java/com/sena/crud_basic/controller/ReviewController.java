@@ -13,6 +13,7 @@ import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.ReviewDTO;
 import com.sena.crud_basic.model.Review;
 import com.sena.crud_basic.service.ReviewService;
+import com.sena.crud_basic.Resource.RateLimiterService;
 
 @RestController
 @RequestMapping("/api/v1/reviews")
@@ -20,10 +21,22 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
-    
-    // Crear una nueva reseña
+
+    @Autowired
+    private RateLimiterService rateLimiter;
+
+    // ✅ Método para verificar límite
+    private boolean isRateLimited() {
+        return !rateLimiter.tryConsume();
+    }
+
+    // ✅ Crear una nueva reseña
     @PostMapping("/")
     public ResponseEntity<Object> createReview(@RequestBody ReviewDTO reviewDTO) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         ResponseDTO response = reviewService.save(reviewDTO);
         if (response.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -35,6 +48,10 @@ public class ReviewController {
     // ✅ Obtener todas las reseñas
     @GetMapping("/")
     public ResponseEntity<Object> getAllReviews() {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         List<Review> reviews = reviewService.findAll();
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
@@ -42,6 +59,10 @@ public class ReviewController {
     // ✅ Obtener una reseña por ID
     @GetMapping("/{id}")
     public ResponseEntity<Object> getReviewById(@PathVariable int id) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         Optional<Review> review = reviewService.findById(id);
         if (!review.isPresent()) {
             return new ResponseEntity<>("Reseña no encontrada", HttpStatus.NOT_FOUND);
@@ -52,6 +73,10 @@ public class ReviewController {
     // ✅ Eliminar una reseña por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteReview(@PathVariable int id) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         ResponseDTO response = reviewService.deleteReview(id);
         if (response.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -60,6 +85,7 @@ public class ReviewController {
         }
     }
 
+    // ✅ Filtrar reseñas
     @GetMapping("/filter")
     public ResponseEntity<Object> filterReviews(
             @RequestParam(required = false) String comment,
@@ -68,12 +94,21 @@ public class ReviewController {
             @RequestParam(required = false) Integer assistantId,
             @RequestParam(required = false) Boolean status) {
 
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         List<Review> reviews = reviewService.filterReviews(comment, rating, eventId, assistantId, status);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
+    // ✅ Actualizar reseña
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateReview(@PathVariable int id, @RequestBody ReviewDTO reviewDTO) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
         ResponseDTO response = reviewService.update(id, reviewDTO);
         if (response.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(response, HttpStatus.OK);

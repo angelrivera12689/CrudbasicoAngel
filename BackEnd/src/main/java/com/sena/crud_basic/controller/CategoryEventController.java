@@ -2,8 +2,6 @@ package com.sena.crud_basic.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import com.sena.crud_basic.DTO.CategoryEventDTO;
 import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.model.CategoryEvent;
 import com.sena.crud_basic.service.CategoryEventService;
+import com.sena.crud_basic.Resource.RateLimiterService;
 
 @RestController
 @RequestMapping("/api/v1/category-events")
@@ -21,63 +20,83 @@ public class CategoryEventController {
     @Autowired
     private CategoryEventService categoryEventService;
 
-    // Registrar una nueva categoría de evento con validaciones
-    @PostMapping("/")
-    public ResponseEntity<Object> registerCategory(@RequestBody CategoryEventDTO categoryEventDTO) {
-        ResponseDTO response = categoryEventService.save(categoryEventDTO);
-        if (response.getStatus().equals(HttpStatus.OK.toString())) {
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
+    @Autowired
+    private RateLimiterService rateLimiter;
+
+    private boolean isRateLimited() {
+        return !rateLimiter.tryConsume();
     }
 
-    // Consultar todas las categorías de eventos
-   @GetMapping("/")
+    // ✅ Registrar una nueva categoría de evento
+    @PostMapping("/")
+    public ResponseEntity<Object> registerCategory(@RequestBody CategoryEventDTO categoryEventDTO) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
+        ResponseDTO response = categoryEventService.save(categoryEventDTO);
+        return new ResponseEntity<>(response, response.getStatus().equals(HttpStatus.OK.toString()) ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    }
+
+    // ✅ Consultar todas las categorías de eventos
+    @GetMapping("/")
     public ResponseEntity<List<CategoryEvent>> getAllCategories() {
-        List<CategoryEvent> categories = categoryEventService.findAll(); // Consulta las categorías activas
+        if (isRateLimited()) {
+            return new ResponseEntity<>(null, HttpStatus.TOO_MANY_REQUESTS);
+        }
+
+        List<CategoryEvent> categories = categoryEventService.findAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
-    // Consultar una categoría de evento por ID
+    // ✅ Consultar una categoría por ID
     @GetMapping("/{id}")
     public ResponseEntity<Object> getCategoryById(@PathVariable int id) {
-        var category = categoryEventService.findById(id);
-        if (!category.isPresent()) {
-            return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
         }
-        return new ResponseEntity<>(category.get(), HttpStatus.OK);
+
+        var category = categoryEventService.findById(id);
+        return category.isPresent()
+                ? new ResponseEntity<>(category.get(), HttpStatus.OK)
+                : new ResponseEntity<>("Categoría no encontrada", HttpStatus.NOT_FOUND);
     }
 
-    // Eliminar una categoría de evento por ID
+    // ✅ Eliminar una categoría por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable int id) {
-        ResponseDTO response = categoryEventService.delete(id);
-        if (response.getStatus().equals(HttpStatus.OK.toString())) {
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
         }
+
+        ResponseDTO response = categoryEventService.delete(id);
+        return new ResponseEntity<>(response, response.getStatus().equals(HttpStatus.OK.toString()) ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
+    // ✅ Filtrar categorías
     @GetMapping("/filter")
     public ResponseEntity<Object> filterCategory(
             @RequestParam(required = false) Integer id,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) Boolean status) {
-    
-        var categoryEventServiceList = categoryEventService.filterCategory(id, name, description, status);
-        return new ResponseEntity<>(categoryEventServiceList, HttpStatus.OK);
-    }
-    
-@PutMapping("/{id}")
-    public ResponseEntity<Object> updateCategory(@PathVariable int id, @RequestBody CategoryEventDTO categoryEventDTO) {
-        ResponseDTO response = categoryEventService.update(id, categoryEventDTO);
-        if (response.getStatus().equals(HttpStatus.OK.toString())) {
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
         }
+
+        var categoryList = categoryEventService.filterCategory(id, name, description, status);
+        return new ResponseEntity<>(categoryList, HttpStatus.OK);
+    }
+
+    // ✅ Actualizar una categoría
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateCategory(@PathVariable int id, @RequestBody CategoryEventDTO categoryEventDTO) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
+        ResponseDTO response = categoryEventService.update(id, categoryEventDTO);
+        return new ResponseEntity<>(response, response.getStatus().equals(HttpStatus.OK.toString()) ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 }
