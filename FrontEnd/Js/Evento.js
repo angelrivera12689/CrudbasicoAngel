@@ -76,20 +76,24 @@ document.addEventListener("DOMContentLoaded", function () {
         card.classList.add("evento-card");
         card.dataset.id = evento.idEvent;
         card.innerHTML = `
-            <div class="evento-actions">
-                <button class="btn-edit"><i class="fas fa-edit"></i></button>
-                <button class="btn-delete"><i class="fas fa-trash-alt"></i></button>
+           <div class="evento-actions">
+            <button class="btn-edit"><i class="fas fa-edit"></i></button>
+            <button class="btn-delete"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        <img src="${evento.imageUrl}" alt="Imagen del evento">
+        <div class="evento-info">
+            <h3>${evento.eventName}</h3>
+            <p class="descripcion">${evento.description}</p>
+            <p class="ubicacion">📍 ${evento.location}</p>
+            <p class="categoria">🎫 Categoría: ${catName}</p>
+            <p class="fecha">📅 Fecha: ${formatDateForDisplay(evento.date)}</p> <!-- Fecha formateada -->
+    
+            <!-- Botón "Ver Detalles" centrado -->
+            <div class="ver-detalles-container">
+                <a href="/FrontEnd/detalleEventos.html?id=${evento.idEvent}" class="btn-ver-detalles">Ver Detalles</a>
             </div>
-            <img src="${evento.imageUrl}" alt="Imagen del evento">
-            <div class="evento-info">
-                <h3>${evento.eventName}</h3>
-                <p class="descripcion">${evento.description}</p>
-                <p class="ubicacion">📍 ${evento.location}</p>
-                <p class="categoria">🎫 Categoría: ${catName}</p>
-                <p class="fecha">📅 Fecha: ${formatDateForDisplay(evento.date)}</p> <!-- Fecha formateada -->
-            </div>
-        `;
-
+        </div>
+    `;
         // Eliminar
         card.querySelector(".btn-delete").addEventListener("click", async () => {
             const id = card.dataset.id;
@@ -283,7 +287,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (btn) btn.disabled = false;
         }
     });
-
+    
     cargarCategorias();
     cargarEventos();
 });
+

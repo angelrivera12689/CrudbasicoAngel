@@ -50,4 +50,56 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+
+import { urlBase } from '/FrontEnd/Js/constante.js'; 
+
+// Definir la URL base para la API de asistentes
+// Suponiendo que ya tienes la URL de la API y un contenedor para los eventos
+const EVENTO_API_BASE_URL = `${urlBase}events/`; // Usa la URL base de tu API
+
+// Función para cargar eventos desde la API y mostrarlos en la galería
+async function cargarEventosDestacados() {
+    const container = document.getElementById("galleryContainer");
+    
+    if (!container) {
+        console.error("❌ El contenedor 'galleryContainer' no se encuentra en el DOM.");
+        return;
+    }
+    
+    try {
+        const resp = await fetch(EVENTO_API_BASE_URL); // Cambia esta URL según sea necesario
+        if (!resp.ok) throw new Error('Error al cargar eventos.');
+
+        const eventos = await resp.json();
+        container.innerHTML = ""; // Limpiar el contenedor antes de agregar nuevos elementos
+
+        // Limitar a los primeros 6 eventos
+        eventos.slice(0, 6).forEach(evento => {
+            const item = document.createElement("div");
+            item.classList.add("gallery-item");
+            item.onclick = () => showProjectDetails(evento.idEvent); // Mostrar detalles al hacer clic
+
+            item.innerHTML = `
+                <img src="${evento.imageUrl}" alt="${evento.eventName}">
+                <div class="overlay">
+                    <span>Ver detalles</span>
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    } catch (error) {
+        console.error("❌ Error al cargar eventos destacados:", error);
+    }
+}
+
+// Llamar a la función para cargar los eventos cuando el DOM esté listo
+document.addEventListener("DOMContentLoaded", function () {
+    cargarEventosDestacados();
+});
+
+
+// Llamar a la función para cargar los eventos destacados
+cargarEventosDestacados();
+
+  
   

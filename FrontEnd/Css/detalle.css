@@ -1,0 +1,238 @@
+/* Variables */
+:root {
+    --primary: #8e44ad;
+    --secondary: #9b59b6;
+    --accent: #ffffff;
+    --text: #333;
+    --text-light: #666;
+    --border-radius: 12px;
+  }
+  
+  /* Animación */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Estilos Generales */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f3e5f5 0%, #ffffff 100%);
+    color: var(--text);
+    animation: fadeIn 0.8s ease both;
+    padding-bottom: 50px;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Imagen del Evento */
+  #evento-imagen {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.8s ease both;
+  }
+  
+  /* Título del Evento */
+  .evento-title {
+    font-size: 2.7rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 15px;
+  }
+  
+  /* Descripción */
+  .evento-description {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  /* Detalles */
+  .evento-details p {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 10px;
+  }
+  
+  .evento-details strong {
+    color: var(--text);
+  }
+  
+  /* Sección de acciones */
+  .evento-actions .btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+  }
+  
+  /* Botón Comprar */
+  .evento-actions .btn-success {
+    background-color: var(--primary);
+    border: none;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(142, 68, 173, 0.3);
+  }
+  
+  .evento-actions .btn-success:hover {
+    background-color: #732d91;
+    transform: translateY(-2px);
+  }
+  
+  /* Botón Compartir */
+  .evento-actions .btn-outline-primary {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    background-color: transparent;
+    box-shadow: none;
+  }
+  
+  .evento-actions .btn-outline-primary:hover {
+    background-color: var(--primary);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  
+  /* Botón Volver a Eventos */
+  .btn-outline-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 50px;
+    background-color: transparent;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: var(--primary);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  
+  /* Títulos de Secciones */
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 20px;
+  }
+  
+  /* Texto Centrado */
+  .text-center {
+    text-align: center;
+  }
+  
+  /* Fade in de secciones */
+  .row {
+    animation: fadeIn 0.7s ease both;
+  }
+  /* Estilo del Modal */
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    background-color: #6f42c1; /* Color morado */
+    color: white;
+    border-radius: 12px 12px 0 0;
+    font-weight: bold;
+}
+
+.modal-header .close {
+    color: white;
+    font-size: 1.5rem;
+    opacity: 1;
+}
+
+.modal-body {
+    background-color: #f4f4f9;
+    padding: 30px;
+    border-radius: 0 0 12px 12px;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: 500;
+    margin-top: 10px;
+    color: #333;
+    display: block;
+}
+
+input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fff;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745; /* Color verde para el botón de compra */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Estilos para el formulario oculto */
+.hidden {
+    display: none;
+}
+
+.hidden:checked {
+    display: block;
+}
+
+/* Estilo del botón "Cancelar" */
+.btn-secondary {
+    background-color: #6c757d; /* Color gris para cancelar */
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}

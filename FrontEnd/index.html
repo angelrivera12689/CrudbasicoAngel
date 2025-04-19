@@ -277,60 +277,11 @@
 
   <section class="portfolio-gallery">
     <h2 class="section-title">Los mejores eventos</h2>
-    
-    <div class="gallery-grid">
-      <!-- Each project item with click functionality -->
-      <div class="gallery-item" onclick="showProjectDetails(1)">
-        <img src="/FrontEnd/images/1.jpg" alt="Proyecto de diseño de interiores - Sala de estar">
-        <div class="overlay">
-          <span>Ver detalles</span>
-        </div>
-      </div>
-      
-      <!-- Repeat for other projects -->
-      <div class="gallery-item" onclick="showProjectDetails(2)">
-        <img src="/FrontEnd/images/2.jpg" alt="Proyecto de comedor minimalista">
-        <div class="overlay">
-          <span>Ver detalles</span>
-        </div>
-      </div>
-      <div class="gallery-item" onclick="showProjectDetails(2)">
-        <img src="/FrontEnd/images/2.jpg" alt="Proyecto de comedor minimalista">
-        <div class="overlay">
-          <span>Ver detalles</span>
-        </div>
-      </div>
-      <div class="gallery-item" onclick="showProjectDetails(2)">
-        <img src="/FrontEnd/images/2.jpg" alt="Proyecto de comedor minimalista">
-        <div class="overlay">
-          <span>Ver detalles</span>
-        </div>
-      </div>
-      <div class="gallery-item" onclick="showProjectDetails(2)">
-        <img src="/FrontEnd/images/2.jpg" alt="Proyecto de comedor minimalista">
-        <div class="overlay">
-          <span>Ver detalles</span>
-        </div>
-      </div>
-      <div class="gallery-item" onclick="showProjectDetails(2)">
-        <img src="/FrontEnd/images/2.jpg" alt="Proyecto de comedor minimalista">
-        <div class="overlay">
-          <span>Ver detalles</span>
-        </div>
-      </div>
-  
-      <!-- More gallery items... -->
-    </div>
-    
-    <!-- Modal for displaying project details -->
-    <div id="projectModal" class="modal">
-      <div class="modal-content">
-        <span class="close-button" onclick="closeModal()">&times;</span>
-        <div id="projectDetails"></div>
-      </div>
+    <div class="gallery-grid" id="galleryContainer">
+      <!-- Los eventos se cargarán dinámicamente aquí -->
     </div>
   </section>
-
+  
 
 
   <section id="por-que-elegir" class="hoc container clear">
@@ -582,17 +533,13 @@
   <!-- end info_section -->
 
   <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; 2019 All Rights Reserved By
-      <a href="https://html.design/">Free Html Templates</a>
-    </p>
-  </section>
+ 
   <!-- footer section -->
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
   <script src="/FrontEnd/js/galeria.js"></script>
+  <script type="module" src="/FrontEnd/js/funcionalidades.js"></script>
 
 </body>
 </body>

@@ -1152,25 +1152,18 @@ a:focus {
   }
 }
 /* Separación de cada sección con un fondo y borde */
-section {
-  padding: 60px 0;
-  margin-bottom: 20px; /* Espaciado entre las secciones */
-}
+
 
 /* Fondo y borde para cada sección */
-.hero_area {
-  background-color: #f0f0f0;
-  border-bottom: 5px solid #00aaff;
-}
+
 
 .about_section {
   background-color: #ffffff;
-  border-bottom: 5px solid #ff7f50;
+
 }
 
 .service_section {
-  background-color: #f9f9f9;
-  border-bottom: 5px solid #2e8b57;
+  background: linear-gradient(135deg, #a454fd, #2b05df);
 }
 
 .portfolio-gallery {
@@ -1179,8 +1172,8 @@ section {
 }
 
 .subscribe_section {
-  background-color: #f0f0f0;
-  border-bottom: 5px solid #ff6347;
+  background-color: #010190;
+
 }
 
 .contact_section {
@@ -1189,8 +1182,8 @@ section {
 }
 
 .info_section {
-  background-color: #f9f9f9;
-  border-bottom: 5px solid #8b0000;
+  background-color: #010190;
+  
 }
 
 /* Ejemplo de cómo agregar un borde a las secciones */

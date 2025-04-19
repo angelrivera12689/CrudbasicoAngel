@@ -1,72 +1,78 @@
-// Importar la URL base desde 'constante.js'
-import { urlBase } from '/FrontEnd/Js/constante.js';  // Asegúrate de que la ruta sea correcta
+import { urlBase } from '/FrontEnd/Js/constante.js';  // Asegúrate que esta ruta sea válida
 
-// Definir la URL base para las reseñas
-const RESEÑA_API_BASE_URL = `${urlBase}reviews/`;  // Concatenamos la URL base con el endpoint de reseñas
+const RESEÑA_API_BASE_URL = `${urlBase}reviews/`;
 
-console.log(RESEÑA_API_BASE_URL);  // Verifica que la URL esté correctamente formada
+console.log(RESEÑA_API_BASE_URL);
 
 // ======================= REGISTRAR RESEÑA =======================
-document.getElementById("review-form").addEventListener("submit", async function (event) {
+document.getElementById("reseña-form").addEventListener("submit", async function (event) {
     event.preventDefault(); // Evita que la página se recargue
 
-    // Capturar los valores del formulario
+    // Obtener los valores del formulario
     let comment = document.getElementById("review-comment").value.trim();
     let rating = parseInt(document.getElementById("review-rating").value.trim());
     let eventId = parseInt(document.getElementById("review-event-id").value.trim());
     let assistantId = parseInt(document.getElementById("review-assistant-id").value.trim());
 
-    // Validar que los campos no estén vacíos y sean correctos
+    // Validar los campos
     if (!comment || isNaN(rating) || isNaN(eventId) || isNaN(assistantId)) {
         alert("Todos los campos son obligatorios y deben ser válidos.");
         return;
     }
 
+    // ✅ Ajuste aquí: Enviar solo el ID del evento directamente
     let bodyContent = JSON.stringify({
         comment: comment,
         rating: rating,
-        eventId: eventId,
+        eventId: eventId,  // Cambiado para enviar solo eventId y no un objeto
         assistantId: assistantId
     });
 
+    // Cabeceras de la solicitud
     let headersList = {
-        "Accept": "*/*",
-        "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+        "Accept": "application/json",
         "Content-Type": "application/json"
     };
 
     try {
-        let response = await fetch(RESEÑA_API_BASE_URL, {  // Usamos la URL base de reseñas
+        // Realizar la solicitud POST para registrar la reseña
+        let response = await fetch(RESEÑA_API_BASE_URL, {
             method: "POST",
             body: bodyContent,
             headers: headersList
         });
 
+        // Comprobar si la respuesta es exitosa
         if (!response.ok) {
-            throw new Error("Error en la solicitud: " + response.statusText);
+            // Obtener detalles del error del servidor
+            const errorData = await response.json();
+            throw new Error(`Error en la solicitud: ${response.statusText} - ${JSON.stringify(errorData)}`);
         }
 
+        // Si la respuesta es exitosa, mostrar mensaje y limpiar formulario
         let data = await response.json();
         console.log("Reseña registrada:", data);
-        alert("Reseña registrada con éxito");
-        document.getElementById("review-form").reset(); // Limpia el formulario
+        alert("✅ Reseña registrada con éxito");
+        document.getElementById("reseña-form").reset();  // Limpiar el formulario después de enviar
     } catch (error) {
         console.error("Error al registrar la reseña:", error);
-        alert("Error al registrar la reseña.");
+        alert("❌ Error al registrar la reseña: " + error.message);  // Mostrar mensaje de error detallado
     }
 });
 
+
+
 // ======================= ACTUALIZAR RESEÑA =======================
-document.getElementById("reseña-update-form").addEventListener("submit", async function(event) {
+document.getElementById("reseña-update").addEventListener("submit", async function(event) {
     event.preventDefault();
 
     let id = document.getElementById("reseña-id-update").value.trim();
     let comentario = document.getElementById("reseña-comentario-update").value.trim();
-    let calificacion = document.getElementById("reseña-calificacion-update").value.trim();
-    let eventoId = document.getElementById("reseña-evento-id-update").value.trim();
-    let asistenteId = document.getElementById("reseña-asistente-id-update").value.trim();
+    let calificacion = parseInt(document.getElementById("reseña-calificacion-update").value.trim());
+    let eventoId = parseInt(document.getElementById("reseña-evento-id-update").value.trim());
+    let asistenteId = parseInt(document.getElementById("reseña-asistente-id-update").value.trim());
 
-    if (!id || !comentario || !calificacion || !eventoId || !asistenteId) {
+    if (!id || !comentario || isNaN(calificacion) || isNaN(eventoId) || isNaN(asistenteId)) {
         alert("Todos los campos son obligatorios ⚠️");
         return;
     }
@@ -77,14 +83,14 @@ document.getElementById("reseña-update-form").addEventListener("submit", async 
     }
 
     let bodyContent = JSON.stringify({
-        "comment": comentario,
-        "rating": parseInt(calificacion),
-        "eventId": parseInt(eventoId),
-        "assistantId": parseInt(asistenteId)
+        comment: comentario,
+        rating: calificacion,
+        event: { id: eventoId },
+        assistant: { id: asistenteId }
     });
 
     try {
-        let response = await fetch(`${RESEÑA_API_BASE_URL}${id}`, {  // Usamos la URL base de reseñas y el ID de la reseña a actualizar
+        let response = await fetch(`${RESEÑA_API_BASE_URL}${id}`, {
             method: "PUT",
             headers: {
                 "Accept": "application/json",
@@ -110,12 +116,13 @@ document.getElementById("reseña-update-form").addEventListener("submit", async 
     }
 });
 
+
 // ======================= ELIMINAR RESEÑA =======================
 document.getElementById("reseña-delete-form").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Evita recarga
+    event.preventDefault();
 
     const id = document.getElementById("reseña-id-delete").value.trim();
-    const mensaje = document.getElementById("mensaje"); // Asegúrate de tener este div en el HTML
+    const mensaje = document.getElementById("mensaje");
 
     if (!id) {
         mensaje.innerText = "⚠️ Por favor ingresa un ID válido.";
@@ -124,7 +131,7 @@ document.getElementById("reseña-delete-form").addEventListener("submit", async 
     }
 
     try {
-        const response = await fetch(`${RESEÑA_API_BASE_URL}${id}`, {  // Usamos la URL base de reseñas y el ID de la reseña a eliminar
+        const response = await fetch(`${RESEÑA_API_BASE_URL}${id}`, {
             method: "DELETE",
             headers: {
                 "Accept": "*/*"
