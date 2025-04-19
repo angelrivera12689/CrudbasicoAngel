@@ -130,12 +130,13 @@ public class EventService {
     }
     
 
-    public List<Events> filterEvent(String event_name, String description, LocalDate date, String location, Integer category_id) {
-        return eventRepository.filterevent(event_name, description, date, location, category_id);
+    public List<Events> filterEvent(String event_name, String description, LocalDate date, String location, String category_name) {
+        return eventRepository.filterEvent(event_name, description, date, location, category_name);
     }
+    
 
-  // ✅ Método para convertir un Events a EventsDTO
-  public EventsDTO convertToDTO(Events event) {
+ // ✅ Método para convertir un Events a EventsDTO
+public EventsDTO convertToDTO(Events event) {
     return new EventsDTO(
             event.getEventName(),
             event.getDescription(),
@@ -143,10 +144,10 @@ public class EventService {
             event.getTime(),
             event.getLocation(),
             event.getCategoryEvent().getcategory_id(),
-            event.getImageUrl() 
+            event.getImageUrl(),
+            event.getCategoryEvent().getName() // 👈 Añadido el nombre de la categoría
     );
 }
-
 
 // ✅ Método para convertir un EventsDTO a Events
 public Events convertToModel(EventsDTO eventDTO) {
@@ -161,7 +162,7 @@ public Events convertToModel(EventsDTO eventDTO) {
             null, // la fecha se autogenera
             null, // la hora también
             eventDTO.getLocation(),
-            eventDTO.getImageUrl(), // 👈 aquí lo añadimos
+            eventDTO.getImageUrl(),
             true
     );
 }

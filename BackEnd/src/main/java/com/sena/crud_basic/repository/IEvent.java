@@ -16,18 +16,20 @@ List<Events> getListEventActive();
 
 @Query("""
     SELECT e FROM Events e 
-    WHERE (:event_name IS NULL OR e.eventName LIKE %:event_name%) 
+    WHERE e.status = true
+      AND (:event_name IS NULL OR e.eventName LIKE %:event_name%) 
       AND (:description IS NULL OR e.description LIKE %:description%) 
       AND (:date IS NULL OR e.date = :date) 
       AND (:location IS NULL OR e.location LIKE %:location%) 
-      AND (:category_id IS NULL OR e.categoryEvent.id = :category_id)
+      AND (:category_name IS NULL OR e.categoryEvent.name LIKE %:category_name%)
 """)
-List<Events> filterevent(
+List<Events> filterEvent(
     @Param("event_name") String event_name,
     @Param("description") String description,
     @Param("date") LocalDate date,
     @Param("location") String location,
-    @Param("category_id") Integer category_id
+    @Param("category_name") String category_name
 );
+
 }
 

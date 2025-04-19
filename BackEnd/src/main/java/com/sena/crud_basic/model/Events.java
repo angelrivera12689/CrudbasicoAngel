@@ -34,9 +34,10 @@ public class Events {
     
     @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
     private boolean status;
-
-    @Column(name = "image_url", length = 255)
-    private String imageUrl; 
+    @Column(name = "image_url", columnDefinition = "LONGTEXT")
+    private String imageUrl;
+    
+    
 
     // Constructor vacío para JPA
     public Events() {

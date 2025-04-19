@@ -1,0 +1,418 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+  }
+  
+  .filter_section {
+    background: #ffffff;
+    padding: 40px 0;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+  }
+  
+  .events_section .card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .events_section .card:hover {
+    transform: scale(1.02);
+  }
+  
+  .footer_section {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 50px;
+  }
+  
+  .modal-header {
+    background-color: #007bff;
+    color: white;
+  }
+  .modal-dialog {
+    margin: 1.75rem auto;
+    max-width: 500px;
+  }
+  
+  .modal-content {
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    border: none;
+  }
+  
+  .modal-header {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .modal-footer {
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  /* Estilo para la sección de registro de eventos */
+#addEventSection {
+    display: none; /* Se oculta por defecto */
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#addEventSection h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+#evento-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#evento-form label {
+    font-size: 16px;
+    color: #555;
+}
+
+#evento-form input, 
+#evento-form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+#evento-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+#evento-form input:focus, 
+#evento-form textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+#evento-form button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#evento-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#evento-form button:hover {
+    background-color: #218838;
+}
+
+/* Estilo para el mensaje de éxito/error */
+#addEventMessage {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+#addEventMessage.success {
+    color: green;
+}
+
+#addEventMessage.error {
+    color: red;
+}
+.eventos-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .evento-card {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    width: 280px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .evento-card:hover {
+    transform: scale(1.03);
+  }
+  
+  .evento-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+  }
+  
+  .evento-info {
+    padding: 15px;
+  }
+  
+  .evento-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .evento-info p {
+    margin: 6px 0;
+    color: #555;
+    font-size: 0.95rem;
+  }
+  .evento-card {
+    position: relative; /* Para poder colocar los íconos en la parte superior derecha */
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.evento-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 1; /* Asegura que los botones estén encima de la imagen */
+    background-color: rgba(255, 255, 255, 0.7);  /* Fondo semi-transparente */
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.evento-actions button {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.evento-actions button:hover {
+    color: #007bff; /* Cambiar color al pasar el mouse */
+}
+
+.evento-actions button:focus {
+    outline: none;
+}
+
+.evento-info {
+    padding-top: 20px;
+}
+
+.evento-info h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.evento-info p {
+    font-size: 14px;
+    color: #666;
+}
+
+.evento-card img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+/* Contenedor principal del filtro */
+.search-filter-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+/* Formulario de filtro */
+.filter-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Caja de entrada de búsqueda */
+.search-filter {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo de los inputs */
+.search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 200px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #7f8c8d;
+}
+
+/* Botón de filtro */
+.search-btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: #2980b9;
+}
+
+.search-btn i {
+    margin-right: 8px;
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .search-input {
+        width: 150px;
+    }
+
+    .search-btn {
+        padding: 10px 18px;
+    }
+}
+/* ====== Fondo del modal ====== */
+.modalactualizar {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* ====== Contenido del modal ====== */
+  .modal-content-actualizar {
+    background-color: #fff;
+    margin: auto;
+    position: fixed;
+    padding: 2rem;
+    border-radius: 12px;
+    top: 10%; /* Puedes ajustar el valor para que esté un poco más abajo si lo deseas */
+    left: 30%; /* Centra el modal horizontalmente */
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  /* ====== Animación de entrada ====== */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* ====== Botón cerrar ====== */
+  .close-btn-actualizar {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+  }
+  .close-btn-actualizar:hover {
+    color: #e74c3c;
+  }
+  
+  /* ====== Título ====== */
+  .modal-content-actualizar h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  /* ====== Inputs y textarea ====== */
+  .modal-content-actualizar input[type="text"],
+  .modal-content-actualizar textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    resize: none;
+  }
+  
+  .modal-content-actualizar textarea {
+    min-height: 100px;
+  }
+  
+  /* ====== Botón actualizar ====== */
+  .modal-content-actualizar button {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  .modal-content-actualizar button:hover {
+    background-color: #2980b9;
+  }
+  

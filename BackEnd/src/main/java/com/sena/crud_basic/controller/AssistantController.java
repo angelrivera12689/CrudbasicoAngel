@@ -65,7 +65,7 @@ public class AssistantController {
     }
 
     // ✅ Eliminar un asistente
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/")
     public ResponseEntity<Object> deleteAssistant(@PathVariable int id) {
         if (isRateLimited()) {
             return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);

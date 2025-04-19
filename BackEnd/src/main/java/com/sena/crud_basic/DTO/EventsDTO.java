@@ -10,19 +10,20 @@ public class EventsDTO {
     private LocalTime time;
     private String location;
     private Integer categoryId;
+    private String categoryName; // Asegúrate de tener este campo
     private String imageUrl;
-
 
     // Constructor con parámetros
     public EventsDTO(String eventName, String description, LocalDate date, LocalTime time,
-                     String location, int categoryId, String imageUrl) {
+                     String location, int categoryId, String imageUrl, String categoryName) {
         this.eventName = eventName;
         this.description = description;
         this.date = date;
         this.time = time;
         this.location = location;
         this.categoryId = categoryId;
-        this.imageUrl = imageUrl; 
+        this.imageUrl = imageUrl;
+        this.categoryName = categoryName; // El nombre de la categoría
     }
 
     // Getters y Setters
@@ -72,6 +73,14 @@ public class EventsDTO {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getImageUrl() {
