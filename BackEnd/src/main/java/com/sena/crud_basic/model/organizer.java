@@ -27,18 +27,20 @@ public class organizer {
     @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
     private boolean status;
 
+    @Column(name = "image_url", columnDefinition = "LONGTEXT")
+    private String imageUrl;
+
     public organizer() {
     }
-    // Constructor
-    public organizer(int id_organizer, String name, String phone, String email, boolean status) {
+
+    public organizer(int id_organizer, String name, String phone, String email, boolean status, String imageUrl) {
         this.id_organizer = id_organizer;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.status =status;
+        this.status = status;
+        this.imageUrl = imageUrl;
     }
-
-    // Getters and Setters
 
     public int getId_organizer() {
         return id_organizer;
@@ -71,12 +73,24 @@ public class organizer {
     public void setEmail(String email) {
         this.email = email;
     }
-    public boolean getStatus() {
+
+    public boolean isStatus() {
         return status;
-     }
-    
-     public void setStatus(boolean status) {
+    }
+
+    public void setStatus(boolean status) {
         this.status = status;
-     }
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    
 }
+
 

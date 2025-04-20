@@ -146,23 +146,25 @@ public class organizerService {
         );
     }
 
-    // Method to convert an organizer entity to organizerDTO
-    public organizerDTO convertToDTO(organizer organizer) {
-        return new organizerDTO(
-                organizer.getName(),
-                organizer.getPhone(),
-                organizer.getEmail());
-    }
-
-    // Method to convert organizerDTO to an organizer entity
-    public organizer convertToModel(organizerDTO organizerDTO) {
-        return new organizer(
-                0,  // Assuming ID is auto-generated
-                organizerDTO.getName(),
-                organizerDTO.getPhone(),
-                organizerDTO.getEmail(), true);
-    }
-
-
+   // Method to convert an organizer entity to organizerDTO
+   public organizerDTO convertToDTO(organizer organizer) {
+    return new organizerDTO(
+        organizer.getName(),
+        organizer.getPhone(),
+        organizer.getEmail(),
+        organizer.getImageUrl() // 👈 Añadido el campo de la imagen
+    );
 }
 
+
+public organizer convertToModel(organizerDTO organizerDTO) {
+    return new organizer(
+        0,  // El ID se generará automáticamente
+        organizerDTO.getName(),
+        organizerDTO.getPhone(),
+        organizerDTO.getEmail(),
+        true,  // Estado activo por defecto
+        organizerDTO.getImageUrl() // El campo de la imagen debe ir al final
+    );
+}
+}

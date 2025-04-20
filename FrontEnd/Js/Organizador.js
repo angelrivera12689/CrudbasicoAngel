@@ -1,139 +1,164 @@
-// Definir la URL base para la API de organizadores
-import { urlBase }  from '/FrontEnd/Js/constante.js'; // Importar la URL base
+// ======================= IMPORTS Y URL BASE =======================
+import { urlBase } from '/FrontEnd/js/constante.js';
+const API_URL_ORGANIZER = `${urlBase}organizer/`;
 
-const API_URL_ORGANIZER = `${urlBase}organizer/`; // Concatenar la URL base con la ruta del recurso "organizer"
+// ======================= CARGAR ORGANIZADORES =======================
+async function fetchOrganizers() {
+    try {
+        let response = await fetch(API_URL_ORGANIZER);
+        if (!response.ok) throw new Error("Error al obtener organizadores");
 
-console.log(API_URL_ORGANIZER); // Verifica que la URL esté correctamente formada
+        let organizers = await response.json();
+        const limitedOrganizers = organizers.slice(0, 6); // Limitar la cantidad de organizadores
+        displayOrganizers(limitedOrganizers);
+    } catch (error) {
+        console.error("Error al cargar organizadores:", error);
+    }
+}
 
+// ======================= MOSTRAR ORGANIZADORES =======================
+function displayOrganizers(organizers) {
+    const organizerList = document.getElementById("organizer-list");
+    organizerList.innerHTML = ""; // Limpiar la lista antes de agregar nuevos organizadores
 
-// Registrar organizador
-document.getElementById("organizer-form").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Evita que la página se recargue
+    organizers.forEach(organizer => {
+        // Crear el contenedor principal del organizador
+        const organizerBox = document.createElement("div");
+        organizerBox.classList.add("box");
 
-    // Capturar los valores del formulario
+        // Crear el contenido interno del organizador (tarjeta)
+        organizerBox.innerHTML = `
+            <div class="organizer-card">
+                <div class="organizer-header">
+                    <img src="${organizer.imageUrl || 'images/default-avatar.png'}" 
+                         alt="${organizer.name}" 
+                         class="organizer-avatar">
+                    <div class="organizer-actions-top">
+                        <button class="edit-btn" 
+                                title="Editar" 
+                                data-id="${organizer.id_organizer}" 
+                                data-name="${organizer.name}" 
+                                data-phone="${organizer.phone}" 
+                                data-email="${organizer.email}">✏️</button>
+                        <button class="delete-btn" 
+                                title="Eliminar" 
+                                data-id="${organizer.id_organizer}">🗑️</button>
+                    </div>
+                </div>
+                <div class="organizer-body">
+                    <h3 class="organizer-name">${organizer.name}</h3>
+                    <p class="organizer-info"><strong>📞 Teléfono:</strong> ${organizer.phone}</p>
+                    <p class="organizer-info"><strong>✉️ Correo:</strong> ${organizer.email}</p>
+                </div>
+            </div>
+        `;
+
+        // Agregar el elemento del organizador a la lista
+        organizerList.appendChild(organizerBox);
+    });
+
+    // Asignar los eventos de "Eliminar" después de que los elementos se agreguen al DOM
+    document.querySelectorAll(".delete-btn").forEach(button => {
+        button.addEventListener("click", async function () {
+            const organizerId = this.dataset.id; // Capturar el ID del botón de eliminar
+            console.log("ID del organizador a eliminar:", organizerId); // Verificar el ID capturado
+
+            const organizerCard = this.closest('.organizer-card'); // Encontrar la tarjeta del organizador
+
+            // Validar si el ID es válido
+            if (!organizerId || organizerId === "undefined") {
+                alert("❌ El ID del organizador no es válido.");
+                return;
+            }
+
+            // Confirmar la eliminación con el usuario
+            const confirmDelete = confirm(`¿Estás seguro de eliminar al organizador con ID ${organizerId}?`);
+
+            if (confirmDelete) {
+                try {
+                    // Realizar la solicitud DELETE a la API
+                    const response = await fetch(`${API_URL_ORGANIZER}${organizerId}`, {
+                        method: "DELETE",
+                        headers: { "Accept": "application/json" } // Especificar que esperamos JSON en la respuesta
+                    });
+
+                    // Procesar la respuesta de la API
+                    if (response.ok) {
+                        // Si la eliminación fue exitosa, remover la tarjeta del DOM
+                        organizerCard.remove();
+                        alert(`✅ Organizador con ID ${organizerId} eliminado correctamente.`);
+                    } else {
+                        // Si hubo un error en la eliminación, mostrar un mensaje
+                        const errorData = await response.json();
+                        alert(`❌ Error al eliminar: ${errorData.message || "No se pudo eliminar el organizador"}`);
+                    }
+                } catch (error) {
+                    // Manejar errores de conexión u otros errores inesperados
+                    console.error("❌ Error al eliminar organizador:", error);
+                    alert("❌ Error de conexión al eliminar.");
+                }
+            }
+        });
+    });
+}
+
+// ======================= DOM Ready =======================
+document.addEventListener("DOMContentLoaded", fetchOrganizers);
+
+// ======================= REGISTRAR ORGANIZADOR =======================
+document.getElementById("organizer-form").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
     let name = document.getElementById("organizador-nombre").value.trim();
     let phone = document.getElementById("organizador-telefono").value.trim();
     let email = document.getElementById("organizador-email").value.trim();
+    let imageUrl = document.getElementById("organizador-imagen-url").value.trim();
 
-    // Validar que los campos no estén vacíos
     if (!name || !phone || !email) {
         alert("Todos los campos son obligatorios.");
         return;
     }
 
-    let bodyContent = JSON.stringify({
-        name: name,
-        phone: phone,
-        email: email
-    });
-
-    let headersList = {
-        "Accept": "*/*",
-        "Content-Type": "application/json"
-    };
+    let bodyContent = JSON.stringify({ name, phone, email, imageUrl });
 
     try {
         let response = await fetch(API_URL_ORGANIZER, {
             method: "POST",
-            body: bodyContent,
-            headers: headersList
+            headers: { "Accept": "*/*", "Content-Type": "application/json" },
+            body: bodyContent
         });
 
-        if (!response.ok) {
-            throw new Error("Error en la solicitud: " + response.statusText);
-        }
+        if (!response.ok) throw new Error("Error en la solicitud: " + response.statusText);
 
         let data = await response.json();
-        console.log("Organizador registrado:", data);
         alert("Organizador registrado con éxito");
-        document.getElementById("organizer-form").reset(); // Limpia el formulario
+        document.getElementById("organizer-form").reset();
+        fetchOrganizers(); // Actualiza la lista de organizadores
     } catch (error) {
         console.error("Error al registrar el organizador:", error);
         alert("Error al registrar el organizador.");
     }
 });
 
-// ======================= ACTUALIZAR ORGANIZADOR =======================
-document.getElementById("organizador-update-form").addEventListener("submit", async function(event) {
-    event.preventDefault();
+// ======================= MANEJO DEL MODAL =======================
+// Obtener el modal y los botones
+const modal = document.getElementById("modal");
+const openModalButton = document.getElementById("openModal");
+const closeModalButton = document.querySelector(".close");
 
-    let id = document.getElementById("organizador-id-update").value.trim();
-    let nombre = document.getElementById("organizador-nombre-update").value.trim();
-    let telefono = document.getElementById("organizador-telefono-update").value.trim();
-    let email = document.getElementById("organizador-email-update").value.trim();
-
-    if (!id || !nombre || !telefono || !email) {
-        alert("Todos los campos son obligatorios ⚠️");
-        return;
-    }
-
-    let bodyContent = JSON.stringify({
-        "name": nombre,
-        "phone": telefono,
-        "email": email
-    });
-
-    try {
-        let response = await fetch(`${API_URL_ORGANIZER}${id}`, { // Uso de API_URL_ORGANIZER correctamente
-            method: "PUT",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: bodyContent
-        });
-
-        let data = await response.json();
-
-        if (response.ok) {
-            alert("✅ Organizador actualizado con éxito 🎉");
-            document.getElementById("organizador-update-form").reset();
-        } else {
-            alert(`❌ Error: ${data.message || "No se pudo actualizar el organizador"}`);
-        }
-
-        console.log("📢 Respuesta del servidor:", data);
-
-    } catch (error) {
-        console.error("❌ Error en la petición:", error);
-        alert("❌ Error de conexión");
-    }
+// Función para abrir el modal
+openModalButton.addEventListener("click", () => {
+    modal.style.display = "block"; // Muestra el modal
 });
 
-// Eliminar organizador
-document.getElementById("organizador-delete-form").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Evita recargar la página
+// Función para cerrar el modal
+closeModalButton.addEventListener("click", () => {
+    modal.style.display = "none"; // Oculta el modal
+});
 
-    const id = document.getElementById("organizador-id-delete").value.trim();
-    const mensaje = document.getElementById("mensaje"); // Asegúrate que exista en el HTML
-
-    if (!id) {
-        mensaje.innerText = "⚠️ Por favor ingresa un ID válido.";
-        mensaje.style.color = "orange";
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_URL_ORGANIZER}${id}`, { // Uso de API_URL_ORGANIZER correctamente
-            method: "DELETE",
-            headers: {
-                "Accept": "*/*"
-            }
-        });
-
-        if (response.ok) {
-            mensaje.innerText = `✅ Organizador con ID ${id} eliminado correctamente.`;
-            mensaje.style.color = "green";
-            document.getElementById("organizador-delete-form").reset();
-            alert("✅ Organizador eliminado correctamente.");
-        } else {
-            const data = await response.json();
-            mensaje.innerText = `❌ Error al eliminar: ${data.message || "No se pudo eliminar el organizador"}`;
-            mensaje.style.color = "red";
-        }
-    } catch (error) {
-        console.error("❌ Error de conexión:", error);
-        mensaje.innerText = "⚠️ Error de conexión al eliminar.";
-        mensaje.style.color = "red";
+// Cerrar el modal si el usuario hace clic fuera del contenido del modal
+window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none"; // Oculta el modal si se hace clic fuera
     }
 });
