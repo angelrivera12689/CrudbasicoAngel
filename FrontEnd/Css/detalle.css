@@ -1,14 +1,18 @@
-/* Variables */
-:root {
+/* ===========================
+   VARIABLES
+   =========================== */
+   :root {
     --primary: #8e44ad;
     --secondary: #9b59b6;
     --accent: #ffffff;
-    --text: #333;
-    --text-light: #666;
+    --text: #333333;
+    --text-light: #666666;
     --border-radius: 12px;
   }
   
-  /* Animación */
+  /* ===========================
+     ANIMACIONES
+     =========================== */
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -20,21 +24,38 @@
     }
   }
   
-  /* Estilos Generales */
+  @keyframes fadeInModal {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* ===========================
+     ESTILOS GENERALES
+     =========================== */
   body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #f3e5f5 0%, #ffffff 100%);
     color: var(--text);
     animation: fadeIn 0.8s ease both;
+    margin: 0;
     padding-bottom: 50px;
   }
   
   .container {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 1rem;
   }
   
-  /* Imagen del Evento */
+  /* ===========================
+     SECCIÓN DETALLE DEL EVENTO
+     =========================== */
   #evento-imagen {
     width: 100%;
     height: 400px;
@@ -44,7 +65,6 @@
     animation: fadeIn 0.8s ease both;
   }
   
-  /* Título del Evento */
   .evento-title {
     font-size: 2.7rem;
     font-weight: 700;
@@ -52,7 +72,6 @@
     margin-bottom: 15px;
   }
   
-  /* Descripción */
   .evento-description {
     font-size: 1.2rem;
     color: var(--text-light);
@@ -60,18 +79,15 @@
     margin-bottom: 20px;
   }
   
-  /* Detalles */
   .evento-details p {
     font-size: 1rem;
     color: var(--text-light);
     margin-bottom: 10px;
   }
-  
   .evento-details strong {
     color: var(--text);
   }
   
-  /* Sección de acciones */
   .evento-actions .btn {
     width: 100%;
     padding: 14px 20px;
@@ -82,34 +98,29 @@
     margin-bottom: 15px;
   }
   
-  /* Botón Comprar */
   .evento-actions .btn-success {
     background-color: var(--primary);
     border: none;
     color: #fff;
     box-shadow: 0 4px 10px rgba(142, 68, 173, 0.3);
   }
-  
   .evento-actions .btn-success:hover {
     background-color: #732d91;
     transform: translateY(-2px);
   }
   
-  /* Botón Compartir */
   .evento-actions .btn-outline-primary {
     border: 2px solid var(--primary);
     color: var(--primary);
     background-color: transparent;
     box-shadow: none;
   }
-  
   .evento-actions .btn-outline-primary:hover {
     background-color: var(--primary);
     color: #fff;
     transform: translateY(-2px);
   }
   
-  /* Botón Volver a Eventos */
   .btn-outline-secondary {
     display: inline-flex;
     align-items: center;
@@ -125,14 +136,12 @@
     transition: all 0.3s ease;
     margin-top: 1rem;
   }
-  
   .btn-outline-secondary:hover {
     background-color: var(--primary);
     color: #fff;
     transform: translateY(-2px);
   }
   
-  /* Títulos de Secciones */
   h2 {
     font-size: 2rem;
     font-weight: 600;
@@ -140,99 +149,165 @@
     margin-bottom: 20px;
   }
   
-  /* Texto Centrado */
   .text-center {
     text-align: center;
   }
   
-  /* Fade in de secciones */
   .row {
     animation: fadeIn 0.7s ease both;
   }
-  /* Estilo del Modal */
-.modal-content {
-    border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-}
-
-.modal-header {
-    background-color: #6f42c1; /* Color morado */
-    color: white;
-    border-radius: 12px 12px 0 0;
-    font-weight: bold;
-}
-
-.modal-header .close {
-    color: white;
-    font-size: 1.5rem;
-    opacity: 1;
-}
-
-.modal-body {
-    background-color: #f4f4f9;
-    padding: 30px;
-    border-radius: 0 0 12px 12px;
-}
-
-h2 {
-    color: #333;
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-}
-
-label {
-    font-weight: 500;
-    margin-top: 10px;
-    color: #333;
-    display: block;
-}
-
-input[type="number"], input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    background-color: #fff;
-}
-
-button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745; /* Color verde para el botón de compra */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #218838;
-}
-
-/* Estilos para el formulario oculto */
-.hidden {
+  
+  /* ===========================
+     MODAL PROPIO DE RESEÑA
+     =========================== */
+  
+  /* Overlay */
+  .custom-modal-overlay {
     display: none;
-}
-
-.hidden:checked {
-    display: block;
-}
-
-/* Estilo del botón "Cancelar" */
-.btn-secondary {
-    background-color: #6c757d; /* Color gris para cancelar */
-    color: white;
-    border-radius: 8px;
-    padding: 10px 20px;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  /* Caja del modal */
+  .custom-modal-box {
+    background: #fff;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: fadeInModal 0.3s ease-out forwards;
+  }
+  
+  /* Header */
+  .custom-modal-header {
+    background: var(--primary);
+    color: var(--accent);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .custom-modal-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  
+  /* Botón de cerrar */
+  .custom-close-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .custom-close-btn:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Cuerpo */
+  .custom-modal-body {
+    background: #f4f4f9;
+    padding: 1.5rem;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  
+  /* Formulario */
+  #review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  #review-form h2 {
+    margin: 0 0 1rem 0;
+    color: var(--primary);
+    font-size: 1.4rem;
+    text-align: center;
+  }
+  
+  #review-form label {
+    font-weight: 500;
+    color: var(--text);
+  }
+  
+  #review-form textarea,
+  #review-form input[type="number"] {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #d1d1d6;
+    border-radius: 6px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  #review-form textarea:focus,
+  #review-form input[type="number"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.2);
+    outline: none;
+  }
+  
+  #review-form button[type="submit"] {
+    padding: 0.75rem;
+    background: var(--primary);
+    color: var(--accent);
+    border: none;
+    border-radius: 6px;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  #review-form button[type="submit"]:hover {
+    background: #732d91;
+    transform: translateY(-1px);
+  }
+  
+  /* Clase para mostrar */
+  .custom-modal-overlay.show {
+    display: flex;
+  }
+  /* Estilo general para las reseñas */
+.reseña-style {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.btn-secondary:hover {
-    background-color: #5a6268;
+.reseña-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reseña-header h5 {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.reseña-header p {
+  margin: 0;
+  color: #ff9900;
+}
+
+.reseña-comment {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #555;
+}
+
+.reseña hr {
+  margin-top: 15px;
+  border-color: #eee;
 }

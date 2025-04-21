@@ -18,153 +18,88 @@ import com.sena.crud_basic.repository.Iorganizer;
 public class organizerService {
 
     @Autowired
-    private Iorganizer data;  // Organizer Repository to interact with the database
+    private Iorganizer data;  // Repositorio para interactuar con la base de datos
 
-  
-   
     public ResponseDTO save(organizerDTO organizerDTO) {
-        // Validar que el nombre tenga entre 1 y 100 caracteres
-        if (organizerDTO.getName().length() < 1 || organizerDTO.getName().length() > 100) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "El nombre debe estar entre 1 y 100 caracteres"
-            );
+        // Validaciones
+        if (!validateOrganizer(organizerDTO)) {
+            return new ResponseDTO(HttpStatus.BAD_REQUEST.toString(), "Datos inválidos");
         }
 
-        // Validar el formato del email
-        if (!isValidEmail(organizerDTO.getEmail())) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "El email no tiene un formato válido"
-            );
-        }
-
-        // Validar el teléfono (debe tener 10 dígitos y solo números)
-        if (organizerDTO.getPhone().length() != 10 || !organizerDTO.getPhone().matches("[0-9]+")) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "El número de teléfono debe tener 10 dígitos y solo puede contener números"
-            );
-        }
-
-        // Convertir el DTO a modelo
         organizer organizer = convertToModel(organizerDTO);
-
-        // Guardar en la base de datos
         data.save(organizer);
 
-        return new ResponseDTO(
-            HttpStatus.OK.toString(),
-            "Organizador guardado exitosamente"
-        );
+        return new ResponseDTO(HttpStatus.OK.toString(), "Organizador guardado exitosamente");
     }
 
-    // ✅ Método para obtener todos los organizadores
     public List<organizer> findAll() {
         return data.getListOrganizerActive();
     }
 
-    // ✅ Método para buscar un organizador por ID
     public Optional<organizer> findById(int id) {
         return data.findById(id);
     }
 
-    // ✅ Método para eliminar un organizador por ID
     public ResponseDTO deleteOrganizer(int id) {
         Optional<organizer> organizer = findById(id);
         if (!organizer.isPresent()) {
-            // Si no se encuentra el empleado, devolvemos una respuesta de error
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "El registro no existe"
-            );
+            return new ResponseDTO(HttpStatus.BAD_REQUEST.toString(), "El registro no existe");
         }
-    
-        // Cambiar el estado del empleado a false (eliminación lógica)
+
         organizer.get().setStatus(false);
         data.save(organizer.get());
-    
-        // Devolvemos una respuesta de éxito
-        return new ResponseDTO(
-            HttpStatus.OK.toString(),
-            "Organizador eliminado correctamente"
-        );
-    }
-    
 
-    // ✅ Método para validar el formato del email
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        return pattern.matcher(email).matches();
-    }
-
-    public List<organizer> filterorganizers(String name, String phone, String email, Boolean status) {
-        return data.filterorganizers(name, phone, email, status);
+        return new ResponseDTO(HttpStatus.OK.toString(), "Organizador eliminado correctamente");
     }
 
     public ResponseDTO update(int id, organizerDTO organizerDTO) {
         Optional<organizer> existingOrganizer = findById(id);
         if (!existingOrganizer.isPresent()) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "El organizador no existe"
-            );
+            return new ResponseDTO(HttpStatus.BAD_REQUEST.toString(), "El organizador no existe");
         }
 
-        if (organizerDTO.getName().length() < 1 || organizerDTO.getName().length() > 100) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "El nombre debe estar entre 1 y 100 caracteres"
-            );
+        // Validaciones
+        if (!validateOrganizer(organizerDTO)) {
+            return new ResponseDTO(HttpStatus.BAD_REQUEST.toString(), "Datos inválidos");
         }
 
-        if (!isValidEmail(organizerDTO.getEmail())) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "El email no tiene un formato válido"
-            );
-        }
-
-        if (organizerDTO.getPhone().length() != 10 || !organizerDTO.getPhone().matches("[0-9]+")) {
-            return new ResponseDTO(
-                HttpStatus.BAD_REQUEST.toString(),
-                "El número de teléfono debe tener 10 dígitos y solo puede contener números"
-            );
-        }
-
+        // 🔹 Actualizar valores incluyendo `imageUrl`
         organizer organizerToUpdate = existingOrganizer.get();
         organizerToUpdate.setName(organizerDTO.getName());
         organizerToUpdate.setPhone(organizerDTO.getPhone());
         organizerToUpdate.setEmail(organizerDTO.getEmail());
+        organizerToUpdate.setImageUrl(organizerDTO.getImageUrl()); // ✅ Ahora también se actualiza la imagen
 
+        // 🔹 Guardar cambios en la base de datos
         data.save(organizerToUpdate);
 
-        return new ResponseDTO(
-            HttpStatus.OK.toString(),
-            "Organizador actualizado exitosamente"
-        );
+        return new ResponseDTO(HttpStatus.OK.toString(), "✅ Organizador actualizado correctamente");
     }
 
-   // Method to convert an organizer entity to organizerDTO
-   public organizerDTO convertToDTO(organizer organizer) {
-    return new organizerDTO(
-        organizer.getName(),
-        organizer.getPhone(),
-        organizer.getEmail(),
-        organizer.getImageUrl() // 👈 Añadido el campo de la imagen
-    );
-}
+    private boolean validateOrganizer(organizerDTO organizerDTO) {
+        return organizerDTO.getName().length() >= 1 && organizerDTO.getName().length() <= 100 &&
+               isValidEmail(organizerDTO.getEmail()) &&
+               organizerDTO.getPhone().length() == 10 && organizerDTO.getPhone().matches("[0-9]+");
+    }
 
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return Pattern.compile(emailRegex).matcher(email).matches();
+    }
+    
+    public List<organizer> filterorganizers(String name, String phone, String email, Boolean status) {
+        return data.filterorganizers(name, phone, email, status);
+    }
+    
 
-public organizer convertToModel(organizerDTO organizerDTO) {
-    return new organizer(
-        0,  // El ID se generará automáticamente
-        organizerDTO.getName(),
-        organizerDTO.getPhone(),
-        organizerDTO.getEmail(),
-        true,  // Estado activo por defecto
-        organizerDTO.getImageUrl() // El campo de la imagen debe ir al final
-    );
-}
+    public organizer convertToModel(organizerDTO organizerDTO) {
+        return new organizer(
+            0,  // ID generado automáticamente
+            organizerDTO.getName(),
+            organizerDTO.getPhone(),
+            organizerDTO.getEmail(),
+            true,  // Estado activo por defecto
+            organizerDTO.getImageUrl() // ✅ Incluyendo la imagen
+        );
+    }
 }

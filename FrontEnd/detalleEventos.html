@@ -1,38 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Detalles del Evento</title>
-  <!-- Fuentes y estilos -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/FrontEnd/css/detalle.css"> <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="/FrontEnd/css/detalle.css">
 </head>
 <body>
-  <!-- Botón para volver a la lista de eventos -->
+  <!-- Botón volver -->
   <div class="container py-3">
-    <button
-      type="button"
-      class="btn btn-outline-secondary"
-      onclick="history.back()"
-    >
+    <button type="button" class="btn btn-outline-secondary" onclick="history.back()">
       <i class="fas fa-arrow-left"></i> Volver a Eventos
     </button>
   </div>
 
   <div class="container py-5">
     <div class="row">
-      <!-- Imagen del Evento -->
       <div class="col-md-6">
-        <img id="evento-imagen"
-             src="https://via.placeholder.com/600x400"
-             alt="Imagen del evento"
-             class="img-fluid rounded shadow">
+        <img id="evento-imagen" src="https://via.placeholder.com/600x400" alt="Imagen del evento" class="img-fluid rounded shadow">
       </div>
-
-      <!-- Detalles del Evento -->
       <div class="col-md-6">
         <h1 id="evento-nombre" class="evento-title">Cargando…</h1>
         <p id="evento-descripcion" class="evento-description">Cargando…</p>
@@ -42,32 +31,60 @@
           <p id="evento-categoria">Cargando…</p>
         </div>
         <div class="evento-actions mt-4">
-          <!-- Botón para abrir el modal de compra -->
-          <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#compraModal">
-            Comprar Entradas
-          </button>
-          <button class="btn btn-outline-primary btn-lg">Compartir Evento</button>
+          <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#compraModal">Hacer un ticket</button>
+          <button class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#reseñaModal">Dejar una Reseña</button>
         </div>
       </div>
     </div>
-
     <div class="row mt-5">
       <div class="col-12">
-        <h2 class="text-center">Más Información</h2>
-        <p id="evento-mas-info" class="text-center">
-          Cargando información adicional…
-        </p>
+        <h2 class="text-center">Reseñas del Eventon</h2>
+        <p id="evento-mas-info" class="text-center">Reseñas del Evento</p>
+        <div id="reseñas-container" class="text-center">
+          <!-- Las reseñas se agregarán aquí dinámicamente -->
+        </div>
       </div>
     </div>
-  </div>
-
-  <
-
-
+    
   
+    
+
+<!-- Modal de Reseña -->
+<div id="resenaModal" class="custom-modal-overlay">
+  <div class="custom-modal-box">
+    <div class="custom-modal-header">
+      <h5 class="custom-modal-title">Deja tu reseña</h5>
+      <button id="closeResenaBtn" class="custom-close-btn">&times;</button>
+    </div>
+    <div class="custom-modal-body">
+      <form id="review-form">
+        <h2>Registrar Reseña</h2>
+      
+        <label for="review-comment">Comentario:</label>
+        <textarea id="review-comment" required></textarea>
+      
+        <label for="review-rating">Calificación (1-5):</label>
+        <input type="number" id="review-rating" min="1" max="5" required>
+      
+        <!-- Ya no pedimos el ID del evento, ya está preasignado con un input oculto -->
+        <input type="hidden" id="review-event-id">
+      
+        <!-- Cambiar el campo de ID del asistente por el nombre del asistente -->
+        <label for="review-assistant-name">Nombre del Asistente:</label>
+        <input type="text" id="review-assistant-name" required>
+      
+        <button type="submit">Enviar Reseña</button>
+      </form>
+      
+    </div>
+  </div>
+</div>
+
+  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Script de detalle de evento -->
   <script type="module" src="/FrontEnd/js/detalleEvento.js"></script>
+  <script type="module" src="/FrontEnd/js/funcionalidades.js"></script>
+
 </body>
 </html>
