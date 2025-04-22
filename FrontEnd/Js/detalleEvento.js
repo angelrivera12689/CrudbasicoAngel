@@ -1,57 +1,61 @@
 // Importar la URL base desde 'constante.js'
 import { urlBase } from '/FrontEnd/js/constante.js';
 
-// Definir la URL base para eventos
+// Definir la URL base para eventos, asistentes y reseñas
 const EVENTO_API_BASE_URL = `${urlBase}events/`;
-// Definir la URL base para los asistentes con filtro
-const ASISTENTE_API_BASE_URL = `${urlBase}assistants/filter`; // API base para los asistentes
-// Definir la URL base para las reseñas
-const RESEÑA_API_BASE_URL = `${urlBase}reviews/`; // API base para las reseñas
+const ASISTENTE_API_BASE_URL = `${urlBase}assistants/filter`;
+const RESEÑA_API_BASE_URL = `${urlBase}reviews/`;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Obtener el ID del evento desde la URL
   const params = new URLSearchParams(window.location.search);
   const eventoId = params.get("id");
 
   if (!eventoId) {
-    return console.error("No se proporcionó ID de evento en la URL");
+    console.error("No se proporcionó ID de evento en la URL");
+    alert("❌ No se encontró el ID del evento en la URL.");
+    return;
   }
 
-  // Cargar los detalles del evento
   cargarDetallesEvento(eventoId);
-
-  // Cargar las reseñas del evento
   cargarReseñasEvento(eventoId);
 
-  // Elementos del DOM para abrir/cerrar el modal
+  const filterForm = document.getElementById("filter-reviews-form");
+  const clearFiltersButton = document.getElementById("clear-filters");
+
+  if (filterForm) {
+    filterForm.addEventListener("submit", e => {
+      e.preventDefault();
+      aplicarFiltros(eventoId);
+    });
+  }
+
+  if (clearFiltersButton) {
+    clearFiltersButton.addEventListener("click", () => {
+      document.getElementById("filter-author").value = "";
+      document.getElementById("filter-rating").value = "";
+      cargarReseñasEvento(eventoId); // Recargar sin filtros
+    });
+  }
+
   const openResenaBtn = document.querySelector('.btn-outline-primary');
   const resenaModal = document.getElementById('resenaModal');
   const closeResenaBtn = document.getElementById('closeResenaBtn');
   const resenaForm = document.getElementById('review-form');
-  const eventIdInput = document.getElementById('review-event-id');
-  const assistantNameInput = document.getElementById('review-assistant-name');  // Nuevo campo para el nombre del asistente
+  const assistantNameInput = document.getElementById('review-assistant-name');
 
-  // Preasignar el ID del evento al input oculto
-  if (eventIdInput) {
-    eventIdInput.value = eventoId;
-  }
-
-  // Abrir el modal de reseña
   if (openResenaBtn) {
     openResenaBtn.addEventListener('click', () => {
       resenaModal.style.display = 'flex';
-      window.scrollTo(0, document.body.scrollHeight); // Desplazar hacia abajo cuando el modal se abre
+      window.scrollTo(0, document.body.scrollHeight);
     });
   }
 
-  // Cerrar el modal con el botón "×"
   if (closeResenaBtn) {
     closeResenaBtn.addEventListener('click', () => {
       resenaModal.style.display = 'none';
     });
   }
 
-  // Cerrar el modal al hacer clic fuera del modal
   if (resenaModal) {
     resenaModal.addEventListener('click', e => {
       if (e.target === resenaModal) {
@@ -60,12 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Manejo del envío del formulario de reseña
   if (resenaForm) {
     resenaForm.addEventListener('submit', async e => {
-      e.preventDefault();  // Evitar que la página se recargue
+      e.preventDefault();
 
-      // Obtener el nombre del asistente desde el input
       const assistantName = assistantNameInput.value.trim();
 
       if (!assistantName) {
@@ -74,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        // Consultar la base de datos para obtener el assistantId basado en el nombre
         const assistant = await consultarAsistentePorNombre(assistantName);
 
         if (!assistant) {
@@ -82,35 +83,34 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Crear el objeto con los datos de la reseña
         const reviewData = {
           comment: document.getElementById('review-comment').value.trim(),
           rating: parseInt(document.getElementById('review-rating').value),
-          eventId: parseInt(eventoId), // Usamos el eventoId ya preasignado
-          assistantName: assistant.name // Usamos el nombre del asistente
+          eventId: parseInt(eventoId),
+          assistantId: assistant.id
         };
 
-        // Validación de los campos
-        if (!reviewData.comment || isNaN(reviewData.rating) || isNaN(reviewData.eventId) || !reviewData.assistantName) {
+        if (!reviewData.comment || isNaN(reviewData.rating) || isNaN(reviewData.eventId) || isNaN(reviewData.assistantId)) {
           alert("Todos los campos son obligatorios y deben ser válidos.");
           return;
         }
 
-        // Realizar la solicitud POST para registrar la reseña
         const response = await fetch(RESEÑA_API_BASE_URL, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(reviewData)
         });
 
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+          const errorResponse = await response.json();
+          console.error("Respuesta del servidor:", errorResponse);
+          throw new Error(`HTTP error! status: ${response.status} - ${errorResponse.message || 'Verifica el servidor para más detalles'}`);
+        }
 
-        // Mostrar mensaje de éxito
         alert('¡Reseña enviada con éxito!');
         resenaModal.style.display = 'none';
-        resenaForm.reset();  // Limpiar el formulario después de enviar
+        resenaForm.reset();
+        cargarReseñasEvento(eventoId);
       } catch (error) {
         console.error('Error al enviar la reseña:', error);
         alert('❌ Error al enviar la reseña. Intenta de nuevo.');
@@ -119,24 +119,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Función para formatear la fecha de manera amigable (DD/MM/YYYY)
-function formatDateForDisplay(dateString) {
-  const d = new Date(dateString);
-  return [
-    String(d.getDate()).padStart(2, "0"),
-    String(d.getMonth() + 1).padStart(2, "0"),
-    d.getFullYear()
-  ].join("/");
-}
-
-// Función para cargar los detalles del evento
 async function cargarDetallesEvento(eventoId) {
   try {
     const resp = await fetch(`${EVENTO_API_BASE_URL}${eventoId}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const evento = await resp.json();
 
-    // Llenar el DOM con la información del evento
     document.getElementById("evento-imagen").src = evento.imageUrl || "/FrontEnd/img/default.jpg";
     document.getElementById("evento-nombre").textContent = evento.eventName;
     document.getElementById("evento-descripcion").textContent = evento.description;
@@ -150,65 +138,91 @@ async function cargarDetallesEvento(eventoId) {
   }
 }
 
-// Función para cargar las reseñas del evento
 async function cargarReseñasEvento(eventoId) {
   try {
-    const resp = await fetch(`${RESEÑA_API_BASE_URL}?eventId=${eventoId}`);
+    const resp = await fetch(`${RESEÑA_API_BASE_URL}event/${eventoId}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const reseñas = await resp.json();
 
-    // Obtener el contenedor donde se mostrarán las reseñas
     const reseñasContainer = document.getElementById("reseñas-container");
-    reseñasContainer.innerHTML = "";  // Limpiar el contenedor antes de agregar nuevas reseñas
+    reseñasContainer.innerHTML = "";
 
-    // Verificar si hay reseñas
     if (reseñas.length === 0) {
       reseñasContainer.innerHTML = "<p>No hay reseñas para este evento aún.</p>";
       return;
     }
 
-    // Agregar cada reseña al contenedor
     reseñas.forEach(reseña => {
       const reseñaDiv = document.createElement("div");
-      reseñaDiv.classList.add("reseña", "reseña-style"); // Añadimos una clase extra para los estilos
-
-      // Crear el contenido de la reseña
+      reseñaDiv.classList.add("reseña", "reseña-style");
       reseñaDiv.innerHTML = `
         <div class="reseña-header">
-          <h5>${reseña.assistantName}</h5>
+          <h5>${reseña.assistant?.name || "Asistente desconocido"}</h5>
           <p><strong>Rating:</strong> ${reseña.rating} ⭐</p>
         </div>
         <p class="reseña-comment">${reseña.comment}</p>
         <hr />
       `;
-
-      // Agregar la reseña al contenedor
       reseñasContainer.appendChild(reseñaDiv);
     });
   } catch (err) {
     console.error("Error cargando reseñas:", err);
-    alert("❌ No se pudo cargar las reseñas.");
+    alert("❌ No se pudo cargar las reseñas. Por favor, intenta nuevamente.");
   }
 }
 
-// Función para consultar si el asistente existe por su nombre
 async function consultarAsistentePorNombre(nombre) {
   try {
-    // Usar el endpoint de filtro
     const response = await fetch(`${ASISTENTE_API_BASE_URL}?name=${encodeURIComponent(nombre)}`);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
     const assistants = await response.json();
-
-    // Verificamos si encontramos algún asistente con ese nombre
-    if (assistants.length === 0) {
-      return null;  // Si no se encuentra el asistente, retornamos null
-    }
-
-    // Suponemos que hay un solo asistente con ese nombre o seleccionamos el primero si hay varios
-    return assistants[0];
+    return assistants.length > 0 ? assistants[0] : null;
   } catch (error) {
     console.error('Error al consultar el asistente:', error);
     return null;
   }
+}
+
+async function aplicarFiltros(eventoId) {
+  const author = document.getElementById("filter-author").value.trim();
+  const rating = parseInt(document.getElementById("filter-rating").value);
+
+  try {
+    let url = `${RESEÑA_API_BASE_URL}filter?eventId=${eventoId}`;
+    if (author) url += `&author=${encodeURIComponent(author)}`;
+    if (!isNaN(rating)) url += `&rating=${rating}`;
+
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const reseñas = await resp.json();
+    const reseñasContainer = document.getElementById("reseñas-container");
+    reseñasContainer.innerHTML = "";
+
+    if (reseñas.length === 0) {
+      reseñasContainer.innerHTML = "<p>No hay reseñas que coincidan con los filtros.</p>";
+      return;
+    }
+
+    reseñas.forEach(reseña => {
+      const reseñaDiv = document.createElement("div");
+      reseñaDiv.classList.add("reseña", "reseña-style");
+      reseñaDiv.innerHTML = `
+        <div class="reseña-header">
+          <h5>${reseña.assistant?.name || "Asistente desconocido"}</h5>
+          <p><strong>Rating:</strong> ${reseña.rating} ⭐</p>
+        </div>
+        <p class="reseña-comment">${reseña.comment}</p>
+        <hr />
+      `;
+      reseñasContainer.appendChild(reseñaDiv);
+    });
+  } catch (err) {
+    console.error("Error aplicando filtros:", err);
+    alert("❌ No se pudieron aplicar los filtros.");
+  }
+}
+
+function formatDateForDisplay(dateString) {
+  const d = new Date(dateString);
+  return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
 }

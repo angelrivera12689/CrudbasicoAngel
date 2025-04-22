@@ -1,204 +1,139 @@
-// Importar la URL base desde 'constante.js'
-import { urlBase } from '/FrontEnd/Js/constante.js'; 
+// Asistente.js
+import { urlBase } from '/FrontEnd/Js/constante.js';
+const API = `${urlBase}assistants/`;
 
-// Definir la URL base para la API de asistentes
-const ASISTENTE_API_BASE_URL = `${urlBase}assistants/`; // API base para los asistentes
+// --- Elementos del DOM ---
+const assistantList     = document.getElementById('assistant-list');
+const assistantForm     = document.getElementById('assistant-form');
+const modalOverlay      = document.getElementById('updateAssistantModal');
+const closeModalBtn     = document.getElementById('closeUpdateModalBtn');
+const updateForm        = document.getElementById('update-assistant-form');
 
-console.log( ASISTENTE_API_BASE_URL);
+// --- Inicialización ---
+document.addEventListener('DOMContentLoaded', loadAssistants);
+assistantForm.addEventListener('submit', registerAssistant);
 
-// ======================= REGISTRAR ASISTENTE =======================
-document.getElementById("asistente-form").addEventListener("submit", async function(event) {
-    event.preventDefault(); // Evita que la página se recargue
+// Cerrar modal al pulsar la X o al hacer clic fuera de la caja
+closeModalBtn.addEventListener('click', () => modalOverlay.style.display = 'none');
+modalOverlay.addEventListener('click', e => {
+  if (e.target === modalOverlay) modalOverlay.style.display = 'none';
+});
 
-    // Capturar los valores del formulario
-    let nombre = document.getElementById("asistente-nombre").value;
-    let email = document.getElementById("asistente-email").value;
-    let phone = document.getElementById("asistente-phone").value;
+// --- 1) Registrar nuevo asistente ---
+async function registerAssistant(e) {
+  e.preventDefault();
+  const name     = document.getElementById('asistente-nombre').value.trim();
+  const email    = document.getElementById('asistente-email').value.trim();
+  const phone    = document.getElementById('asistente-phone').value.trim();
+  const imageUrl = document.getElementById('asistente-image-url').value.trim();
 
-    // Crear el objeto JSON
-    let bodyContent = JSON.stringify({
-        "name": nombre,
-        "email": email,
-        "phone": phone
+  try {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, phone, imageUrl })
     });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || res.statusText);
+    }
+    alert('¡Registro exitoso!');
+    e.target.reset();
+    loadAssistants();
+  } catch (err) {
+    alert('Error al registrar: ' + err.message);
+  }
+}
 
+// --- 2) Cargar y renderizar lista ---
+async function loadAssistants() {
+  try {
+    const res  = await fetch(API);
+    if (!res.ok) throw '';
+    const list = await res.json();
+    assistantList.innerHTML = '';
+
+    if (!list.length) {
+      assistantList.innerHTML = `<li class="list-group-item text-center">No hay asistentes.</li>`;
+      return;
+    }
+
+    list.forEach(a => {
+      assistantList.insertAdjacentHTML('afterbegin', `
+        <li class="list-group-item position-relative">
+          <img src="${a.imageUrl}" 
+               style="width:60px;height:60px;border-radius:50%;border:2px solid #007bff;display:block;margin:0 auto 10px;">
+          <strong>${a.name}</strong><br>
+          ${a.email}<br>
+          ${a.phone}
+          <div class="assistant-actions">
+            <button class="custom-edit-btn" onclick="openUpdateModal('${a.id}')">✏️</button>
+            <button class="custom-delete-btn" onclick="deleteAssistant('${a.id}')">🗑️</button>
+          </div>
+        </li>
+      `);
+    });
+  } catch {
+    alert('No se pudo cargar asistentes');
+  }
+}
+
+// --- 3) Eliminar asistente ---
+window.deleteAssistant = async function(id) {
+  if (!confirm('¿Eliminar este asistente?')) return;
+  try {
+    const res = await fetch(API + id, { method: 'DELETE' });
+    if (!res.ok) throw '';
+    loadAssistants();
+  } catch {
+    alert('Error al eliminar');
+  }
+};
+
+// --- 4) Abrir modal y precargar datos ---
+window.openUpdateModal = function(id) {
+  fetch(API + id)
+    .then(r=>r.json())
+    .then(a=>{
+      // Llenar formulario del modal
+      document.getElementById('update-asistente-nombre').value     = a.name;
+      document.getElementById('update-asistente-email').value     = a.email;
+      document.getElementById('update-asistente-phone').value     = a.phone;
+      document.getElementById('update-asistente-image-url').value = a.imageUrl;
+      // Guardar id en un atributo data-* para usar en submit
+      updateForm.dataset.id = id;
+      // Mostrar modal
+      modalOverlay.style.display = 'flex';
+    })
+    .catch(()=>alert('Asistente no encontrado'));
+};
+
+// --- 5) Actualizar asistente ---
+updateForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const id       = this.dataset.id;
+    const name     = document.getElementById('update-asistente-nombre').value.trim();
+    const email    = document.getElementById('update-asistente-email').value.trim();
+    const phone    = document.getElementById('update-asistente-phone').value.trim();
+    const imageUrl = document.getElementById('update-asistente-image-url').value.trim();
+  
     try {
-        let response = await fetch(ASISTENTE_API_BASE_URL, {  // Uso de ASISTENTE_API_BASE_URL
-            method: "POST",
-            headers: {
-                "Accept": "*/*",
-                "Content-Type": "application/json"
-            },
-            body: bodyContent
-        });
-
-        let data = await response.text(); 
-
-        if (response.ok) {
-            document.getElementById("mensaje").innerText = "Registro exitoso 🎉";
-            document.getElementById("asistente-form").reset(); // Limpiar formulario
-        } else {
-            document.getElementById("mensaje").innerText = "Error al registrar 😢";
-        }
-
-        console.log(data); // Para depuración en la consola
-
+      const res = await fetch(API + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, imageUrl })
+      });
+  
+      if (res.ok) {
+        alert('Asistente actualizado correctamente');
+        modalOverlay.style.display = 'none';
+        loadAssistants(); // Recargar la lista de asistentes
+      } else {
+        const err = await res.json();
+        alert(`Error al actualizar: ${err.message || res.statusText}`);
+      }
     } catch (error) {
-        console.error("Error en la petición:", error);
-        document.getElementById("mensaje").innerText = "Error de conexión 😢";
+      console.error('Error de conexión al actualizar:', error);
+      alert('Error de conexión al actualizar.');
     }
-});
-
-// ======================= ACTUALIZAR ASISTENTE =======================
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("asistente-update-form").addEventListener("submit", async function(event) {
-        event.preventDefault();
-
-        let id = document.getElementById("update-asistente-id").value.trim();
-        let nombre = document.getElementById("update-asistente-nombre").value.trim();
-        let email = document.getElementById("update-asistente-email").value.trim();
-        let phone = document.getElementById("update-asistente-phone").value.trim();
-
-        let mensajeElemento = document.getElementById("mensaje");
-        mensajeElemento.innerText = "";
-
-        if (!id || !nombre || !email || !phone) {
-            let mensaje = "Todos los campos son obligatorios ⚠️";
-            mensajeElemento.innerText = mensaje;
-            alert(mensaje);
-            return;
-        }
-
-        let bodyContent = JSON.stringify({
-            "name": nombre,
-            "email": email,
-            "phone": phone
-        });
-
-        let url = `${ASISTENTE_API_BASE_URL}${id}`;  // URL de actualización
-
-        try {
-            let response = await fetch(url, {
-                method: "PUT",
-                headers: {
-                    "Accept": "*/*",
-                    "Content-Type": "application/json"
-                },
-                body: bodyContent
-            });
-
-            let data = await response.json();
-            console.log("📢 Respuesta del servidor:", data);
-
-            if (response.ok) {
-                let mensaje = "Asistente actualizado con éxito 🎉";
-                mensajeElemento.innerText = mensaje;
-                alert(mensaje);
-            } else {
-                let mensaje = `Error: ${data.message || "No se pudo actualizar"}`;
-                mensajeElemento.innerText = mensaje;
-                alert(mensaje);
-            }
-
-        } catch (error) {
-            console.error("❌ Error en la petición:", error);
-            let mensaje = "Error de conexión 😢";
-            mensajeElemento.innerText = mensaje;
-            alert(mensaje);
-        }
-    });
-});
-
-// ======================= FILTRAR ASISTENTE =======================
-document.addEventListener("DOMContentLoaded", function () {
-    const input = document.getElementById("searchInputAsistentes");
-    const button = document.getElementById("searchButtonAsistentes");
-    const tableBody = document.getElementById("tableBodyAsistentes");
-
-    button.addEventListener("click", async function () {
-        const query = input.value.trim().toLowerCase();
-        let url = new URL(`${ASISTENTE_API_BASE_URL}filter`);  // Filtrado de asistentes
-
-        if (!query) return;
-
-        if (!isNaN(query)) {
-            if (query.length <= 6) url.searchParams.append("id", query);
-            else url.searchParams.append("phone", query);
-        } else if (query.includes("@")) {
-            url.searchParams.append("email", query);
-        } else if (query === "activo") {
-            url.searchParams.append("status", true);
-        } else if (query === "inactivo") {
-            url.searchParams.append("status", false);
-        } else {
-            url.searchParams.append("name", query);
-        }
-
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error("❌ Error al obtener datos");
-
-            const data = await response.json();
-
-            if (data.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="7">😕 No se encontraron asistentes</td></tr>`;
-                return;
-            }
-
-            tableBody.innerHTML = data.map(asistente => `
-                <tr>
-                    <td>${asistente.id}</td>
-                    <td>${asistente.name}</td>
-                    <td>${asistente.email}</td>
-                    <td>${asistente.phone || '—'}</td>
-                    <td>${asistente.status ? 'Activo' : 'Inactivo'}</td>
-                    <td>
-                        <button class="edit-btn" data-id="${asistente.id}">✏️</button>
-                        <button class="delete-btn" data-id="${asistente.id}">🗑️</button>
-                    </td>
-                </tr>
-            `).join("");
-        } catch (error) {
-            console.error(error);
-            alert("🚨 No se pudo filtrar la lista de asistentes.");
-        }
-    });
-});
-
-// ======================= ELIMINAR ASISTENTE =======================
-document.getElementById("asistente-delete-form").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Evita el comportamiento por defecto del formulario
-
-    const id = document.getElementById("asistente-id-eliminate").value.trim();
-    const mensaje = document.getElementById("mensaje");
-
-    if (!id) {
-        mensaje.innerText = "⚠️ Por favor ingresa un ID válido.";
-        mensaje.style.color = "orange";
-        return;
-    }
-
-    try {
-        const response = await fetch(`${ASISTENTE_API_BASE_URL}${id}`, {
-            method: "DELETE",
-            headers: {
-                "Accept": "*/*"
-            }
-        });
-
-        if (response.ok) {
-            mensaje.innerText = `✅ Asistente con ID ${id} eliminado correctamente.`;
-            mensaje.style.color = "green";
-            document.getElementById("asistente-delete-form").reset();
-            alert("✅ Asistente eliminado correctamente.");
-        } else {
-            const data = await response.json();
-            mensaje.innerText = `❌ Error al eliminar: ${data.message || "No se pudo eliminar el asistente"}`;
-            mensaje.style.color = "red";
-        }
-    } catch (error) {
-        console.error("❌ Error de conexión:", error);
-        mensaje.innerText = "⚠️ Error de conexión al eliminar.";
-        mensaje.style.color = "red";
-    }
-});
+  });

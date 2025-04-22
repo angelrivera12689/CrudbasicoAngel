@@ -29,7 +29,7 @@ public class ReviewService {
     @Autowired
     private IAssistant assistantRepository;
     
-     public ResponseDTO save(ReviewDTO reviewDTO) {
+    public ResponseDTO save(ReviewDTO reviewDTO) {
         // Validar que el comentario no sea nulo o vacío
         if (reviewDTO.getComment() == null || reviewDTO.getComment().trim().isEmpty()) {
             return new ResponseDTO(
@@ -82,6 +82,11 @@ public class ReviewService {
     // ✅ Método para buscar una reseña por ID
     public Optional<Review> findById(int id) {
         return reviewRepository.findById(id);
+    }
+
+    // ✅ Método para obtener reseñas por eventId
+    public List<Review> findByEventId(int eventId) {
+        return reviewRepository.findByEventId(eventId);
     }
 
     // ✅ Método para eliminar una reseña por ID

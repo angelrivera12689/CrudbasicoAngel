@@ -65,16 +65,17 @@ public class AssistantController {
     }
 
     // ✅ Eliminar un asistente
-    @DeleteMapping("/")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAssistant(@PathVariable int id) {
         if (isRateLimited()) {
             return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
         }
-
+    
         ResponseDTO message = assistantService.delete(id);
         return new ResponseEntity<>(message,
                 message.getStatus().equals(HttpStatus.OK.toString()) ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
+    
 
     // ✅ Filtrar asistentes
     @GetMapping("/filter")
@@ -86,7 +87,7 @@ public class AssistantController {
             @RequestParam(required = false) Boolean status) {
 
         if (isRateLimited()) {
-            return new ResponseEntity<>(null, HttpStatus.TOO_MANY_REQUESTS);
+            return new ResponseEntity<>( HttpStatus.TOO_MANY_REQUESTS);
         }
 
         List<Assistant> results = assistantService.filterAssistants(id, name, email, phone, status);

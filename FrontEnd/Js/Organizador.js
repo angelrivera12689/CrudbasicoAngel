@@ -170,26 +170,56 @@ document.getElementById("edit-organizer-form").addEventListener("submit", async 
     alert("❌ Error: " + (error.message || "Hubo un error al actualizar"));
   }
 });
+
 // ======================= ACTUALIZAR IMAGEN PREVIA EN EL MODAL =======================
 document.getElementById("edit-organizador-imagen-url").addEventListener("input", function () {
-    const imagePreview = document.getElementById("image-preview");
-    const imageUrl = this.value.trim();
+  const imagePreview = document.getElementById("image-preview");
+  const imageUrl = this.value.trim();
 
-    if (imageUrl) {
-        // Crear un objeto Image para comprobar si la URL es válida
-        const img = new Image();
-        img.onload = function () {
-            imagePreview.src = `${imageUrl}?t=${Date.now()}`; // Forzar recarga de la imagen
-            imagePreview.style.display = "block";
-        };
-        img.onerror = function () {
-            imagePreview.style.display = "none";
-            alert("La URL de la imagen no es válida.");
-        };
-        img.src = imageUrl;
-    } else {
-        imagePreview.style.display = "none"; // Ocultar imagen si la URL está vacía
-    }
+  if (imageUrl) {
+    // Crear un objeto Image para comprobar si la URL es válida
+    const img = new Image();
+    img.onload = function () {
+      imagePreview.src = `${imageUrl}?t=${Date.now()}`; // Forzar recarga de la imagen
+      imagePreview.style.display = "block";
+    };
+    img.onerror = function () {
+      imagePreview.style.display = "none";
+      alert("La URL de la imagen no es válida.");
+    };
+    img.src = imageUrl;
+  } else {
+    imagePreview.style.display = "none"; // Ocultar imagen si la URL está vacía
+  }
+});
+
+// ======================= FILTRAR ORGANIZADORES =======================
+document.getElementById("filter-organizer-form").addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  // Obtener valores de los filtros
+  const name = document.getElementById("filter-name").value.trim();
+  const phone = document.getElementById("filter-phone").value.trim();
+  const email = document.getElementById("filter-email").value.trim();
+  const status = document.getElementById("filter-status").value;
+
+  // Construir la URL con parámetros de consulta
+  const params = new URLSearchParams();
+  if (name) params.append("name", name);
+  if (phone) params.append("phone", phone);
+  if (email) params.append("email", email);
+  if (status) params.append("status", status);
+
+  try {
+    // Realizar la solicitud al endpoint de filtro
+    const response = await fetch(`${API_URL_ORGANIZER}filter?${params.toString()}`);
+    if (!response.ok) throw new Error("Error al filtrar organizadores");
+
+    const filteredOrganizers = await response.json();
+    displayOrganizers(filteredOrganizers); // Mostrar los organizadores filtrados
+  } catch (error) {
+    alert("❌ Error al filtrar organizadores: " + error.message);
+  }
 });
 
 // ======================= INICIALIZAR =======================

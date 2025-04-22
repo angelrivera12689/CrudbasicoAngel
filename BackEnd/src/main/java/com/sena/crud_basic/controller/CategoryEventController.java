@@ -42,7 +42,7 @@ public class CategoryEventController {
     @GetMapping("/")
     public ResponseEntity<List<CategoryEvent>> getAllCategories() {
         if (isRateLimited()) {
-            return new ResponseEntity<>(null, HttpStatus.TOO_MANY_REQUESTS);
+            return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
         }
 
         List<CategoryEvent> categories = categoryEventService.findAll();

@@ -4,64 +4,6 @@ const RESEÑA_API_BASE_URL = `${urlBase}reviews/`;
 
 console.log(RESEÑA_API_BASE_URL);
 
-// ======================= REGISTRAR RESEÑA =======================
-document.getElementById("reseña-form").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Evita que la página se recargue
-
-    // Obtener los valores del formulario
-    let comment = document.getElementById("review-comment").value.trim();
-    let rating = parseInt(document.getElementById("review-rating").value.trim());
-    let eventId = parseInt(document.getElementById("review-event-id").value.trim());
-    let assistantId = parseInt(document.getElementById("review-assistant-id").value.trim());
-
-    // Validar los campos
-    if (!comment || isNaN(rating) || isNaN(eventId) || isNaN(assistantId)) {
-        alert("Todos los campos son obligatorios y deben ser válidos.");
-        return;
-    }
-
-    // ✅ Ajuste aquí: Enviar solo el ID del evento directamente
-    let bodyContent = JSON.stringify({
-        comment: comment,
-        rating: rating,
-        eventId: eventId,  // Cambiado para enviar solo eventId y no un objeto
-        assistantId: assistantId
-    });
-
-    // Cabeceras de la solicitud
-    let headersList = {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    };
-
-    try {
-        // Realizar la solicitud POST para registrar la reseña
-        let response = await fetch(RESEÑA_API_BASE_URL, {
-            method: "POST",
-            body: bodyContent,
-            headers: headersList
-        });
-
-        // Comprobar si la respuesta es exitosa
-        if (!response.ok) {
-            // Obtener detalles del error del servidor
-            const errorData = await response.json();
-            throw new Error(`Error en la solicitud: ${response.statusText} - ${JSON.stringify(errorData)}`);
-        }
-
-        // Si la respuesta es exitosa, mostrar mensaje y limpiar formulario
-        let data = await response.json();
-        console.log("Reseña registrada:", data);
-        alert("✅ Reseña registrada con éxito");
-        document.getElementById("reseña-form").reset();  // Limpiar el formulario después de enviar
-    } catch (error) {
-        console.error("Error al registrar la reseña:", error);
-        alert("❌ Error al registrar la reseña: " + error.message);  // Mostrar mensaje de error detallado
-    }
-});
-
-
-
 // ======================= ACTUALIZAR RESEÑA =======================
 document.getElementById("reseña-update").addEventListener("submit", async function(event) {
     event.preventDefault();

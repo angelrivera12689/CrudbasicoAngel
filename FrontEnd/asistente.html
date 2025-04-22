@@ -25,6 +25,7 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
+  <link href="css/asistente.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
 </head>
@@ -91,72 +92,40 @@
 
   <!-- portfolio section -->
 
-  <section class="portfolio_section layout_padding">
+  <section class="layout_padding" style="background-color: #f8f8f8;">
     <div class="container">
       <div class="custom_heading-container">
-        <h2>
-          Portfolio
-        </h2>
+        <h3>Registrarse como asistente</h3>
         <hr>
       </div>
-      <p>
-        There are many variations of passages of Lorem Ipsum available, but the majority
-      </p>
-      <div class="layout_padding2-top">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="img-box">
-              <img src="images/p-1.jpg" alt="">
-              <a href="">
-                <img src="images/link.png" alt="">
-              </a>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="img-box">
-              <img src="images/p-2.jpg" alt="">
-              <a href="">
-                <img src="images/link.png" alt="">
-              </a>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="img-box">
-              <img src="images/p-3.jpg" alt="">
-              <a href="">
-                <img src="images/link.png" alt="">
-              </a>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="img-box">
-              <img src="images/p-4.jpg" alt="">
-              <a href="">
-                <img src="images/link.png" alt="">
-              </a>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="img-box">
-              <img src="images/p-5.jpg" alt="">
-              <a href="">
-                <img src="images/link.png" alt="">
-              </a>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="img-box">
-              <img src="images/p-6.jpg" alt="">
-              <a href="">
-                <img src="images/link.png" alt="">
-              </a>
-            </div>
-          </div>
+      <form id="assistant-form" class="p-3 bg-white shadow rounded" style="max-width: 500px; margin: auto;">
+        <div class="form-group">
+            <label for="asistente-nombre">Nombre completo</label>
+            <input type="text" id="asistente-nombre" name="nombre" class="form-control" placeholder="Tu nombre" required>
         </div>
+        <div class="form-group">
+            <label for="asistente-email">Correo electrónico</label>
+            <input type="email" id="asistente-email" name="email" class="form-control" placeholder="ejemplo@mail.com" required>
+        </div>
+        <div class="form-group">
+            <label for="asistente-phone">Número de teléfono</label>
+            <input type="tel" id="asistente-phone" name="phone" class="form-control" placeholder="(123) 456-7890" required>
+        </div>
+        <div class="form-group">
+            <label for="asistente-image-url">URL de imagen de perfil</label>
+            <input type="url" id="asistente-image-url" name="image" class="form-control" placeholder="https://ejemplo.com/imagen.jpg" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+      </form>
+    
+      <div class="mt-5">
+        <h4 class="text-center">Asistentes registrados recientemente</h4>
+        <ul id="assistant-list" class="list-group mt-3" style="max-width: 500px; margin: auto;">
+          <!-- Lista dinámica -->
+        </ul>
       </div>
     </div>
   </section>
-
   <!-- end portfolio section -->
 
 
@@ -198,16 +167,43 @@
   <!-- end info_section -->
 
   <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; 2019 All Rights Reserved By
-      <a href="https://html.design/">Free Html Templates</a>
-    </p>
-  </section>
-  <!-- footer section -->
+ <!-- Modal custom para actualizar asistente -->
+<div id="updateAssistantModal" class="custom-modal-overlay" style="display: none;">
+  <div class="custom-modal-box">
+    <div class="custom-modal-header">
+      <h5 class="custom-modal-title">Editar Asistente</h5>
+      <button id="closeUpdateModalBtn" class="custom-modal-close">&times;</button>
+    </div>
+    <div class="custom-modal-body">
+      <form id="update-assistant-form">
+        <div class="form-group">
+          <label for="update-asistente-nombre">Nombre completo</label>
+          <input type="text" id="update-asistente-nombre" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="update-asistente-email">Correo electrónico</label>
+          <input type="email" id="update-asistente-email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="update-asistente-phone">Número de teléfono</label>
+          <input type="tel" id="update-asistente-phone" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="update-asistente-image-url">URL imagen de perfil</label>
+          <input type="url" id="update-asistente-image-url" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="module" src="/FrontEnd/js/Asistente.js"></script>
+
+
 
 </body>
 </body>

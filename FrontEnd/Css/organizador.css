@@ -257,3 +257,78 @@ body {
 .organizer-actions-top button:hover {
     transform: scale(1.2);
 }
+/* Estilo general de la sección */
+.filter_section {
+  padding: 20px;
+  background-color: linear-gradient(135deg, #a454fd, #2b05df);
+}
+
+/* Contenedor de la búsqueda */
+.search-filter-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* Estilo para el formulario de filtro */
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  width: 100%;
+  text-align: center;
+}
+
+/* Estilo para los inputs y select */
+.search-input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 200px;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Estilo para el botón */
+.search-btn {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto; /* Esto centrará el botón */
+  width: auto; 
+  width: 80px;
+}
+
+
+.search-btn:hover {
+  background-color: #2980b9;
+}
+
+.search-btn i {
+  font-size: 16px;
+}
+
+/* Estilos responsivos: ajustando los inputs en dispositivos más pequeños */
+@media (max-width: 768px) {
+  .filter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}

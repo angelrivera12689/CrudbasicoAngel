@@ -1,0 +1,182 @@
+/* GRID para tarjetas */
+#assistant-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+  }
+  
+  #assistant-list .list-group-item {
+    position: relative;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  #assistant-list .list-group-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  #assistant-list img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 4px solid #007bff;
+  }
+  
+  #assistant-list strong {
+    display: block;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  #assistant-list .text-center {
+    grid-column: 1 / -1;
+    font-size: 1.2rem;
+    color: #999;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 1024px) {
+    #assistant-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    #assistant-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    #assistant-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Botones flotantes */
+  .assistant-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    z-index: 10;
+  }
+  
+  /* Overlay del modal */
+  .custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Caja del modal */
+  .custom-modal-box {
+    background: #fff;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+  }
+  
+  /* Header */
+  .custom-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .custom-modal-title {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+  
+  .custom-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s;
+  }
+  
+  .custom-modal-close:hover {
+    color: #e74c3c;
+  }
+  
+  /* Body */
+  .custom-modal-body {
+    padding: 1rem;
+  }
+  
+  .custom-modal-body .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .custom-modal-body .form-control {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Botón submit */
+  .custom-modal-body .btn-block {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    border: none !important;
+    outline: none;
+  }
+  
+  /* Quitar borde de botones de acción (editar/eliminar) */
+  .custom-edit-btn,
+  .custom-delete-btn {
+    background-color: transparent;
+    border: none !important;
+    outline: none;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 3px 6px;
+    border-radius: 4px;
+  }
+  
+  .custom-edit-btn:hover {
+    color: #ffc107;
+  }
+  
+  .custom-delete-btn:hover {
+    color: #dc3545;
+  }
+  
+  /* Quitar borde del botón registrar */
+  #assistant-form button {
+    border: none;
+    outline: none;
+  }
+  

@@ -26,14 +26,19 @@ public class Assistant {
     @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
     private boolean status;
 
+    // Nuevo campo para la imagen
+    @Column(name = "image_url", columnDefinition = "LONGTEXT")
+    private String imageUrl;
+
     public Assistant() {}
 
-    public Assistant(int id_assistant, String name, String email, String phone, boolean status) {
+    public Assistant(int id_assistant, String name, String email, String phone, boolean status, String imageUrl) {
         this.id_assistant = id_assistant;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.status = status;
+        this.imageUrl = imageUrl;
     }
 
     public int getId() {
@@ -74,6 +79,15 @@ public class Assistant {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    // Getter y Setter para el campo de la URL de la imagen
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     // OPCIONAL: si alguna parte del código lo necesita, podés dejarlo

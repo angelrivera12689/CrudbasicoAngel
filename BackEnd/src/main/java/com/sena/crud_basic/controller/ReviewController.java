@@ -56,6 +56,21 @@ public class ReviewController {
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
+    // ✅ Obtener reseñas por eventId
+    @GetMapping("/event/{eventId}")
+    public ResponseEntity<Object> getReviewsByEventId(@PathVariable int eventId) {
+        if (isRateLimited()) {
+            return new ResponseEntity<>(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"), HttpStatus.TOO_MANY_REQUESTS);
+        }
+
+        List<Review> reviews = reviewService.findByEventId(eventId);
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO("404", "No se encontraron reseñas para este evento"), HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
+
     // ✅ Obtener una reseña por ID
     @GetMapping("/{id}")
     public ResponseEntity<Object> getReviewById(@PathVariable int id) {

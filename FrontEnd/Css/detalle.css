@@ -311,3 +311,125 @@
   margin-top: 15px;
   border-color: #eee;
 }
+
+
+/* Estilos para el overlay del modal */
+.custom-ticket-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+/* Caja principal del modal */
+.custom-ticket-modal-box {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Encabezado del modal */
+.custom-ticket-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.custom-ticket-modal-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+  margin: 0;
+}
+
+.custom-ticket-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #555555;
+  cursor: pointer;
+}
+
+.custom-ticket-close-btn:hover {
+  color: #000000;
+}
+
+/* Cuerpo del modal */
+.custom-ticket-modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-ticket-modal-body h2 {
+  font-size: 20px;
+  color: #732d91;
+  margin-bottom: 15px;
+}
+
+/* Formulario del modal */
+.custom-ticket-modal-body form {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-ticket-modal-body label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555555;
+}
+
+.custom-ticket-modal-body input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Efecto de enfoque en los inputs */
+.custom-ticket-modal-body input:focus {
+  border-color: #007BFF;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Botón del formulario */
+.custom-ticket-modal-body button {
+  background-color: #732d91;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-ticket-modal-body button:hover {
+  background-color: #0056b3;
+}
+
+/* Animación de entrada para el modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

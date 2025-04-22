@@ -94,7 +94,7 @@ public class EventController {
             @RequestParam(required = false) String category_name) {
         
         if (isRateLimited()) {
-            return new ResponseEntity<>(null, HttpStatus.TOO_MANY_REQUESTS);
+            return new ResponseEntity<>( HttpStatus.TOO_MANY_REQUESTS);
         }
     
         List<Events> filteredEvents = eventService.filterEvent(event_name, description, date, location, category_name);

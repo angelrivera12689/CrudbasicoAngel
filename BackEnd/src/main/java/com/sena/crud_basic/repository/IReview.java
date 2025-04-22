@@ -9,11 +9,13 @@ import org.springframework.data.repository.query.Param;
 import com.sena.crud_basic.model.Review;
 
 public interface IReview extends JpaRepository<Review, Integer> {
- @Query("SELECT r FROM Review r WHERE r.status != false")
+
+    // ✅ Obtener lista de reseñas activas
+    @Query("SELECT r FROM Review r WHERE r.status != false")
     List<Review> getListReviewActive();
 
-
-      @Query("SELECT r FROM Review r WHERE " +
+    // ✅ Filtrar reseñas con múltiples parámetros
+    @Query("SELECT r FROM Review r WHERE " +
            "(:comment IS NULL OR r.comment LIKE %:comment%) AND " +
            "(:rating IS NULL OR r.rating = :rating) AND " +
            "(:eventId IS NULL OR r.event.id = :eventId) AND " +
@@ -26,5 +28,8 @@ public interface IReview extends JpaRepository<Review, Integer> {
         @Param("assistantId") Integer assistantId,
         @Param("status") Boolean status
     );
-}
 
+    // ✅ Obtener reseñas asociadas a un evento específico
+    @Query("SELECT r FROM Review r WHERE r.event.id = :eventId")
+    List<Review> findByEventId(@Param("eventId") Integer eventId);
+}

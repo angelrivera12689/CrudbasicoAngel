@@ -7,11 +7,12 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import com.sena.crud_basic.DTO.AssistantDTO;
 import com.sena.crud_basic.model.Assistant;
 import com.sena.crud_basic.repository.IAssistant;
-
 import com.sena.crud_basic.DTO.ResponseDTO;
+
 @Service
 public class AssistantService {
 
@@ -44,6 +45,13 @@ public class AssistantService {
             );
         }
         
+        // Validar la URL de la imagen (si se proporciona)
+        if (assistantDTO.getImageUrl() != null && !assistantDTO.getImageUrl().isEmpty() && !isValidImageUrl(assistantDTO.getImageUrl())) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "La URL de la imagen no es válida"
+            );
+        }
     
         // Convertir el DTO a modelo
         Assistant assistant = convertToModel(assistantDTO);
@@ -67,9 +75,16 @@ public class AssistantService {
         // Retorna true si el correo cumple con la expresión regular, de lo contrario false
         return matcher.matches();
     }
-    //termina el metodo de Registro con Validaciones
-    
 
+    // Método para validar la URL de la imagen (básico)
+    private boolean isValidImageUrl(String url) {
+        String urlRegex = "^(http|https)://.*\\.(jpg|jpeg|png|gif)$"; // Para validar imágenes con extensiones comunes
+        Pattern pattern = Pattern.compile(urlRegex);
+        java.util.regex.Matcher matcher = pattern.matcher(url);
+        return matcher.matches();
+    }
+    
+    // Método para consultar todos los asistentes activos
     public List<Assistant> findAll() {
         return data.getListAssistantActive();
     }
@@ -79,7 +94,7 @@ public class AssistantService {
         return data.findById(id);
     }
 
-    // Método para eliminar un asistente por ID
+    // Método para eliminar un asistente por ID (eliminación lógica)
     public ResponseDTO delete(int id) {
         Optional<Assistant> assistant = findById(id);
         if (!assistant.isPresent()) {
@@ -100,76 +115,96 @@ public class AssistantService {
             "Asistente eliminado correctamente"
         );
     }
+
+    // Método para filtrar asistentes
     public List<Assistant> filterAssistants(Integer id, String name, String email, String phone, Boolean status) {
         return data.filterAssistants(id, name, email, phone, status);
     }
     
-    
-        // Método para convertir un modelo a un DTO
-        public AssistantDTO convertToDTO(Assistant assistant) {
-            return new AssistantDTO(
-                assistant.getName(),
-                assistant.getEmail(),
-                assistant.getPhone()
-            );
-        }
-    
-        // Método para convertir un DTO a un modelo
-        public Assistant convertToModel(AssistantDTO assistantDTO) {
-            return new Assistant(
-                0, // Asumimos que el ID es auto-generado en la base de datos
-                assistantDTO.getName(),
-                assistantDTO.getEmail(),
-                assistantDTO.getPhone(), 
-                true
-            );
-        }
-        public ResponseDTO update(int id, AssistantDTO assistantDTO) {
-            // Buscar el asistente por ID
-            Optional<Assistant> existingAssistant = findById(id);
-            if (!existingAssistant.isPresent()) {
-                return new ResponseDTO(
-                    HttpStatus.BAD_REQUEST.toString(),
-                    "El asistente no existe"
-                );
-            }
-    
-            // Validar el nombre de acuerdo a las restricciones
-            if (assistantDTO.getName().length() < 1 || assistantDTO.getName().length() > 50) {
-                return new ResponseDTO(
-                    HttpStatus.BAD_REQUEST.toString(),
-                    "El nombre debe estar entre 1 y 50 caracteres"
-                );
-            }
-    
-            // Validar el formato del email
-            if (!isValidEmail(assistantDTO.getEmail())) {
-                return new ResponseDTO(
-                    HttpStatus.BAD_REQUEST.toString(),
-                    "El email no tiene un formato válido"
-                );
-            }
-    
-            // Validar el teléfono (por ejemplo, debe tener 10 dígitos)
-            if (assistantDTO.getPhone().length() != 10 || !assistantDTO.getPhone().matches("[0-9]+")) {
-                return new ResponseDTO(
-                    HttpStatus.BAD_REQUEST.toString(),
-                    "El número de teléfono debe tener 10 dígitos y solo puede contener números"
-                );
-            }
-    
-            // Actualizar los datos del asistente existente
-            Assistant assistantToUpdate = existingAssistant.get();
-            assistantToUpdate.setName(assistantDTO.getName());
-            assistantToUpdate.setEmail(assistantDTO.getEmail());
-            assistantToUpdate.setPhone(assistantDTO.getPhone());
-    
-            // Guardar los cambios
-            data.save(assistantToUpdate);
-    
-            return new ResponseDTO(
-                HttpStatus.OK.toString(),
-                "Asistente actualizado exitosamente"
-            );
-        }
+    // Método para convertir un modelo a un DTO
+    public AssistantDTO convertToDTO(Assistant assistant) {
+        return new AssistantDTO(
+            assistant.getName(),
+            assistant.getEmail(),
+            assistant.getPhone(),
+            assistant.getImageUrl()  // Incluimos la URL de la imagen
+        );
     }
+    
+    // Método para convertir un DTO a un modelo
+    public Assistant convertToModel(AssistantDTO assistantDTO) {
+        return new Assistant(
+            0, // Asumimos que el ID es auto-generado en la base de datos
+            assistantDTO.getName(),
+            assistantDTO.getEmail(),
+            assistantDTO.getPhone(),
+            true, // Estado por defecto: activo
+            assistantDTO.getImageUrl() // Incluir la URL de la imagen
+        );
+    }
+
+    // Método para actualizar un asistente
+    public ResponseDTO update(int id, AssistantDTO assistantDTO) {
+        // Buscar el asistente por ID
+        Optional<Assistant> existingAssistant = findById(id);
+        if (!existingAssistant.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El asistente no existe"
+            );
+        }
+    
+        // Validar el nombre de acuerdo a las restricciones
+        if (assistantDTO.getName().length() < 1 || assistantDTO.getName().length() > 50) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El nombre debe estar entre 1 y 50 caracteres"
+            );
+        }
+    
+        // Validar el formato del email
+        if (!isValidEmail(assistantDTO.getEmail())) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El email no tiene un formato válido"
+            );
+        }
+    
+        // Validar el teléfono (por ejemplo, debe tener 10 dígitos)
+        if (assistantDTO.getPhone().length() != 10 || !assistantDTO.getPhone().matches("[0-9]+")) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El número de teléfono debe tener 10 dígitos y solo puede contener números"
+            );
+        }
+    
+        // Validar la URL de la imagen (si se proporciona)
+        if (assistantDTO.getImageUrl() != null && !assistantDTO.getImageUrl().isEmpty()) {
+            if (!isValidImageUrl(assistantDTO.getImageUrl())) {
+                return new ResponseDTO(
+                    HttpStatus.BAD_REQUEST.toString(),
+                    "La URL de la imagen no es válida"
+                );
+            }
+        }
+    
+        // Actualizar los datos del asistente existente
+        Assistant assistantToUpdate = existingAssistant.get();
+        assistantToUpdate.setName(assistantDTO.getName());
+        assistantToUpdate.setEmail(assistantDTO.getEmail());
+        assistantToUpdate.setPhone(assistantDTO.getPhone());
+    
+        // Actualizar solo si se proporciona una URL de imagen válida, de lo contrario, dejar el campo anterior intacto
+        if (assistantDTO.getImageUrl() != null && !assistantDTO.getImageUrl().isEmpty()) {
+            assistantToUpdate.setImageUrl(assistantDTO.getImageUrl());
+        }
+    
+        // Guardar los cambios
+        data.save(assistantToUpdate);
+    
+        return new ResponseDTO(
+            HttpStatus.OK.toString(),
+            "Asistente actualizado exitosamente"
+        );
+    } 
+}

@@ -155,13 +155,16 @@ public class TicketService {
         return new TicketDTO(
                 ticket.getIdTicket(),
                 ticket.getEvent().getIdEvent(),
+                ticket.getEvent().getEventName(), // ✅ Añadimos el nombre del evento
                 ticket.getAssistant().getId(),
+                ticket.getAssistant().getName(), // ✅ Añadimos el nombre del asistente
                 ticket.getPrice(),
                 ticket.getSeatNumber(),
                 ticket.getPurchaseDate(),
                 ticket.getStatus()
         );
     }
+    
  // ✅ Método para convertir un TicketDTO a Ticket
     public Ticket convertToModel(TicketDTO ticketDTO) {
         // Buscar el evento y el asistente en la base de datos
