@@ -16,26 +16,14 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 @Query("SELECT t FROM Ticket t WHERE t.status != false")
 List<Ticket> getListTicketActive();
 
-
 @Query("SELECT t FROM Ticket t " +
-           "WHERE (:idTicket IS NULL OR t.idTicket = :idTicket) " +  // Agregado el filtro por idTicket
-           "AND (:eventId IS NULL OR t.event.idEvent = :eventId) " +
-           "AND (:assistantId IS NULL OR t.assistant.id_assistant = :assistantId) " +
-           "AND (:price IS NULL OR t.price = :price) " +
-           "AND (:seatNumber IS NULL OR t.seatNumber LIKE %:seatNumber%) " +
-           "AND (:status IS NULL OR t.status = :status) " +
-           "AND (:fromDate IS NULL OR t.purchaseDate >= :fromDate) " +
-           "AND (:toDate IS NULL OR t.purchaseDate <= :toDate)")
+       "WHERE (:eventName IS NULL OR LOWER(t.event.eventName) LIKE LOWER(CONCAT('%', :eventName, '%'))) " +
+       "AND (:assistantName IS NULL OR LOWER(t.assistant.name) LIKE LOWER(CONCAT('%', :assistantName, '%')))")
 List<Ticket> filterTickets(
-        @Param("idTicket") Integer idTicket,  // Parámetro adicional para filtrar por idTicket
-        @Param("eventId") Integer eventId,
-        @Param("assistantId") Integer assistantId,
-        @Param("price") Double price,
-        @Param("seatNumber") String seatNumber,
-        @Param("status") Boolean status,
-        @Param("fromDate") LocalDateTime fromDate,
-        @Param("toDate") LocalDateTime toDate
+        @Param("eventName") String eventName,
+        @Param("assistantName") String assistantName
 );
+
 
 }
 

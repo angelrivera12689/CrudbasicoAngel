@@ -1,8 +1,8 @@
-import { urlBase } from '/FrontEnd/Js/constante.js';  // Asegúrate de que la ruta sea correcta
+import { urlBase } from '/FrontEnd/js/constante.js';  // Asegúrate de que la ruta sea correcta
 
 // Definir la URL base para los tickets y asistentes
 const TICKET_API_BASE_URL = `${urlBase}tickets/`;
-const ASSISTANT_API_BASE_URL = `${urlBase}assistants/filter`;
+const ASSISTANT_API_BASE_URL = `${urlBase}assistants/filter`;  // Esta es la URL para el filtrado
 
 document.addEventListener("DOMContentLoaded", function () {
   // Capturar el ID del evento desde la URL
@@ -111,6 +111,76 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("❌ Error al registrar el ticket.");
     }
   });
+
+  // Capturar el formulario de filtros
+  const filterForm = document.getElementById("filter-form");
+
+  // Manejar el envío del formulario de filtros
+  filterForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Evita que la página se recargue
+
+    // Capturar los valores de los filtros
+    const eventIdFilter = document.getElementById("filter-event-id").value.trim();
+    const assistantNameFilter = document.getElementById("filter-assistant-name").value.trim();
+
+    // Llamar a la función de filtrado con los parámetros
+    aplicarFiltro(eventIdFilter, assistantNameFilter);
+  });
+
+  // Función para aplicar el filtro
+  async function aplicarFiltro(eventId, assistantName) {
+    try {
+      let filterParams = "";
+
+      // Solo agregamos los parámetros si los campos no están vacíos
+      if (eventId) {
+        filterParams += `eventName=${encodeURIComponent(eventId)}`;
+      }
+
+      if (assistantName) {
+        if (filterParams.length > 0) {
+          filterParams += "&";  // Si ya hay un parámetro, agregamos el ampersand
+        }
+        filterParams += `assistantName=${encodeURIComponent(assistantName)}`;
+      }
+
+      // Asegurarse de que la URL de la API se construya correctamente
+      const filterUrl = `${ASSISTANT_API_BASE_URL}?${filterParams}`;
+
+      // Realizar la solicitud GET para obtener los asistentes filtrados
+      const response = await fetch(filterUrl);
+
+      if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
+
+      const assistants = await response.json();
+
+      if (assistants.length > 0) {
+        console.log("Asistentes filtrados:", assistants);
+        // Aquí puedes mostrar los asistentes filtrados en tu interfaz de usuario
+        mostrarAsistentes(assistants);
+      } else {
+        alert("No se encontraron asistentes con esos filtros.");
+      }
+    } catch (error) {
+      console.error("Error al aplicar el filtro:", error);
+      alert("❌ Error al aplicar el filtro.");
+    }
+  }
+
+  // Función para mostrar los asistentes filtrados (Ejemplo básico)
+  function mostrarAsistentes(assistants) {
+    const resultContainer = document.getElementById("assistant-results");
+    
+    // Limpiar resultados anteriores
+    resultContainer.innerHTML = "";
+    
+    assistants.forEach(assistant => {
+      const assistantElement = document.createElement("div");
+      assistantElement.classList.add("assistant");
+      assistantElement.textContent = `Asistente: ${assistant.name}, ID: ${assistant.id}`;
+      resultContainer.appendChild(assistantElement);
+    });
+  }
 
   /**
    * Consulta el asistente por nombre.

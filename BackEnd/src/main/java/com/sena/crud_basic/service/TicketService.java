@@ -136,19 +136,11 @@ public class TicketService {
     }
 
 
-    public List<Ticket> filterTickets(
-        Integer idTicket,       // Agregamos el filtro por idTicket
-        Integer eventId,
-        Integer assistantId,
-        Double price,
-        String seatNumber,
-        Boolean status,
-        LocalDateTime fromDate,
-        LocalDateTime toDate
-    ) {
-        // Llamamos al repositorio pasando los parámetros
-        return ticketRepository.filterTickets(idTicket, eventId, assistantId, price, seatNumber, status, fromDate, toDate);
-    }
+   // ✅ Método adaptado para filtrar solo por nombre de evento y asistente
+public List<Ticket> filterTickets(String eventName, String assistantName) {
+    return ticketRepository.filterTickets(eventName, assistantName);
+}
+
     
     // ✅ Método para convertir un Ticket a TicketDTO
     public TicketDTO convertToDTO(Ticket ticket) {

@@ -91,23 +91,21 @@ public class TicketController {
     // ✅ Endpoint para filtrar tickets
     @GetMapping("/filter")
     public ResponseEntity<?> filterTickets(
-            @RequestParam(required = false, name = "idTicket") Integer idTicket,
-            @RequestParam(required = false, name = "eventId") Integer eventId,
-            @RequestParam(required = false, name = "assistantId") Integer assistantId,
-            @RequestParam(required = false, name = "price") Double price,
-            @RequestParam(required = false, name = "seatNumber") String seatNumber,
-            @RequestParam(required = false, name = "status") Boolean status,
-            @RequestParam(required = false, name = "fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,
-            @RequestParam(required = false, name = "toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDate) {
-
+            @RequestParam(required = false) String eventName,
+            @RequestParam(required = false) String assistantName) {
+    
         if (isRateLimited()) {
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
                     .body(new ResponseDTO("429", "🚫 Límite de peticiones alcanzado"));
         }
-
-        List<Ticket> tickets = ticketService.filterTickets(idTicket, eventId, assistantId, price, seatNumber, status, fromDate, toDate);
+    
+        // Llamar al servicio con los filtros por nombre de evento y asistente
+        List<Ticket> tickets = ticketService.filterTickets(eventName, assistantName);
+    
+        // Retornar los tickets encontrados
         return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
+    
 
     // ✅ Endpoint para actualizar un ticket
     @PutMapping("/{id}")
