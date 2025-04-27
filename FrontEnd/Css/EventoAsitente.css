@@ -109,3 +109,59 @@ body {
     object-fit: cover; /* Asegura que la imagen no se distorsione */
     margin-right: 10px; /* Espaciado entre la imagen y el texto */
 }
+
+/* Estilos para la sección de asignación de asistente a evento */
+#assign-assistant-event {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Limitar el ancho para hacerlo más compacto */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#assign-assistant-event h2 {
+    text-align: center;
+    color: #333;
+    font-size: 18px; /* Tamaño de fuente más pequeño */
+    margin-bottom: 15px;
+}
+
+/* Estilo para las etiquetas */
+#assign-assistant-event label {
+    display: block;
+    font-size: 14px; /* Tamaño más pequeño para las etiquetas */
+    margin-bottom: 6px;
+    color: #333;
+}
+
+/* Estilo para los select */
+#assign-assistant-event select {
+    width: 100%;
+    padding: 8px; /* Reducir el padding */
+    margin-bottom: 15px; /* Menos espacio entre los elementos */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px; /* Font más pequeño */
+    background-color: #fff;
+}
+
+/* Estilo del botón */
+#assign-assistant-event button {
+    display: block;
+    width: 100%;
+    padding: 10px; /* Reducir padding */
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px; /* Tamaño más pequeño del texto */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#assign-assistant-event button:hover {
+    background-color: #0056b3;
+}

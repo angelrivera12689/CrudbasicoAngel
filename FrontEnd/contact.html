@@ -82,34 +82,51 @@
   </div>
 <!-- Filter Section -->
 <body>
+  <section id="assign-assistant-event">
+    <h2>Asignar Asistente a Evento</h2>
+    
+    <!-- Seleccionar Evento -->
+    <label for="event-id">Selecciona un evento:</label>
+    <select id="event-id">
+        <!-- Las opciones se llenarán dinámicamente -->
+    </select>
 
-  <div class="container">
-      <h1>Buscar Eventos y Asistentes</h1>
+    <!-- Seleccionar Asistente -->
+    <label for="assistant-id">Selecciona un asistente:</label>
+    <select id="assistant-id">
+        <!-- Las opciones se llenarán dinámicamente -->
+    </select>
 
-      <!-- Filtro para Buscar Eventos por Asistente -->
-      <div class="search-box">
-          <input type="text" id="assistant-name" placeholder="Nombre del asistente" />
-          <button id="search-events-btn">Buscar Eventos por Asistente</button>
-      </div>
+    <button id="assign-assistant-btn">Asignar Asistente</button>
+</section>
 
-      <!-- Resultados de la búsqueda de eventos -->
-      <div id="events-list" class="results-list">
-          <h3>Eventos</h3>
-          <!-- Los eventos aparecerán aquí -->
-      </div>
+<div class="container">
+  <h1>Buscar Eventos y Asistentes</h1>
 
-      <!-- Filtro para Buscar Asistentes por Evento -->
-      <div class="search-box">
-          <input type="text" id="event-id" placeholder="ID del evento" />
-          <button id="search-assistants-btn">Buscar Asistentes por Evento</button>
-      </div>
-
-      <!-- Resultados de la búsqueda de asistentes -->
-      <div id="assistants-list" class="results-list">
-          <h3>Asistentes</h3>
-          <!-- Los asistentes aparecerán aquí -->
-      </div>
+  <!-- Filtro para Buscar Eventos por Asistente -->
+  <div class="search-box">
+      <input type="text" id="assistant-name" placeholder="Nombre del asistente" />
+      <button id="search-events-btn">Buscar Eventos por Asistente</button>
   </div>
+
+  <!-- Resultados de la búsqueda de eventos -->
+  <div id="events-list" class="results-list">
+      <h3>Eventos</h3>
+      <!-- Los eventos aparecerán aquí -->
+  </div>
+
+  <!-- Filtro para Buscar Asistentes por Evento -->
+  <div class="search-box">
+      <input type="text" id="event-name" placeholder="Nombre del evento" /> <!-- Cambiado ID para reflejar el propósito -->
+      <button id="search-assistants-btn">Buscar Asistentes por Evento</button>
+  </div>
+
+  <!-- Resultados de la búsqueda de asistentes -->
+  <div id="assistants-list" class="results-list">
+      <h3>Asistentes</h3>
+      <!-- Los asistentes aparecerán aquí -->
+  </div>
+</div>
 
 
 <!-- Scripts -->
