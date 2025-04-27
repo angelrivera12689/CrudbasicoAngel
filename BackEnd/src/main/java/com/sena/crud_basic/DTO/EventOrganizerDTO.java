@@ -1,27 +1,22 @@
 package com.sena.crud_basic.DTO;
 
 import com.sena.crud_basic.model.Events;
-import com.sena.crud_basic.model.organizer;  // Corrected class name to "Organizer" as per Java conventions
+import com.sena.crud_basic.model.organizer;
 
 public class EventOrganizerDTO {
 
-    // Primary key of the EventOrganizer relationship
     private int idEventOrganizer;
-
-    // Foreign key to the Event entity
     private Events event;
-
-    // Foreign key to the Organizer entity
     private organizer organizer;
+    private boolean status;
 
-    // Constructor
-    public EventOrganizerDTO(int idEventOrganizer, Events event, organizer organizer) {
+    public EventOrganizerDTO(int idEventOrganizer, Events event, organizer organizer, boolean status) {
         this.idEventOrganizer = idEventOrganizer;
         this.event = event;
         this.organizer = organizer;
+        this.status = status;
     }
 
-    // Getters and Setters
     public int getIdEventOrganizer() {
         return idEventOrganizer;
     }
@@ -44,5 +39,13 @@ public class EventOrganizerDTO {
 
     public void setOrganizer(organizer organizer) {
         this.organizer = organizer;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

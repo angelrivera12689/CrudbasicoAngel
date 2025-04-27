@@ -30,11 +30,15 @@ public class EventOrganizer {
     @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
     private boolean status;
 
-    // Constructor
+    // Constructor vacío necesario para Hibernate
+    public EventOrganizer() {
+    }
+
+    // Constructor con parámetros
     public EventOrganizer(Events event, organizer organizer, boolean status) {
         this.event = event;
         this.organizer = organizer;
-        this.status=status;
+        this.status = status;
     }
 
     // Getters and Setters
@@ -61,12 +65,12 @@ public class EventOrganizer {
     public void setOrganizer(organizer organizer) {
         this.organizer = organizer;
     }
+
     public boolean getStatus() {
         return status;
-     }
+    }
     
-     public void setStatus(boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
-     }
+    }
 }
-

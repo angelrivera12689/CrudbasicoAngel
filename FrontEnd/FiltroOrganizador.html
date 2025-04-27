@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>ELEMENTS</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="css/organizadorevento.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+</head>
+
+<body class="sub_page">
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="">
+            <span>
+              ELEMENTS
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+       
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav  ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html"> Inicio <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/FrontEnd/evento.html">Eventos </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="organizers.html">Organizadores </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="asistente.html"> Asistentes</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Historial.html"> Tickets </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="contact.html">Historial</a>
+                </li>
+              </ul>
+            </div>
+            <div class="quote_btn-container  d-flex justify-content-center">
+             
+          
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+  <!-- Filtro por Evento -->
+<!-- Filtro por Evento -->
+
+<h1>Asociar Organizador a Evento</h1>
+    <form id="associate-form">
+        <label for="event-id">ID del Evento:</label>
+        <input type="text" id="event-id" name="event-id" required>
+        <br><br>
+        <label for="organizer-id">ID del Organizador:</label>
+        <input type="text" id="organizer-id" name="organizer-id" required>
+        <br><br>
+        <button type="submit">Asociar Organizador</button>
+    </form>
+    
+<section class="filter_section">
+    <h3 class="filter-title">Filtrar organizadores por evento</h3>
+    <form id="filter-event-form" class="filter-form">
+      <input type="text" id="event-name" placeholder="Nombre del evento" class="search-input" required>
+      <button type="submit" class="search-btn">Filtrar</button>
+    </form>
+    
+    <!-- Contenedor de los organizadores filtrados por evento -->
+    <div id="organizer-list-by-event" class="result-list">
+      <!-- Aquí aparecerán los resultados filtrados de organizadores -->
+    </div>
+  </section>
+  
+  <!-- Filtro por Organizador -->
+  <section class="filter_section">
+    <h3 class="filter-title">Filtrar eventos por organizador</h3>
+    <form id="filter-organizer-form" class="filter-form">
+      <input type="text" id="organizer-name" placeholder="Nombre del organizador" class="search-input" required>
+      <button type="submit" class="search-btn">Filtrar</button>
+    </form>
+    
+    <!-- Contenedor de los eventos filtrados por organizador -->
+    <div id="event-list-by-organizer" class="result-list">
+      <!-- Aquí aparecerán los resultados filtrados de eventos -->
+    </div>
+  </section>
+  
+  
+  
+  <!-- Contenedor para mostrar los resultados -->
+  
+  
+  <!-- Scripts necesarios para modal -->
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script type="module" src="/FrontEnd/js/Organizador.js"></script>
+<script type="module" src="/FrontEnd/js/FiltroOrganizadorEvento.js"></script>
+</body>
+
+</html>

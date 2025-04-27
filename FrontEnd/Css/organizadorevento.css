@@ -1,0 +1,201 @@
+/* Estilos generales para la página */
+/* Estilos generales para la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal de las tarjetas */
+#organizer-list-by-event, #event-list-by-organizer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Reducir el espacio entre tarjetas */
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Card de organizador y evento */
+.organizer-item, .event-item {
+    background-color: white;
+    border-radius: 8px; /* Reducción en el borde para un aspecto más sutil */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 220px; /* Reducir el tamaño de las tarjetas */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 15px; /* Reducir el espacio inferior */
+    cursor: pointer;
+}
+
+.organizer-item:hover, .event-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo de la imagen */
+.organizer-image, .event-image {
+    width: 100%;
+    height: 150px; /* Reducir la altura de la imagen */
+    object-fit: cover;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Información del organizador y evento */
+.organizer-info, .event-info {
+    padding: 10px; /* Reducir el padding dentro de las tarjetas */
+}
+
+/* Títulos */
+.organizer-info h3, .event-info h3 {
+    font-size: 16px; /* Reducir el tamaño del título */
+    color: #333;
+    margin-bottom: 8px; /* Reducir el margen inferior */
+}
+
+/* Texto de los párrafos */
+.organizer-info p, .event-info p {
+    font-size: 12px; /* Reducir el tamaño del texto */
+    color: #666;
+    margin: 4px 0; /* Reducir el espacio entre párrafos */
+}
+
+.organizer-info p strong, .event-info p strong {
+    color: #333;
+}
+
+/* Estilos del contenedor de estado */
+.organizer-status, .event-status {
+    font-size: 12px;
+    padding: 4px 8px; /* Reducir el padding */
+    color: white;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.organizer-status.active, .event-status.active {
+    background-color: #28a745; /* Verde */
+}
+
+.organizer-status.inactive, .event-status.inactive {
+    background-color: #dc3545; /* Rojo */
+}
+
+/* Filter Section */
+.filter_section {
+    background-color: #fff;
+    padding: 30px;
+    margin: 30px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filter-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .filter-form {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .search-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+  }
+  
+  .search-btn {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .search-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive adjustments for the filter section */
+  @media (max-width: 768px) {
+    .filter-form {
+      flex-direction: column;
+    }
+  
+    .search-input {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .filter-section {
+      padding: 15px;
+    }
+  
+    .search-btn {
+      width: 100%;
+      font-size: 1.1rem;
+    }
+  }
+  
+  form {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+label {
+    font-size: 12px;
+    color: #555;
+}
+
+input[type="text"] {
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+button {
+    padding: 6px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button:active {
+    background-color: #1f6f9f;
+}
