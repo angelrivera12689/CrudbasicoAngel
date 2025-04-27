@@ -101,7 +101,7 @@ public class employeeService {
                 "El empleado no existe"
             );
         }
-
+    
         // Validar que el nombre tenga entre 1 y 100 caracteres
         if (employeeDTO.getFirstName().length() < 1 || employeeDTO.getFirstName().length() > 100) {
             return new ResponseDTO(
@@ -109,7 +109,7 @@ public class employeeService {
                 "El primer nombre debe estar entre 1 y 100 caracteres"
             );
         }
-
+    
         // Validar que el apellido tenga entre 1 y 100 caracteres
         if (employeeDTO.getLastName().length() < 1 || employeeDTO.getLastName().length() > 100) {
             return new ResponseDTO(
@@ -117,7 +117,7 @@ public class employeeService {
                 "El apellido debe estar entre 1 y 100 caracteres"
             );
         }
-
+    
         // Validar el número de teléfono (debe tener 10 dígitos y solo números)
         if (employeeDTO.getPhoneNumber().length() != 10 || !employeeDTO.getPhoneNumber().matches("[0-9]+")) {
             return new ResponseDTO(
@@ -125,29 +125,42 @@ public class employeeService {
                 "El número de teléfono debe tener 10 dígitos y solo contener números"
             );
         }
-
+    
+        // Validar si la URL de la imagen es válida (opcional, pero recomendable)
+        if (employeeDTO.getImageUrl() != null && !employeeDTO.getImageUrl().isEmpty()) {
+            if (!employeeDTO.getImageUrl().matches("^(http|https)://.*$")) {
+                return new ResponseDTO(
+                    HttpStatus.BAD_REQUEST.toString(),
+                    "La URL de la imagen no es válida"
+                );
+            }
+        }
+    
         // Actualizar los datos del empleado existente
         employee employeeToUpdate = existingEmployee.get();
         employeeToUpdate.setFirst_name(employeeDTO.getFirstName());
         employeeToUpdate.setLast_name(employeeDTO.getLastName());
         employeeToUpdate.setAddress(employeeDTO.getAddress());
         employeeToUpdate.setPhone_number(employeeDTO.getPhoneNumber());
-
+        employeeToUpdate.setImageUrl(employeeDTO.getImageUrl()); // <-- Aquí agregamos la imagen
+    
         // Guardar los cambios
         data.save(employeeToUpdate);
-
+    
         return new ResponseDTO(
             HttpStatus.OK.toString(),
             "Empleado actualizado exitosamente"
         );
     }
     
+    
     public employeeDTO convertToDTO(employee employee) {
         return new employeeDTO(
                 employee.getFirst_name(),
                 employee.getLast_name(),
                 employee.getAddress(),
-                employee.getPhone_number());
+                employee.getPhone_number(),
+                employee.getImageUrl());  // Incluir imageUrl
     }
 
     public employee convertToModel(employeeDTO employeeDTO) {
@@ -155,6 +168,8 @@ public class employeeService {
                 employeeDTO.getFirstName(),
                 employeeDTO.getLastName(),
                 employeeDTO.getAddress(),
-                employeeDTO.getPhoneNumber(), true);
+                employeeDTO.getPhoneNumber(),
+                true,  // El estado inicial es true
+                employeeDTO.getImageUrl());  // Incluir imageUrl
     }
 }

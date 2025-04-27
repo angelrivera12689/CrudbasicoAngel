@@ -1,170 +1,187 @@
+import { urlBase } from '/FrontEnd/js/constante.js';
+const API_URL = `${urlBase}employee/`;
 
-import { urlBase } from '/FrontEnd/Js/constante.js'; 
+document.addEventListener("DOMContentLoaded", function () {
+  async function cargarEmpleados() {
+    try {
+      let response = await fetch(API_URL);
+      if (!response.ok) {
+        throw new Error("Error al obtener empleados");
+      }
+      let empleados = await response.json();
+      console.log("Empleados obtenidos:", empleados);
 
+      const employeeList = document.getElementById("employee-list");
+      employeeList.innerHTML = "";
 
-const API_URL_EMPLEADO = `${urlBase}employee/`; 
+      empleados.forEach(empleado => {
+        const li = document.createElement("li");
+        li.classList.add("employee-card");
 
-console.log( API_URL_EMPLEADO); 
+        const firstName = empleado.first_name || empleado.firstName;
+        const lastName = empleado.last_name || empleado.lastName;
+        const phoneNumber = empleado.phone_number || empleado.phoneNumber;
+        const imageUrl = empleado.image_url || empleado.imageUrl || 'https://via.placeholder.com/100'; // Imagen default si no hay
 
-// Registrar empleado
-document.getElementById("persona-form").addEventListener("submit", async function (event) {
+        li.innerHTML = `
+          <img src="${imageUrl}" alt="Foto">
+          <strong>${firstName} ${lastName}</strong>
+          <div class="phone-number">${phoneNumber}</div>
+          <div class="button-group">
+            <button class="btn btn-warning btn-sm editar-btn" data-id="${empleado.id_employee}">Editar</button>
+            <button class="btn btn-danger btn-sm eliminar-btn" data-id="${empleado.id_employee}">Eliminar</button>
+          </div>
+        `;
+        employeeList.appendChild(li);
+      });
+
+      // Delegación de eventos para botones
+      document.querySelectorAll('.editar-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          const id = this.dataset.id;
+          editarEmpleado(id);
+        });
+      });
+
+      document.querySelectorAll('.eliminar-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          const id = this.dataset.id;
+          eliminarEmpleado(id);
+        });
+      });
+
+    } catch (error) {
+      console.error("Error al cargar empleados:", error);
+      alert("Error al cargar los empleados. Revisa la consola.");
+    }
+  }
+
+  document.getElementById("employee-form").addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    let bodyContent = JSON.stringify({
-        "firstName": document.getElementById("persona-firstName").value,
-        "lastName": document.getElementById("persona-lastName").value,
-        "address": document.getElementById("persona-address").value,
-        "phoneNumber": document.getElementById("persona-phoneNumber").value
-    });
+    const firstName = document.getElementById("employee-first-name").value;
+    const lastName = document.getElementById("employee-last-name").value;
+    const address = document.getElementById("employee-address").value;
+    const phoneNumber = document.getElementById("employee-phone").value;
+    const imageUrl = document.getElementById("employee-image-url").value;
 
-    let response = await fetch(API_URL_EMPLEADO, {
+    const newEmployee = {
+      firstName,
+      lastName,
+      address,
+      phoneNumber,
+      imageUrl
+    };
+
+    try {
+      let response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: bodyContent
-    });
+        body: JSON.stringify(newEmployee)
+      });
 
-    let data = await response.text();
-    console.log(data);
-    alert("Persona registrada con éxito");
-});
+      if (response.ok) {
+        alert("Empleado registrado con éxito");
+        cargarEmpleados();
+        document.getElementById("employee-form").reset();
+      } else {
+        throw new Error("Error al registrar empleado");
+      }
+    } catch (error) {
+      console.error("Error al registrar empleado:", error);
+      alert("Error al registrar el empleado. Revisa la consola.");
+    }
+  });
 
-// Registrar evento
-document.getElementById("evento-form").addEventListener("submit", async function (event) {
+  async function editarEmpleado(id) {
+    try {
+      let response = await fetch(`${API_URL}${id}`);
+      if (!response.ok) {
+        throw new Error("Empleado no encontrado");
+      }
+
+      let empleado = await response.json();
+      console.log("Empleado a editar:", empleado);
+
+      const firstName = empleado.first_name || empleado.firstName;
+      const lastName = empleado.last_name || empleado.lastName;
+      const address = empleado.address;
+      const phoneNumber = empleado.phone_number || empleado.phoneNumber;
+      const imageUrl = empleado.image_url || empleado.imageUrl;
+
+      document.getElementById("update-employee-first-name").value = firstName;
+      document.getElementById("update-employee-last-name").value = lastName;
+      document.getElementById("update-employee-address").value = address;
+      document.getElementById("update-employee-phone").value = phoneNumber;
+      document.getElementById("update-employee-image-url").value = imageUrl || '';
+
+      document.getElementById("updateEmployeeModal").style.display = "flex"; // Mostrar modal
+      document.getElementById("update-employee-form").dataset.employeeId = id;
+    } catch (error) {
+      console.error("Error al cargar el empleado para editar:", error);
+      alert("Error al cargar el empleado para editar.");
+    }
+  }
+
+  document.getElementById("update-employee-form").addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    let eventName = document.getElementById("evento-nombre").value.trim();
-    let description = document.getElementById("evento-descripcion").value.trim();
-    let location = document.getElementById("evento-ubicacion").value.trim();
-    let categoryId = parseInt(document.getElementById("evento-categoria").value.trim());
-    let imageUrl = document.getElementById("evento-imagen").value.trim();
+    const id = document.getElementById("update-employee-form").dataset.employeeId;
+    const firstName = document.getElementById("update-employee-first-name").value;
+    const lastName = document.getElementById("update-employee-last-name").value;
+    const address = document.getElementById("update-employee-address").value;
+    const phoneNumber = document.getElementById("update-employee-phone").value;
+    const imageUrl = document.getElementById("update-employee-image-url").value;
 
-    if (!eventName || !description || !location || !imageUrl || isNaN(categoryId)) {
-        alert("Todos los campos son obligatorios, y la categoría debe ser un número válido.");
-        return;
-    }
-
-    // 👇 No se envían ni date ni time
-    let bodyContent = JSON.stringify({
-        eventName: eventName,
-        description: description,
-        location: location,
-        categoryId: categoryId,
-        imageUrl: imageUrl
-    });
+    const updatedEmployee = {
+      firstName,
+      lastName,
+      address,
+      phoneNumber,
+      imageUrl
+    };
 
     try {
-        let response = await fetch("http://localhost:8080/api/v1/events/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "*/*"
-            },
-            body: bodyContent
-        });
+      let response = await fetch(`${API_URL}${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedEmployee)
+      });
 
-        if (!response.ok) {
-            const errorBody = await response.text();
-            throw new Error("Error en la solicitud: " + response.status + " - " + errorBody);
-        }
-
-        let data = await response.json();
-        console.log("✅ Evento registrado:", data);
-        alert("✅ Evento registrado con éxito");
-        document.getElementById("evento-form").reset();
+      if (response.ok) {
+        alert("Empleado actualizado con éxito");
+        cargarEmpleados();
+        document.getElementById("updateEmployeeModal").style.display = "none";
+      } else {
+        throw new Error("Error al actualizar empleado");
+      }
     } catch (error) {
-        console.error("❌ Error al registrar el evento:", error);
-        alert("❌ Error al registrar el evento. Revisa consola.");
+      console.error("Error al actualizar empleado:", error);
+      alert("Error al actualizar el empleado.");
     }
-});
+  });
 
-// ======================= ACTUALIZAR EMPLEADO =======================
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("empleado-update-form").addEventListener("submit", async function (event) {
-        event.preventDefault();
+  document.getElementById("closeUpdateModalBtn").addEventListener("click", function () {
+    document.getElementById("updateEmployeeModal").style.display = "none";
+  });
 
-        let id = document.getElementById("empleado-id-update").value.trim();
-        let nombre = document.getElementById("empleado-nombre-update").value.trim();
-        let apellido = document.getElementById("empleado-apellido-update").value.trim();
-        let direccion = document.getElementById("empleado-direccion-update").value.trim();
-        let telefono = document.getElementById("empleado-telefono-update").value.trim();
-
-        if (!id || !nombre || !apellido || !direccion || !telefono) {
-            alert("⚠️ Todos los campos son obligatorios.");
-            return;
-        }
-
-        let bodyContent = JSON.stringify({
-            "firstName": nombre,
-            "lastName": apellido,
-            "address": direccion,
-            "phoneNumber": telefono
-        });
-
-        let url = `${API_URL_EMPLEADO}${id}`;
-        console.log(`📡 Enviando petición a: ${url}`);
-        console.log("📦 Enviando datos:", bodyContent);
-
-        try {
-            let response = await fetch(url, {
-                method: "PUT",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: bodyContent
-            });
-
-            let data = await response.json();
-            console.log("📢 Respuesta del servidor:", data);
-
-            if (response.ok) {
-                alert("✅ Empleado actualizado con éxito.");
-                document.getElementById("empleado-update-form").reset();
-            } else {
-                alert(`❌ Error: ${data.message || "No se pudo actualizar el empleado"}`);
-            }
-
-        } catch (error) {
-            console.error("❌ Error en la petición:", error);
-            alert("🚨 Error de conexión.");
-        }
-    });
-});
-
-// Eliminar empleado
-document.getElementById("empleado-delete-form").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Prevenir comportamiento por defecto
-
-    const id = document.getElementById("empleado-id-delete").value.trim();
-    const mensaje = document.getElementById("mensaje"); // Asegúrate de que exista en tu HTML
-
-    if (!id) {
-        mensaje.innerText = "⚠️ Por favor ingresa un ID válido.";
-        mensaje.style.color = "orange";
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_URL_EMPLEADO}${id}`, {
-            method: "DELETE",
-            headers: {
-                "Accept": "*/*"
-            }
-        });
+  async function eliminarEmpleado(id) {
+    if (confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
+      try {
+        let response = await fetch(`${API_URL}${id}`, { method: "DELETE" });
 
         if (response.ok) {
-            mensaje.innerText = `✅ Empleado con ID ${id} eliminado correctamente.`;
-            mensaje.style.color = "green";
-            document.getElementById("empleado-delete-form").reset();
-            alert("✅ Empleado eliminado correctamente.");
+          alert("Empleado eliminado con éxito");
+          cargarEmpleados();
         } else {
-            const data = await response.json();
-            mensaje.innerText = `❌ Error al eliminar: ${data.message || "No se pudo eliminar el empleado"}`;
-            mensaje.style.color = "red";
+          throw new Error("Error al eliminar empleado");
         }
-    } catch (error) {
-        console.error("❌ Error de conexión:", error);
-        mensaje.innerText = "⚠️ Error de conexión al eliminar.";
-        mensaje.style.color = "red";
+      } catch (error) {
+        console.error("Error al eliminar empleado:", error);
+        alert("Error al eliminar el empleado.");
+      }
     }
+  }
+
+  cargarEmpleados();
 });

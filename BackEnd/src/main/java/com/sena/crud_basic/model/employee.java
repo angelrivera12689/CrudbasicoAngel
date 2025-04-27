@@ -13,7 +13,6 @@ import jakarta.persistence.Id;
  */
 
 @Entity(name="employee")
-
 public class employee {
 
     /*
@@ -37,18 +36,28 @@ public class employee {
 
     @Column(name="phone_number", length=15, nullable = false)
     private String phone_number;
-    public employee() {
-    }
-    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+
+    @Column(name="status", nullable = false, columnDefinition = "boolean default true")
     private boolean status;
-    //constructor
-    public employee(String first_name, String last_name, String address, String phone_number, boolean status) {
+
+    // Nueva columna para la URL de la imagen
+    @Column(name = "image_url", columnDefinition = "LONGTEXT")
+    private String imageUrl;
+
+    // Constructor vacío
+    public employee() {}
+
+    // Constructor con parámetros
+    public employee(String first_name, String last_name, String address, String phone_number, boolean status, String imageUrl) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.address = address;
         this.phone_number = phone_number;
-        this.status= status;
+        this.status = status;
+        this.imageUrl = imageUrl;
     }
+
+    // Getters y Setters
 
     public int getId_employee() {
         return id_employee;
@@ -89,11 +98,20 @@ public class employee {
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
+
     public boolean getStatus() {
         return status;
-     }
-    
-     public void setStatus(boolean status) {
+    }
+
+    public void setStatus(boolean status) {
         this.status = status;
-     }
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

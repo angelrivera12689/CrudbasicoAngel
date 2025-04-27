@@ -1,0 +1,200 @@
+/* Estilo general de la lista */
+#employee-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  /* Cada tarjeta cuadrada */
+  #employee-list li {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  /* Animación hover */
+  #employee-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Imagen de perfil arriba */
+  #employee-list img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  
+  /* Nombre */
+  #employee-list strong {
+    font-size: 18px;
+    color: #333;
+    margin-top: 5px;
+  }
+  
+  /* Teléfono */
+  #employee-list .phone-number {
+    font-size: 14px;
+    color: #666;
+    margin: 8px 0;
+  }
+  
+  /* Contenedor de botones */
+  #employee-list .button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Empuja hacia abajo los botones */
+  }
+  
+  /* Botones individuales */
+  #employee-list button {
+    flex: 1;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  /* Botón Editar */
+  #employee-list button.btn-warning {
+    background-color: #ffc107;
+    color: #fff;
+  }
+  
+  /* Botón Eliminar */
+  #employee-list button.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  /* Modal Update (opcional) */
+  #updateEmployeeModal {
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+  }
+  
+  #updateEmployeeModal .modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+  }
+  /* Fondo oscuro detrás del modal */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex; /* Para centrar el modal */
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  /* Caja blanca del modal */
+  .custom-modal-box {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.3s ease;
+  }
+  
+  /* Encabezado del modal */
+  .custom-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  /* Título */
+  .custom-modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Botón de cerrar (la X) */
+  .custom-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.2s;
+  }
+  
+  .custom-modal-close:hover {
+    color: #000;
+  }
+  
+  /* Cuerpo del modal */
+  .custom-modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  
+  /* Estilo del formulario */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Animaciones suaves */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Botón de actualizar */
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
