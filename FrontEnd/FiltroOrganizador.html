@@ -68,6 +68,10 @@
                 <li class="nav-item">
                   <a class="nav-link" href="contact.html">Historial</a>
                 </li>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Empleado</a>
+              </li>
               </ul>
             </div>
             <div class="quote_btn-container  d-flex justify-content-center">
@@ -82,17 +86,28 @@
   </div>
   <!-- Filtro por Evento -->
 <!-- Filtro por Evento -->
-
 <h1>Asociar Organizador a Evento</h1>
-    <form id="associate-form">
-        <label for="event-id">ID del Evento:</label>
-        <input type="text" id="event-id" name="event-id" required>
-        <br><br>
-        <label for="organizer-id">ID del Organizador:</label>
-        <input type="text" id="organizer-id" name="organizer-id" required>
-        <br><br>
-        <button type="submit">Asociar Organizador</button>
-    </form>
+
+<form id="associate-form">
+  <label for="event-id">Selecciona un Evento:</label>
+  <select id="event-id" name="event-id" required>
+      <!-- Opciones de eventos se llenarán dinámicamente -->
+  </select>
+  <br><br>
+
+  <label for="organizer-id">Selecciona un Organizador:</label>
+  <select id="organizer-id" name="organizer-id" required>
+      <!-- Opciones de organizadores se llenarán dinámicamente -->
+  </select>
+  <br><br>
+
+  <button type="submit">Asociar Organizador</button>
+</form>
+
+<!-- Mensaje de resultado de la asociación -->
+<div id="associate-message"></div>
+
+
     
 <section class="filter_section">
     <h3 class="filter-title">Filtrar organizadores por evento</h3>

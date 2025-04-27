@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +23,10 @@ public class EventOrganizerController {
     @PostMapping("/")
     public ResponseEntity<ResponseDTO> save(@RequestBody EventOrganizerDTO dto) {
         ResponseDTO resp = service.save(dto);
-        return ResponseEntity
-                .status(resp.getStatus().equals("OK") ? 200 : 400)
-                .body(resp);
+
+        // Mapear explícitamente el estado HTTP
+        HttpStatus status = mapStatus(resp.getStatus());
+        return ResponseEntity.status(status).body(resp);
     }
 
     // Get all EventOrganizers
@@ -46,9 +48,10 @@ public class EventOrganizerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseDTO> delete(@PathVariable int id) {
         ResponseDTO resp = service.deleteById(id);
-        return ResponseEntity
-                .status(resp.getStatus().equals("OK") ? 200 : 404)
-                .body(resp);
+
+        // Mapear explícitamente el estado HTTP
+        HttpStatus status = mapStatus(resp.getStatus());
+        return ResponseEntity.status(status).body(resp);
     }
 
     // Get organizers by event name
@@ -57,7 +60,7 @@ public class EventOrganizerController {
         List<EventOrganizerDTO> organizers = service.findOrganizersByEventName(name);
         if (organizers.isEmpty()) {
             return ResponseEntity
-                    .status(404)
+                    .status(HttpStatus.NOT_FOUND)
                     .body("No organizers found for event: " + name);
         }
         return ResponseEntity.ok(organizers);
@@ -69,9 +72,23 @@ public class EventOrganizerController {
         List<EventOrganizerDTO> events = service.findEventsByOrganizerName(name);
         if (events.isEmpty()) {
             return ResponseEntity
-                    .status(404)
+                    .status(HttpStatus.NOT_FOUND)
                     .body("No events found for organizer: " + name);
         }
         return ResponseEntity.ok(events);
+    }
+
+    // Método auxiliar para mapear el estado devuelto por el servicio a un código HTTP
+    private HttpStatus mapStatus(String status) {
+        if (HttpStatus.OK.toString().equalsIgnoreCase(status)) {
+            return HttpStatus.OK;
+        } else if (HttpStatus.BAD_REQUEST.toString().equalsIgnoreCase(status)) {
+            return HttpStatus.BAD_REQUEST;
+        } else if (HttpStatus.NOT_FOUND.toString().equalsIgnoreCase(status)) {
+            return HttpStatus.NOT_FOUND;
+        } else {
+            // Por defecto, devolver un error interno del servidor
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
     }
 }

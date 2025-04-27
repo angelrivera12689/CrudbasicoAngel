@@ -35,26 +35,44 @@ public class EventOrganizerService {
     public ResponseDTO save(EventOrganizerDTO dto) {
         // Buscar el evento por su ID
         Optional<Events> ev = eventsRepository.findById(dto.getEvent().getIdEvent());
-        // NOTA: aquí usamos el getter que tu clase 'organizer' ya genera: getId_organizer()
         Optional<organizer> org = organizerRepository.findById(dto.getOrganizer().getId_organizer());
 
-        if (!ev.isPresent() || !org.isPresent()) {
+        // Si el evento o el organizador no se encuentran, retorna un error 400
+        if (!ev.isPresent()) {
             return new ResponseDTO(
                 HttpStatus.BAD_REQUEST.toString(),
-                "Evento o Organizador no encontrados"
+                "Evento no encontrado. Verifique el ID del evento."
             );
         }
 
-        EventOrganizer eo = convertToModel(dto);
-        eo.setEvent(ev.get());
-        eo.setOrganizer(org.get());
-        eo.setStatus(true);
-        eventOrganizerRepository.save(eo);
+        if (!org.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "Organizador no encontrado. Verifique el ID del organizador."
+            );
+        }
 
-        return new ResponseDTO(
-            HttpStatus.OK.toString(),
-            "Relación registrada exitosamente"
-        );
+        try {
+            // Convertir el DTO a modelo
+            EventOrganizer eo = convertToModel(dto);
+            eo.setEvent(ev.get());
+            eo.setOrganizer(org.get());
+            eo.setStatus(true);
+
+            // Guardar la relación evento-organizador
+            eventOrganizerRepository.save(eo);
+
+            return new ResponseDTO(
+                HttpStatus.OK.toString(),
+                "Relación registrada exitosamente."
+            );
+        } catch (Exception e) {
+            // Manejar excepciones inesperadas y devolver un error 500
+            return new ResponseDTO(
+                HttpStatus.INTERNAL_SERVER_ERROR.toString(),
+                "Error interno del servidor: " + e.getMessage()
+            );
+        }
     }
 
     /**
@@ -82,13 +100,13 @@ public class EventOrganizerService {
         if (!eventOrganizerRepository.existsById(id)) {
             return new ResponseDTO(
                 HttpStatus.NOT_FOUND.toString(),
-                "Registro no encontrado"
+                "Registro no encontrado con el ID proporcionado."
             );
         }
         eventOrganizerRepository.deleteById(id);
         return new ResponseDTO(
             HttpStatus.OK.toString(),
-            "Relación eliminada exitosamente"
+            "Relación eliminada exitosamente."
         );
     }
 
@@ -129,7 +147,7 @@ public class EventOrganizerService {
      */
     public EventOrganizer convertToModel(EventOrganizerDTO dto) {
         if (dto.getEvent() == null || dto.getOrganizer() == null) {
-            throw new IllegalArgumentException("Evento y Organizador no pueden ser nulos");
+            throw new IllegalArgumentException("Evento y Organizador no pueden ser nulos.");
         }
         return new EventOrganizer(
             dto.getEvent(),

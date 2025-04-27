@@ -12,7 +12,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>ELEMENTS</title>
+  <title>Empleado</title>
 
   <!-- slider stylesheet -->
   <link rel="stylesheet" type="text/css"
@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
-  <link href="css/asistente.css" rel="stylesheet" />
+  <link href="css/empleado.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
 </head>
@@ -82,46 +82,46 @@
     <!-- end header section -->
   </div>
 
-
   <!-- portfolio section -->
-
   <section class="layout_padding" style="background-color: #f8f8f8;">
     <div class="container">
       <div class="custom_heading-container">
-        <h3>Registrarse como asistente</h3>
+        <h3>Empleado</h3>
         <hr>
       </div>
-      <form id="assistant-form" class="p-3 bg-white shadow rounded" style="max-width: 500px; margin: auto;">
+      <form id="employee-form" class="p-3 bg-white shadow rounded" style="max-width: 500px; margin: auto;">
         <div class="form-group">
-            <label for="asistente-nombre">Nombre completo</label>
-            <input type="text" id="asistente-nombre" name="nombre" class="form-control" placeholder="Tu nombre" required>
+            <label for="employee-nombre">Nombre completo</label>
+            <input type="text" id="employee-nombre" name="nombre" class="form-control" placeholder="Tu nombre" required>
         </div>
         <div class="form-group">
-            <label for="asistente-email">Correo electrónico</label>
-            <input type="email" id="asistente-email" name="email" class="form-control" placeholder="ejemplo@mail.com" required>
+            <label for="employee-email">Correo electrónico</label>
+            <input type="email" id="employee-email" name="email" class="form-control" placeholder="ejemplo@mail.com" required>
         </div>
         <div class="form-group">
-            <label for="asistente-phone">Número de teléfono</label>
-            <input type="tel" id="asistente-phone" name="phone" class="form-control" placeholder="(123) 456-7890" required>
+            <label for="employee-phone">Número de teléfono</label>
+            <input type="tel" id="employee-phone" name="phone" class="form-control" placeholder="(123) 456-7890" required>
         </div>
         <div class="form-group">
-            <label for="asistente-image-url">URL de imagen de perfil</label>
-            <input type="url" id="asistente-image-url" name="image" class="form-control" placeholder="https://ejemplo.com/imagen.jpg" required>
+            <label for="employee-position">Cargo</label>
+            <input type="text" id="employee-position" name="position" class="form-control" placeholder="Cargo del empleado" required>
+        </div>
+        <div class="form-group">
+            <label for="employee-image-url">URL de imagen de perfil</label>
+            <input type="url" id="employee-image-url" name="image" class="form-control" placeholder="https://ejemplo.com/imagen.jpg" required>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
       </form>
     
       <div class="mt-5">
-        <h4 class="text-center">Asistentes registrados recientemente</h4>
-        <ul id="assistant-list" class="list-group mt-3" style="max-width: 500px; margin: auto;">
+        <h4 class="text-center">Empleados registrados recientemente</h4>
+        <ul id="employee-list" class="list-group mt-3" style="max-width: 500px; margin: auto;">
           <!-- Lista dinámica -->
         </ul>
       </div>
     </div>
   </section>
   <!-- end portfolio section -->
-
-
 
   <!-- info section -->
   <section class="info_section layout_padding">
@@ -156,49 +156,43 @@
       </div>
     </div>
   </section>
-
   <!-- end info_section -->
 
   <!-- footer section -->
- <!-- Modal custom para actualizar asistente -->
-<div id="updateAssistantModal" class="custom-modal-overlay" style="display: none;">
-  <div class="custom-modal-box">
-    <div class="custom-modal-header">
-      <h5 class="custom-modal-title">Editar Asistente</h5>
-      <button id="closeUpdateModalBtn" class="custom-modal-close">&times;</button>
-    </div>
-    <div class="custom-modal-body">
-      <form id="update-assistant-form">
-        <div class="form-group">
-          <label for="update-asistente-nombre">Nombre completo</label>
-          <input type="text" id="update-asistente-nombre" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="update-asistente-email">Correo electrónico</label>
-          <input type="email" id="update-asistente-email" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="update-asistente-phone">Número de teléfono</label>
-          <input type="tel" id="update-asistente-phone" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="update-asistente-image-url">URL imagen de perfil</label>
-          <input type="url" id="update-asistente-image-url" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
-      </form>
+  <!-- Modal custom para actualizar empleado -->
+  <div id="updateEmployeeModal" class="custom-modal-overlay" style="display: none;">
+    <div class="custom-modal-box">
+      <div class="custom-modal-header">
+        <h5 class="custom-modal-title">Editar Empleado</h5>
+        <button id="closeUpdateModalBtn" class="custom-modal-close">&times;</button>
+      </div>
+      <div class="custom-modal-body">
+        <form id="update-employee-form">
+          <div class="form-group">
+            <label for="update-employee-nombre">Nombre completo</label>
+            <input type="text" id="update-employee-nombre" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="update-employee-email">Correo electrónico</label>
+            <input type="email" id="update-employee-email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="update-employee-phone">Número de teléfono</label>
+            <input type="tel" id="update-employee-phone" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="update-employee-image-url">URL imagen de perfil</label>
+            <input type="url" id="update-employee-image-url" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
-
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
-  <script type="module" src="/FrontEnd/js/Asistente.js"></script>
-
-
-
-</body>
+  <script type="module" src="/FrontEnd/js/Empleado.js"></script>
 </body>
 
 </html>
