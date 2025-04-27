@@ -1,0 +1,111 @@
+/* Estilo global */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilo de los cuadros de búsqueda */
+.search-box {
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    padding: 10px;
+    width: 300px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-box button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.search-box button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para las listas de resultados */
+.results-list {
+    margin-top: 20px;
+}
+
+.results-list h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.card {
+    width: 300px;
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    font-size: 0.875rem;
+    color: #777;
+}
+
+.card-status {
+    font-size: 0.875rem;
+    color: #333;
+}
+
+/* Ajustes para las tarjetas */
+.results-list .card {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top;
+}
+.assistant-img {
+    width: 40px; /* Ajusta el tamaño de la imagen */
+    height: 40px; /* Ajusta el tamaño de la imagen */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen no se distorsione */
+    margin-right: 10px; /* Espaciado entre la imagen y el texto */
+}

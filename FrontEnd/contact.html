@@ -25,6 +25,7 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
+  <link href="css/EventoAsitente.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
 </head>
@@ -62,24 +63,16 @@
                   <a class="nav-link" href="asistente.html"> Asistentes</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="Historial.html"> Historia </a>
+                  <a class="nav-link" href="Historial.html"> Tickets </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="contact.html">Contactos</a>
+                  <a class="nav-link" href="contact.html">Historial</a>
                 </li>
               </ul>
             </div>
             <div class="quote_btn-container  d-flex justify-content-center">
-              <a href="">
-                <img src="images/call.png" alt="">
-                CALL : +01 1234567890
-              </a>
-              <a href="">
-                <span>
-                  @
-                </span>
-                demo@gmail.com
-              </a>
+             
+          
             </div>
           </div>
         </nav>
@@ -87,100 +80,42 @@
     </header>
     <!-- end header section -->
   </div>
+<!-- Filter Section -->
+<body>
 
-  <!-- contact section -->
+  <div class="container">
+      <h1>Buscar Eventos y Asistentes</h1>
 
-  <section class="contact_section layout_padding">
-    <div class="container">
-      <div class="d-flex flex-column align-items-end">
-        <div class="custom_heading-container">
-          <hr>
-          <h2>Registrar Reseña</h2>
-        </div>
+      <!-- Filtro para Buscar Eventos por Asistente -->
+      <div class="search-box">
+          <input type="text" id="assistant-name" placeholder="Nombre del asistente" />
+          <button id="search-events-btn">Buscar Eventos por Asistente</button>
       </div>
-      <div class="layout_padding-top layout_padding2-bottom">
-        <div class="row">
-          <div class="col-md-7">
-            <!-- Formulario para registrar una reseña -->
-            <form id="reseña-form">
-              <div class="contact_form-container">
-                <div class="form-group">
-                  <input type="text" id="review-comment" class="form-control" placeholder="Comentario" />
-                </div>
-                <div class="form-group">
-                  <input type="number" id="review-rating" class="form-control" placeholder="Calificación (1-5)" min="1" max="5" />
-                </div>
-                <div class="form-group">
-                  <input type="number" id="review-event-id" class="form-control" placeholder="ID del Evento" />
-                </div>
-                <div class="form-group">
-                  <input type="number" id="review-assistant-id" class="form-control" placeholder="ID del Asistente" />
-                </div>
-                <div class="mt-4">
-                  <button type="submit" class="btn btn-primary">Enviar Reseña</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
+
+      <!-- Resultados de la búsqueda de eventos -->
+      <div id="events-list" class="results-list">
+          <h3>Eventos</h3>
+          <!-- Los eventos aparecerán aquí -->
       </div>
-    </div>
-  </section>
-  
 
-
-  <!-- end contact section -->
-
-  <!-- info section -->
-  <section class="info_section layout_padding">
-    <div class="container">
-      <div class="info_social">
-        <div>
-          <a href="">
-            <img src="images/fb.png" alt="">
-          </a>
-        </div>
-        <div>
-          <a href="">
-            <img src="images/twitter.png" alt="">
-          </a>
-        </div>
-        <div>
-          <a href="">
-            <img src="images/linkedin.png" alt="">
-          </a>
-        </div>
-        <div>
-          <a href="">
-            <img src="images/insta.png" alt="">
-          </a>
-        </div>
+      <!-- Filtro para Buscar Asistentes por Evento -->
+      <div class="search-box">
+          <input type="text" id="event-id" placeholder="ID del evento" />
+          <button id="search-assistants-btn">Buscar Asistentes por Evento</button>
       </div>
-      <div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-        </p>
+
+      <!-- Resultados de la búsqueda de asistentes -->
+      <div id="assistants-list" class="results-list">
+          <h3>Asistentes</h3>
+          <!-- Los asistentes aparecerán aquí -->
       </div>
-    </div>
-  </section>
+  </div>
 
-  <!-- end info_section -->
 
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; 2019 All Rights Reserved By
-      <a href="https://html.design/">Free Html Templates</a>
-    </p>
-  </section>
-  <!-- footer section -->
-
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
-  <script type="module" src="/FrontEnd/js/Reseña.js"></script>
+<!-- Scripts -->
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script type="module" src="/FrontEnd/js/FiltrosAsistentesEvento.js"></script>
 
 </body>
-</body>
-
 </html>
