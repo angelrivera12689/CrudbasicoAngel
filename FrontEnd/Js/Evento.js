@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <p class="descripcion">${evento.description}</p>
             <p class="ubicacion">📍 ${evento.location}</p>
             <p class="categoria">🎫 Categoría: ${catName}</p>
-            <p class="fecha">📅 Fecha: ${formatDateForDisplay(evento.date)}</p> <!-- Fecha formateada -->
+            <p class="fecha">📅 Fecha: ${formatDateForDisplay(evento.date)}</p>
     
             <!-- Botón "Ver Detalles" centrado -->
             <div class="ver-detalles-container">
@@ -132,7 +132,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!resp.ok) throw new Error();
             const eventos = await resp.json();
             container.innerHTML = "";
-            eventos.forEach(crearTarjetaEvento);
+            
+            // 🔥 MOSTRAR SOLO LOS PRIMEROS 20 🔥
+            eventos.slice(0, 20).forEach(crearTarjetaEvento);
+
         } catch (e) {
             console.error("❌ Error al cargar eventos:", e);
         }
@@ -167,7 +170,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // ⚠️ Solo agregar categoría si no es la opción por defecto
         if (cat && cat !== "— Selecciona una categoría —") {
             filtros.category_name = cat;
         }
@@ -226,7 +228,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
         const btn = document.getElementById("submit-btn-editar");
     
-        // Verificar si el botón de editar existe
         if (btn) {
             btn.disabled = true;
         } else {
@@ -234,7 +235,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
     
-        // Recoger los valores del formulario de edición
         const id          = document.getElementById("editar-id").value.trim();
         const eventName   = document.getElementById("editar-nombre").value.trim();
         const description = document.getElementById("editar-descripcion").value.trim();
@@ -242,14 +242,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const categoryId  = document.getElementById("editar-categoria").value;
         const imageUrl    = document.getElementById("editar-imagen").value.trim();
     
-        // Validar que todos los campos estén completos
         if (!eventName || !description || !location || !imageUrl || !categoryId) {
             alert("Todos los campos son obligatorios y debes elegir una categoría.");
             if (btn) btn.disabled = false;
             return;
         }
     
-        // Crear el objeto con los datos del evento a actualizar
         const eventoActualizado = {
             eventName,
             description,
@@ -259,31 +257,21 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     
         try {
-            // Enviar la solicitud PUT al servidor para actualizar el evento
             const resp = await fetch(`${EVENTO_API_BASE_URL}${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(eventoActualizado)
             });
-    
-            // Verificar si la respuesta fue exitosa
             if (!resp.ok) throw new Error();
     
-            // Si todo fue bien, mostrar un mensaje de éxito
             alert("✅ Evento actualizado con éxito");
-    
-            // Cerrar el modal de edición
             modalEditar.style.display = "none";
-    
-            // Recargar la lista de eventos
             cargarEventos();
     
         } catch (error) {
-            // Si ocurre un error, mostrar un mensaje de error
             alert("❌ Error al actualizar el evento.");
             console.error(error);
         } finally {
-            // Habilitar el botón de edición nuevamente
             if (btn) btn.disabled = false;
         }
     });

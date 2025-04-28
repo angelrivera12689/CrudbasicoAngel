@@ -446,3 +446,54 @@ body {
 .organizer-details p {
     margin: 4px 0;
 }
+/* Estilos para la sección */
+.info_section {
+    background: linear-gradient(135deg, rgb(164, 84, 253), rgb(43, 5, 223));
+    padding: 60px 0;
+    text-align: center; /* Centrado de texto dentro de la sección */
+  }
+  
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+  
+  .section-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #fcfcfc; /* Color del título */
+    margin-bottom: 20px;
+  }
+  
+  .section-description {
+    font-size: 18px;
+    color: #fcfcfc; /* Color de texto */
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .register-btn {
+    background-color: #007bff; /* Fondo del botón */
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center; /* Asegura que el texto esté centrado en el botón */
+  }
+  
+  .register-btn:hover {
+    background-color: #0056b3; /* Color más oscuro cuando se pasa el ratón */
+  }
+  
+  .section-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Espacio entre el texto y la imagen */
+  }
+  

@@ -2,17 +2,23 @@ import { urlBase } from '/FrontEnd/js/constante.js';
 const API_URL = `${urlBase}employee/`;
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Función para cargar los empleados
-  async function cargarEmpleados() {
+  
+  async function cargarEmpleados(filtros = {}) {
     try {
-      let response = await fetch(API_URL);
+      let url = API_URL;
+
+      if (Object.keys(filtros).length > 0) {
+        const queryString = new URLSearchParams(filtros).toString();
+        url += `filter?${queryString}`;
+      }
+
+      let response = await fetch(url);
       if (!response.ok) {
         throw new Error("Error al obtener empleados");
       }
-      let empleados = await response.json();
 
-      // Limitar a los primeros 10 empleados
-      empleados = empleados.slice(0, 10); // Solo los primeros 10
+      let empleados = await response.json();
+      empleados = empleados.slice(0, 10);
 
       console.log("Empleados obtenidos:", empleados);
 
@@ -26,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const firstName = empleado.first_name || empleado.firstName;
         const lastName = empleado.last_name || empleado.lastName;
         const phoneNumber = empleado.phone_number || empleado.phoneNumber;
-        const imageUrl = empleado.image_url || empleado.imageUrl || 'https://via.placeholder.com/100'; // Imagen default si no hay
+        const imageUrl = empleado.image_url || empleado.imageUrl || 'https://via.placeholder.com/100';
 
         li.innerHTML = `
           <img src="${imageUrl}" alt="Foto">
@@ -40,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
         employeeList.appendChild(li);
       });
 
-      // Delegación de eventos para botones de editar y eliminar
       document.querySelectorAll('.editar-btn').forEach(btn => {
         btn.addEventListener('click', function () {
           const id = this.dataset.id;
@@ -61,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Formulario de creación de un nuevo empleado
   document.getElementById("employee-form").addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -99,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Función para editar un empleado
   async function editarEmpleado(id) {
     try {
       let response = await fetch(`${API_URL}${id}`);
@@ -110,19 +113,13 @@ document.addEventListener("DOMContentLoaded", function () {
       let empleado = await response.json();
       console.log("Empleado a editar:", empleado);
 
-      const firstName = empleado.first_name || empleado.firstName;
-      const lastName = empleado.last_name || empleado.lastName;
-      const address = empleado.address;
-      const phoneNumber = empleado.phone_number || empleado.phoneNumber;
-      const imageUrl = empleado.image_url || empleado.imageUrl;
+      document.getElementById("update-employee-first-name").value = empleado.first_name || empleado.firstName;
+      document.getElementById("update-employee-last-name").value = empleado.last_name || empleado.lastName;
+      document.getElementById("update-employee-address").value = empleado.address;
+      document.getElementById("update-employee-phone").value = empleado.phone_number || empleado.phoneNumber;
+      document.getElementById("update-employee-image-url").value = empleado.image_url || empleado.imageUrl || '';
 
-      document.getElementById("update-employee-first-name").value = firstName;
-      document.getElementById("update-employee-last-name").value = lastName;
-      document.getElementById("update-employee-address").value = address;
-      document.getElementById("update-employee-phone").value = phoneNumber;
-      document.getElementById("update-employee-image-url").value = imageUrl || '';
-
-      document.getElementById("updateEmployeeModal").style.display = "flex"; // Mostrar modal
+      document.getElementById("updateEmployeeModal").style.display = "flex";
       document.getElementById("update-employee-form").dataset.employeeId = id;
     } catch (error) {
       console.error("Error al cargar el empleado para editar:", error);
@@ -130,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Formulario de actualización de un empleado
   document.getElementById("update-employee-form").addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -169,12 +165,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Cerrar el modal de actualización
   document.getElementById("closeUpdateModalBtn").addEventListener("click", function () {
     document.getElementById("updateEmployeeModal").style.display = "none";
   });
 
-  // Función para eliminar un empleado
   async function eliminarEmpleado(id) {
     if (confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
       try {
@@ -193,6 +187,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Cargar los empleados inicialmente
+  // Aquí es donde agregamos el filtro sin romper nada
+  document.getElementById("filter-employee-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Evitar recargar página
+
+    const filtros = {
+      first_name: document.getElementById("filter-first-name").value.trim(),
+      last_name: document.getElementById("filter-last-name").value.trim(),
+      address: document.getElementById("filter-address").value.trim(),
+      phone_number: document.getElementById("filter-phone-number").value.trim(),
+      status: document.getElementById("filter-status").value.trim()
+    };
+
+    // Limpiar filtros vacíos (para no enviar parámetros vacíos)
+    Object.keys(filtros).forEach(key => {
+      if (filtros[key] === '') {
+        delete filtros[key];
+      }
+    });
+
+    cargarEmpleados(filtros);
+  });
+
   cargarEmpleados();
 });

@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!response.ok) throw new Error("❌ Error al obtener los tickets");
 
       const data = await response.json();
-      allTickets = data;  // Guardamos todos los tickets en memoria
-      renderTable(allTickets); // Renderizamos la tabla con todos los tickets
+      allTickets = data; // Guardamos todos los tickets en memoria
+      renderTable(allTickets.slice(0, 15)); // Renderizamos solo los primeros 15 tickets
     } catch (error) {
       console.error(error);
       alert("🚨 No se pudieron cargar los tickets.");

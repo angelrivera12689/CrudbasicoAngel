@@ -217,3 +217,75 @@
     transform: scale(1.1); /* Efecto de zoom */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
   }
+
+  /* Estilos generales de la sección de filtro */
+.filter_section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+/* Contenedor principal del filtro */
+.search-filter-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Formulario */
+.filter-form {
+  width: 100%;
+  max-width: 900px;
+}
+
+/* Contenedor de los inputs */
+.search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* Estilos para los inputs y el select */
+.search-input {
+  flex: 1 1 180px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Botón de búsqueda */
+.search-btn {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+/* Ícono dentro del botón */
+.search-btn i {
+  font-size: 18px;
+}
+
+/* Hover del botón */
+.search-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 600px) {
+  .search-filter {
+    flex-direction: column;
+  }
+
+  .search-input, .search-btn {
+    width: 100%;
+  }
+}
