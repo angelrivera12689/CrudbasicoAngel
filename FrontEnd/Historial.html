@@ -97,19 +97,13 @@
       </div>
   
       <!-- Formulario de Filtros -->
-      <form id="filter-form" class="filter-form">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="filter-event-id">ID del Evento:</label>
-            <input type="text" id="filter-event-id" class="form-control" placeholder="Filtrar por ID del evento">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="filter-assistant-name">Nombre del Asistente:</label>
-            <input type="text" id="filter-assistant-name" class="form-control" placeholder="Filtrar por Nombre del asistente">
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Filtrar</button>
-      </form>
+     <!-- Filtro de tickets -->
+<div id="filter-section">
+  <input type="text" id="filter-event-name" placeholder="Filtrar por nombre de evento" />
+  <input type="text" id="filter-assistant-name" placeholder="Filtrar por nombre de asistente" />
+  <button id="filter-btn" class="btn btn-primary">Filtrar</button>
+</div>
+
       
   <br>
       <!-- Tabla de Tickets -->

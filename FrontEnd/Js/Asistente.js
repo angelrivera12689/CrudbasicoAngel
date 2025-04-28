@@ -48,9 +48,10 @@ async function registerAssistant(e) {
 // --- 2) Cargar y renderizar lista ---
 async function loadAssistants() {
   try {
-    const res  = await fetch(API);
+    const res = await fetch(API);
     if (!res.ok) throw '';
     const list = await res.json();
+
     assistantList.innerHTML = '';
 
     if (!list.length) {
@@ -58,7 +59,10 @@ async function loadAssistants() {
       return;
     }
 
-    list.forEach(a => {
+    // Limitar a los primeros 8 asistentes
+    const limitedList = list.slice(0, 8);
+
+    limitedList.forEach(a => {
       assistantList.insertAdjacentHTML('afterbegin', `
         <li class="list-group-item position-relative">
           <img src="${a.imageUrl}" 
@@ -136,4 +140,4 @@ updateForm.addEventListener('submit', async function(e) {
       console.error('Error de conexión al actualizar:', error);
       alert('Error de conexión al actualizar.');
     }
-  });
+});

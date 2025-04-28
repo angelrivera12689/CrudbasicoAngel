@@ -2,6 +2,7 @@ import { urlBase } from '/FrontEnd/js/constante.js';
 const API_URL = `${urlBase}employee/`;
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Función para cargar los empleados
   async function cargarEmpleados() {
     try {
       let response = await fetch(API_URL);
@@ -9,6 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
         throw new Error("Error al obtener empleados");
       }
       let empleados = await response.json();
+
+      // Limitar a los primeros 10 empleados
+      empleados = empleados.slice(0, 10); // Solo los primeros 10
+
       console.log("Empleados obtenidos:", empleados);
 
       const employeeList = document.getElementById("employee-list");
@@ -35,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         employeeList.appendChild(li);
       });
 
-      // Delegación de eventos para botones
+      // Delegación de eventos para botones de editar y eliminar
       document.querySelectorAll('.editar-btn').forEach(btn => {
         btn.addEventListener('click', function () {
           const id = this.dataset.id;
@@ -56,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Formulario de creación de un nuevo empleado
   document.getElementById("employee-form").addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -93,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Función para editar un empleado
   async function editarEmpleado(id) {
     try {
       let response = await fetch(`${API_URL}${id}`);
@@ -123,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Formulario de actualización de un empleado
   document.getElementById("update-employee-form").addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -161,10 +169,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Cerrar el modal de actualización
   document.getElementById("closeUpdateModalBtn").addEventListener("click", function () {
     document.getElementById("updateEmployeeModal").style.display = "none";
   });
 
+  // Función para eliminar un empleado
   async function eliminarEmpleado(id) {
     if (confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
       try {
@@ -183,5 +193,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Cargar los empleados inicialmente
   cargarEmpleados();
 });

@@ -2,32 +2,66 @@ import { urlBase } from '/FrontEnd/Js/constante.js';
 
 const TICKET_API_BASE_URL = `${urlBase}tickets/`;
 
+let allTickets = []; // Variable para almacenar todos los tickets cargados
+
 document.addEventListener("DOMContentLoaded", function () {
   const tableBody = document.getElementById("tableBody");
   const updateModal = document.getElementById("ticket-update-modal");
   const modalOverlay = document.getElementById("modal-overlay");
   const updateForm = document.getElementById("ticket-update-form");
 
+  // Elementos del filtro
+  const filterBtn = document.getElementById("filter-btn");
+  const filterEventName = document.getElementById("filter-event-name");
+  const filterAssistantName = document.getElementById("filter-assistant-name");
+
   if (!tableBody || !updateModal || !modalOverlay || !updateForm) {
     console.error("❌ Elementos necesarios no encontrados en el DOM.");
     return;
   }
 
+  // Cargar los tickets inicialmente sin filtros
   loadTickets();
 
+  // Event listener para el filtro
+  filterBtn.addEventListener("click", function () {
+    const eventName = filterEventName.value.trim().toLowerCase();
+    const assistantName = filterAssistantName.value.trim().toLowerCase();
+    applyFilter(eventName, assistantName);  // Llamamos a la función de filtro
+  });
+
+  // Función para cargar los tickets desde el servidor
   async function loadTickets() {
     try {
       const response = await fetch(TICKET_API_BASE_URL);
       if (!response.ok) throw new Error("❌ Error al obtener los tickets");
 
       const data = await response.json();
-      renderTable(data);
+      allTickets = data;  // Guardamos todos los tickets en memoria
+      renderTable(allTickets); // Renderizamos la tabla con todos los tickets
     } catch (error) {
       console.error(error);
       alert("🚨 No se pudieron cargar los tickets.");
     }
   }
 
+  // Función para aplicar el filtro
+  function applyFilter(eventName = '', assistantName = '') {
+    const filteredTickets = allTickets.filter(ticket => {
+      const ticketEventName = ticket.eventName?.toLowerCase() ?? '';
+      const ticketAssistantName = ticket.assistantName?.toLowerCase() ?? '';
+
+      // Verificamos si el nombre del evento o del asistente coincide con el filtro
+      const eventNameMatch = ticketEventName.includes(eventName);
+      const assistantNameMatch = ticketAssistantName.includes(assistantName);
+
+      return eventNameMatch && assistantNameMatch;
+    });
+
+    renderTable(filteredTickets);  // Renderizamos la tabla con los tickets filtrados
+  }
+
+  // Función para renderizar la tabla de tickets
   function renderTable(data) {
     if (data.length === 0) {
       tableBody.innerHTML = `<tr><td colspan="7">😕 No se encontraron tickets</td></tr>`;

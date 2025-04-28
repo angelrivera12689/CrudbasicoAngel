@@ -1,10 +1,12 @@
 /* Estilo general de la lista */
 #employee-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columnas de igual tamaño */
+  grid-auto-rows: minmax(220px, auto); /* Altura mínima de 220px por fila */
+  gap: 20px; /* Espaciado entre los elementos */
+  padding: 20px; /* Espaciado interno del contenedor */
+  justify-content: center; /* Centrar el contenido dentro del contenedor */
+}
   
   /* Cada tarjeta cuadrada */
   #employee-list li {
@@ -197,4 +199,21 @@
   .btn-primary:hover {
     background-color: #0056b3;
   }
+  .read-btn a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007bff; /* Color azul primario */
+    padding: 10px 20px;
+    border-radius: 25px; /* Bordes redondeados */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  }
   
+  .read-btn a:hover {
+    background-color: #0056b3; /* Color azul oscuro en hover */
+    transform: scale(1.1); /* Efecto de zoom */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+  }

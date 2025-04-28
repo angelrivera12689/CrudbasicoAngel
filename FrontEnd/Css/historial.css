@@ -30,3 +30,53 @@
   .btn:hover {
     opacity: 0.9;
   }
+  #filter-section {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2cm; /* Espacio entre los elementos (2 cm de separación) */
+    flex-wrap: wrap;
+  }
+  
+  #filter-section input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 250px;
+    max-width: 100%;
+  }
+  
+  #filter-section button {
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  #filter-section button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 600px) {
+    #filter-section {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1cm; /* Menor separación en pantallas pequeñas */
+    }
+  
+    #filter-section input {
+      width: 100%;
+    }
+  
+    #filter-section button {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  
