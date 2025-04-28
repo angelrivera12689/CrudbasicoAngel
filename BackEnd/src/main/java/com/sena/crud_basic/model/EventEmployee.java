@@ -8,36 +8,35 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-@Entity(name = "event_employee")  // The name of the linking table for the many-to-many relationship
+@Entity(name = "event_employee")  // Nombre de la tabla de la relación muchos a muchos
 public class EventEmployee {
 
-    /*
-     * Attributes or columns of the entity
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_event_employee")  // Primary key of the table
+    @Column(name = "id_event_employee")  // Clave primaria de la tabla
     private int idEventEmployee;
 
     @ManyToOne
-    @JoinColumn(name = "id_event")  // Foreign key to the Event entity
+    @JoinColumn(name = "id_event")  // Clave foránea para la entidad Event
     private Events event;
 
     @ManyToOne
-    @JoinColumn(name = "id_employee")  // Foreign key to the Employee entity
-    private employee employee;
+    @JoinColumn(name = "id_employee")  // Clave foránea para la entidad employee (con minúscula)
+    private employee employee;  // Nombre correcto de la clase es 'employee' (minúscula)
 
-    @Column(name="status",nullable =false, columnDefinition = "boolean default true ")
+    @Column(name="status",nullable = false, columnDefinition = "boolean default true")
     private boolean status;
-
+  // 1) Constructor vacío necesario para JPA
+  public EventEmployee() {
+}
     // Constructor
     public EventEmployee(Events event, employee employee, boolean status) {
-        this.status=status;
         this.event = event;
         this.employee = employee;
+        this.status = status;
     }
 
-    // Getters and Setters
+    // Getters y Setters
     public int getIdEventEmployee() {
         return idEventEmployee;
     }
@@ -61,11 +60,12 @@ public class EventEmployee {
     public void setEmployee(employee employee) {
         this.employee = employee;
     }
+
     public boolean getStatus() {
         return status;
-     }
-    
-     public void setStatus(boolean status) {
+    }
+
+    public void setStatus(boolean status) {
         this.status = status;
-     }
+    }
 }

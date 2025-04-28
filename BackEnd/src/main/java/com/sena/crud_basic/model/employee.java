@@ -7,18 +7,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 /*
- * agregamos la anotacion entity
+ * Agregamos la anotación @Entity
  * para indicar que la clase es una entidad
- * name="nombre que registra en la base de datos"
+ * name="nombre que se registra en la base de datos"
  */
 
-@Entity(name="employee")
-public class employee {
+@Entity(name="employee")  // Mantengo "employee" en minúsculas
+public class employee {  // Mantengo el nombre de la clase en minúsculas como lo prefieres
 
     /*
-     * atributos o columnas de la entidad
+     * Atributos o columnas de la entidad
      * @Id = es una llave primaria o PK
-     * @Column=columna en la entidad
+     * @Column = columna en la entidad
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -36,7 +36,7 @@ public class EventOrganizerService {
         // Buscar el evento por su ID
         Optional<Events> ev = eventsRepository.findById(dto.getEvent().getIdEvent());
         Optional<organizer> org = organizerRepository.findById(dto.getOrganizer().getId_organizer());
-
+    
         // Si el evento o el organizador no se encuentran, retorna un error 400
         if (!ev.isPresent()) {
             return new ResponseDTO(
@@ -44,24 +44,33 @@ public class EventOrganizerService {
                 "Evento no encontrado. Verifique el ID del evento."
             );
         }
-
+    
         if (!org.isPresent()) {
             return new ResponseDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 "Organizador no encontrado. Verifique el ID del organizador."
             );
         }
-
+    
+        // Verificar si ya existe la relación evento-organizador
+        Optional<EventOrganizer> existingRelation = eventOrganizerRepository.findByEventAndOrganizer(ev.get(), org.get());
+        if (existingRelation.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El Organizador ya está asignado a este evento"
+            );
+        }
+    
         try {
             // Convertir el DTO a modelo
             EventOrganizer eo = convertToModel(dto);
             eo.setEvent(ev.get());
             eo.setOrganizer(org.get());
             eo.setStatus(true);
-
+    
             // Guardar la relación evento-organizador
             eventOrganizerRepository.save(eo);
-
+    
             return new ResponseDTO(
                 HttpStatus.OK.toString(),
                 "Relación registrada exitosamente."
@@ -74,6 +83,7 @@ public class EventOrganizerService {
             );
         }
     }
+    
 
     /**
      * Obtener todas las relaciones evento-organizador.

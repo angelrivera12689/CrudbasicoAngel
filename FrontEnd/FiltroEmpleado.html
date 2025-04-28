@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>Event–Employee Management</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="css/Eventoempleado.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+</head>
+
+<body class="sub_page">
+  <div class="hero_area">
+    <!-- header section starts -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="">
+            <span>ELEMENTS</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav">
+                <li class="nav-item active"><a class="nav-link" href="index.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="/FrontEnd/evento.html">Eventos</a></li>
+                <li class="nav-item"><a class="nav-link" href="empleado.html">Empleados</a></li>
+                <li class="nav-item"><a class="nav-link" href="asistente.html">Asistentes</a></li>
+                <li class="nav-item"><a class="nav-link" href="Historial.html">Tickets</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <div class="container mt-5">
+    <h1 class="mb-4">Asociar Empleado a Evento</h1>
+    <form id="associate-form">
+      <div class="form-group">
+        <label for="associate-event-name">Selecciona un Evento:</label>
+        <select id="associate-event-name" name="associate-event-name" class="form-control" required>
+          <!-- Opciones de eventos se cargarán aquí -->
+        </select>
+      </div>
+  
+      <div class="form-group mt-3">
+        <label for="associate-employee-name">Selecciona un Empleado:</label>
+        <select id="associate-employee-name" name="associate-employee-name" class="form-control" required>
+          <!-- Opciones de empleados se cargarán aquí -->
+        </select>
+      </div>
+  
+      <button type="submit" class="btn btn-primary mt-4">Asociar Empleado</button>
+    </form>
+  
+    <p id="associate-message"></p>
+  </div>
+  
+
+  <section class="filter_section container mt-5">
+    <h3 class="filter-title">Filtrar empleados por evento</h3>
+    <form id="filter-event-form" class="filter-form d-flex">
+      <input type="text" id="filter-event-name" placeholder="Nombre del evento" class="form-control me-2" required>
+      <button type="submit" class="btn btn-outline-secondary">Filtrar</button>
+    </form>
+    <div id="employee-list-by-event" class="result-list row mt-3">
+      <!-- Aquí aparecerán los resultados filtrados de empleados -->
+    </div>
+  </section>
+
+  <section class="filter_section container mt-5">
+    <h3 class="filter-title">Filtrar eventos por empleado</h3>
+    <form id="filter-employee-form" class="filter-form d-flex">
+      <input type="text" id="filter-employee-name" placeholder="Nombre del empleado" class="form-control me-2"
+        required>
+      <button type="submit" class="btn btn-outline-secondary">Filtrar</button>
+    </form>
+    <div id="event-list-by-employee" class="result-list row mt-3">
+      <!-- Aquí aparecerán los resultados filtrados de eventos -->
+    </div>
+  </section>
+
+  <!-- Scripts necesarios -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Tus módulos JS para manejar la lógica -->
+
+  <script type="module" src="/FrontEnd/js/FiltroEmpleadoEvento.js"></script>
+</body>
+
+</html>

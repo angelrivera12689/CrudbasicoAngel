@@ -33,20 +33,29 @@ public class EventAssistantService {
         // Verificar que el evento y el asistente existen
         Optional<Events> event = eventsRepository.findById(eventAssistantDTO.getEvent().getIdEvent());
         Optional<Assistant> assistant = assistantRepository.findById(eventAssistantDTO.getAssistant().getId());
-
+    
         if (!event.isPresent() || !assistant.isPresent()) {
             return new ResponseDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 "Evento o Asistente no encontrados"
             );
         }
-
+    
+        // Verificar si ya existe la relación evento-asistente
+        Optional<EventAssistant> existingRelation = eventAssistantRepository.findByEventAndAssistant(event.get(), assistant.get());
+        if (existingRelation.isPresent()) {
+            return new ResponseDTO(
+                HttpStatus.BAD_REQUEST.toString(),
+                "El Asistente ya está asignado a este evento"
+            );
+        }
+    
         // Convertir el DTO al modelo
         EventAssistant eventAssistant = convertToModel(eventAssistantDTO);
         eventAssistant.setEvent(event.get());
         eventAssistant.setAssistant(assistant.get());
         eventAssistantRepository.save(eventAssistant);
-
+    
         return new ResponseDTO(HttpStatus.OK.toString(), "Registro guardado exitosamente");
     }
 

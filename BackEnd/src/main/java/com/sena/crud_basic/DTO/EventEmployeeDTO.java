@@ -1,7 +1,7 @@
 package com.sena.crud_basic.DTO;
 
 import com.sena.crud_basic.model.Events;
-import com.sena.crud_basic.model.employee;  // Corrected "employee" to "Employee" as per Java naming conventions
+import com.sena.crud_basic.model.employee;  // Correcto según las convenciones Java
 
 public class EventEmployeeDTO {
 
@@ -12,7 +12,7 @@ public class EventEmployeeDTO {
     private Events event;
 
     // Foreign key to the Employee entity
-    private employee employee;
+    private employee employee;  // Cambiado de "employee" a "Employee"
 
     // Constructor
     public EventEmployeeDTO(int idEventEmployee, Events event, employee employee) {
