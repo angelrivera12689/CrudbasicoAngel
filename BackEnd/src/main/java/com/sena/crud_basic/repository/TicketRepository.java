@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.sena.crud_basic.model.Ticket;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
