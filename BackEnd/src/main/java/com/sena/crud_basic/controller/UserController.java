@@ -1,5 +1,6 @@
 package com.sena.crud_basic.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sena.crud_basic.DTO.ChangePasswordRequest;
 import com.sena.crud_basic.DTO.ResponseDTO;
 import com.sena.crud_basic.DTO.ResponseLogin;
 import com.sena.crud_basic.DTO.UserDTO;
@@ -88,5 +91,23 @@ public class UserController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    // Nota: eliminamos el endpoint de reactivación porque ya no aplica borrado lógico
+@PutMapping("/change-password")
+public ResponseEntity<String> changePasswordAuthenticated(
+        @RequestBody ChangePasswordRequest req,
+        Principal principal) {
+
+    String email = principal.getName();
+    String result = userService.changePasswordAuthenticated(
+        email,
+        req.getCurrentPassword(),
+        req.getNewPassword()
+    );
+
+    if ("Contraseña actualizada correctamente".equals(result)) {
+        return ResponseEntity.ok(result);
+    } else {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+    }
+}
+
 }

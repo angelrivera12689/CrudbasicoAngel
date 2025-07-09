@@ -8,10 +8,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sena.crud_basic.DTO.RecoveryRequestDTO;
 import com.sena.crud_basic.model.RecoveryRequest;
 import com.sena.crud_basic.model.User;
 import com.sena.crud_basic.repository.IRecoveryRequest;
@@ -26,75 +26,69 @@ public class RecoveryRequestService {
     @Autowired
     private IUser userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EmailService EmailService;
+
     // Listar todas las solicitudes de recuperación
     public List<RecoveryRequest> findAll() {
         return recoveryRequestRepository.findAll();
     }
 
-    // Buscar por ID
+    // Buscar solicitud por ID
     public Optional<RecoveryRequest> findById(int id) {
         return recoveryRequestRepository.findById(id);
     }
 
-    // Buscar por token
+    // Buscar solicitud por token
     public Optional<RecoveryRequest> findByToken(String token) {
         return recoveryRequestRepository.findByToken(token);
     }
 
-    // Buscar por usuario
+    // Buscar solicitudes por ID de usuario
     public List<RecoveryRequest> findByUserID(int userID) {
         return recoveryRequestRepository.findByUserID_UserID(userID);
     }
 
-    // Registrar una nueva solicitud de recuperación
-    @Transactional
-    public String createRecoveryRequest(RecoveryRequestDTO dto) {
-        if (dto.getUserID() == null || dto.getUserID().getUserID() == 0) {
-            return "Usuario inválido para recuperación";
-        }
-
-        Optional<User> userOptional = userRepository.findById(dto.getUserID().getUserID());
-        if (!userOptional.isPresent()) {
-            return "Usuario no encontrado";
-        }
-
-        String token = generateSecureToken();
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expiresAt = now.plusHours(1); // Token expira en 1 hora
-
-        RecoveryRequest recoveryRequest = new RecoveryRequest(
-                0,
-                userOptional.get(),
-                token,
-                false,
-                expiresAt,
-                now
-        );
-
-        try {
-            recoveryRequestRepository.save(recoveryRequest);
-            return token;
-        } catch (DataAccessException e) {
-            return "Error de base de datos al guardar la solicitud";
-        } catch (Exception e) {
-            return "Error inesperado al guardar la solicitud";
-        }
+    // Generar token seguro
+    private String generateSecureToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[32];
+        random.nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
 
-    // Marcar como usada una solicitud de recuperación
+    // Crear solicitud de recuperación por email
     @Transactional
-    public String markAsUsed(String token) {
-        Optional<RecoveryRequest> recoveryRequestOptional = recoveryRequestRepository.findByToken(token);
-        if (!recoveryRequestOptional.isPresent()) {
-            return "Solicitud de recuperación no encontrada";
-        }
-        RecoveryRequest recoveryRequest = recoveryRequestOptional.get();
-        recoveryRequest.setUsed(true);
+public String createRecoveryRequestByEmail(String email) {
+    Optional<User> userOptional = userRepository.findByEmail(email);
+    if (!userOptional.isPresent()) {
+        return "Usuario no encontrado";
+    }
+
+    User user = userOptional.get();
+    String token = generateSecureToken();
+    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime expiresAt = now.plusHours(1);
+
+    RecoveryRequest recoveryRequest = new RecoveryRequest(
+        0, user, token, false, expiresAt, now
+    );
+
+    try {
         recoveryRequestRepository.save(recoveryRequest);
-        return "Solicitud marcada como usada";
+        EmailService.sendRecoveryToken(email, token); // <--- aquí envías el email
+        return token;
+    } catch (DataAccessException e) {
+        return "Error de base de datos al guardar la solicitud";
+    } catch (Exception e) {
+        return "Error inesperado al guardar la solicitud";
     }
+}
 
-    // Eliminar una solicitud por ID
+    // Eliminar solicitud de recuperación por ID
     @Transactional
     public String deleteById(int id) {
         Optional<RecoveryRequest> recoveryRequest = recoveryRequestRepository.findById(id);
@@ -111,28 +105,52 @@ public class RecoveryRequestService {
         }
     }
 
-    // Utilidad para token seguro
-    private String generateSecureToken() {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[32];
-        random.nextBytes(bytes);
-        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+    // Marcar solicitud como usada por token
+    @Transactional
+    public String markAsUsed(String token) {
+        Optional<RecoveryRequest> recoveryRequestOptional = recoveryRequestRepository.findByToken(token);
+        if (!recoveryRequestOptional.isPresent()) {
+            return "Solicitud de recuperación no encontrada";
+        }
+        RecoveryRequest recoveryRequest = recoveryRequestOptional.get();
+
+        if (recoveryRequest.isUsed()) {
+            return "Token ya fue usado";
+        }
+        if (recoveryRequest.getExpiresAt().isBefore(LocalDateTime.now())) {
+            return "Token expirado";
+        }
+
+        recoveryRequest.setUsed(true);
+        recoveryRequestRepository.save(recoveryRequest);
+        return "Solicitud marcada como usada";
     }
 
-    // Convertir DTO a entidad
-    public RecoveryRequest convertToModel(RecoveryRequestDTO dto, String token, LocalDateTime expiresAt, LocalDateTime createdAt) {
-        return new RecoveryRequest(
-                0,
-                dto.getUserID(),
-                token,
-                false,
-                expiresAt,
-                createdAt
-        );
-    }
+    // Cambiar contraseña vía token de recuperación (sin pedir antigua)
+    @Transactional
+    public String changePasswordByToken(String token, String newPassword) {
+        Optional<RecoveryRequest> recoveryRequestOpt = recoveryRequestRepository.findByToken(token);
+        if (!recoveryRequestOpt.isPresent()) {
+            return "Token inválido";
+        }
 
-    // Convertir entidad a DTO
-    public RecoveryRequestDTO convertToDTO(RecoveryRequest rr) {
-        return new RecoveryRequestDTO(rr.getUserID());
+        RecoveryRequest request = recoveryRequestOpt.get();
+
+        if (request.isUsed()) {
+            return "Token ya usado";
+        }
+        if (request.getExpiresAt().isBefore(LocalDateTime.now())) {
+            return "Token expirado";
+        }
+
+        User user = request.getUserID();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        // Marcar token como usado
+        request.setUsed(true);
+        recoveryRequestRepository.save(request);
+
+        return "Contraseña actualizada correctamente";
     }
 }

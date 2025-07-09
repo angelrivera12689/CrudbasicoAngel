@@ -53,36 +53,41 @@ public class UserService {
 
     // Registro de usuario
     @Transactional
-    public ResponseDTO register(UserDTO userDTO) {
-        // Validar rol
-        Optional<Role> roleEntity = roleRepository.findById(userDTO.getRoleID().getRoleID());
-        if (!roleEntity.isPresent()) {
-            return new ResponseDTO("error", "Rol no encontrado");
-        }
-        // Validar existencia de email
-        if (userRepository.existsByEmail(userDTO.getEmail())) {
-            return new ResponseDTO("error", "El correo electrónico ya está registrado");
-        }
-        // Validar formato de email
-        if (!userDTO.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            return new ResponseDTO("error", "El formato del correo electrónico no es válido");
-        }
-        // Validar longitud de contraseña
-        if (userDTO.getPassword() == null || userDTO.getPassword().length() < 8) {
-            return new ResponseDTO("error", "La contraseña debe tener al menos 8 caracteres");
-        }
+public ResponseDTO register(UserDTO userDTO) {
+    // Obtener el primer rol disponible (puedes cambiar la lógica según tu necesidad)
+    Optional<Role> roleEntity = roleRepository.findAll().stream().findFirst();
 
-        try {
-            // Encriptar la contraseña antes de guardar el usuario
-            User userEntity = convertToModel(userDTO, roleEntity.get());
-            userRepository.save(userEntity);
-            return new ResponseDTO("success", "Usuario registrado correctamente");
-        } catch (DataAccessException e) {
-            return new ResponseDTO("error", "Error de base de datos al guardar el usuario");
-        } catch (Exception e) {
-            return new ResponseDTO("error", "Error inesperado al guardar el usuario");
-        }
+    if (!roleEntity.isPresent()) {
+        return new ResponseDTO("error", "No hay roles configurados en la base de datos");
     }
+
+    // Validar existencia de email
+    if (userRepository.existsByEmail(userDTO.getEmail())) {
+        return new ResponseDTO("error", "El correo electrónico ya está registrado");
+    }
+
+    // Validar formato de email
+    if (!userDTO.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+        return new ResponseDTO("error", "El formato del correo electrónico no es válido");
+    }
+
+    // Validar longitud de contraseña
+    if (userDTO.getPassword() == null || userDTO.getPassword().length() < 8) {
+        return new ResponseDTO("error", "La contraseña debe tener al menos 8 caracteres");
+    }
+
+    try {
+        // Crear entidad User con el rol por defecto
+        User userEntity = convertToModel(userDTO, roleEntity.get());
+        userRepository.save(userEntity);
+        return new ResponseDTO("success", "Usuario registrado correctamente");
+    } catch (DataAccessException e) {
+        return new ResponseDTO("error", "Error de base de datos al guardar el usuario");
+    } catch (Exception e) {
+        return new ResponseDTO("error", "Error inesperado al guardar el usuario");
+    }
+}
+
 
     // Inicio de sesión
     public ResponseLogin login(String email, String password) {
@@ -181,6 +186,22 @@ public class UserService {
                 userEntity.getRoleID()
         );
     }
+public String changePasswordAuthenticated(String email, String currentPassword, String newPassword) {
+    Optional<User> optionalUser = userRepository.findByEmail(email);
+    if (optionalUser.isEmpty()) {
+        return "Usuario no encontrado";
+    }
+
+    User user = optionalUser.get();
+
+    if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+        return "La contraseña actual es incorrecta";
+    }
+
+    user.setPassword(passwordEncoder.encode(newPassword));
+    userRepository.save(user);
+    return "Contraseña actualizada correctamente";
+}
 
     // Convertir DTO a entidad, encriptando la contraseña
     public User convertToModel(UserDTO userDTO, Role role) {

@@ -22,7 +22,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -45,9 +47,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 email = jwtService.extractUsername(token);
             } catch (ExpiredJwtException e) {
-                logger.warn("JWT expired: " + e.getMessage());
+                log.warn("JWT expired: {}", e.getMessage());
             } catch (JwtException e) {
-                logger.warn("JWT invalid: " + e.getMessage());
+                log.warn("Invalid JWT: {}", e.getMessage());
             }
         }
 
@@ -55,19 +57,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Optional<User> optionalUser = userRepository.findByEmail(email);
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
+
                 UserDetails userDetails = org.springframework.security.core.userdetails.User
                         .withUsername(user.getEmail())
-                        .password(user.getPassword())
+                        .password(user.getPassword()) // Necesario para validar firma
                         .authorities("ROLE_" + user.getRoleID().getName())
                         .build();
 
                 if (jwtService.validateToken(token, userDetails)) {
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities()
                     );
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                } else {
+                    log.warn("Token inválido para el usuario {}", user.getEmail());
                 }
+            } else {
+                log.warn("Usuario no encontrado: {}", email);
             }
         }
 
